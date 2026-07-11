@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adler Pelzer Group — A worldwide leader in automotive acoustics</title>
+<meta name="description" content="Adler Pelzer Group: worldwide leader in the design, engineering and manufacturing of acoustic and thermal components and systems for the automotive sector.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;500;700&family=Source+Sans+3:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ADLER PELZER GROUP V2 — Design System
+   ============================================================ */
+:root{
+  --apg-blue:#2E3192;
+  --apg-blue-deep:#1a1f6e;
+  --apg-blue-2:#3358A6;
+  --apg-blue-glow:rgba(46,49,146,.45);
+  --amber:#FDB92D;
+  --amber-glow:rgba(253,185,45,.25);
+  --bg:#07091A;
+  --bg-2:#0b0e24;
+  --surface:rgba(255,255,255,0.04);
+  --surface-2:rgba(255,255,255,0.07);
+  --surface-3:rgba(255,255,255,0.02);
+  --text:#F0F2FF;
+  --text-2:#C4C9E8;
+  --muted:#8A93B8;
+  --muted-2:#5a6080;
+  --line:rgba(255,255,255,0.08);
+  --line-2:rgba(255,255,255,0.14);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --font-head:"Lexend","Space Grotesk",sans-serif;
+  --font-body:"Source Sans 3","Space Grotesk","Noto Sans SC",system-ui,sans-serif;
+  --font-mono:"Space Mono",ui-monospace,monospace;
+  --maxw:1240px;
+  --r-card:16px;
+  --r-btn:12px;
+}
+html[data-theme="light"]{
+  --bg:#EEF1F6;
+  --bg-2:#E4E8F2;
+  --surface:rgba(255,255,255,0.75);
+  --surface-2:rgba(255,255,255,0.9);
+  --surface-3:rgba(255,255,255,0.5);
+  --text:#0E1116;
+  --text-2:#3C4452;
+  --muted:#5B6470;
+  --muted-2:#8A93A0;
+  --line:rgba(14,17,22,0.10);
+  --line-2:rgba(14,17,22,0.18);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.65;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+:lang(zh){--font-head:"Noto Sans SC","Lexend",sans-serif;--font-body:"Noto Sans SC","Source Sans 3",sans-serif}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+section{position:relative}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+::selection{background:var(--apg-blue);color:#fff}
+
+/* ---- Type scale ---- */
+h1,h2,h3,h4,h5{font-family:var(--font-head);line-height:1.08;letter-spacing:-.02em}
+.eyebrow{
+  font-family:var(--font-mono);font-size:11px;font-weight:700;
+  letter-spacing:.32em;text-transform:uppercase;color:var(--apg-blue);
+  display:inline-flex;align-items:center;gap:12px;
+}
+html[data-theme="light"] .eyebrow{color:var(--apg-blue)}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--apg-blue);display:inline-block}
+.eyebrow.center{justify-content:center}
+.eyebrow.center::before{display:none}
+.lede{font-size:clamp(16px,1.5vw,19px);color:var(--text-2);max-width:64ch;font-weight:400}
+
+/* ---- Ambient glow blobs ---- */
+.blob{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+.blob-1{width:600px;height:600px;background:radial-gradient(circle,rgba(46,49,146,.35),transparent 70%);top:-100px;right:-80px;animation:blobFloat 18s ease-in-out infinite}
+.blob-2{width:500px;height:500px;background:radial-gradient(circle,rgba(46,49,146,.2),transparent 70%);bottom:0;left:-120px;animation:blobFloat 22s ease-in-out infinite reverse}
+.blob-3{width:400px;height:400px;background:radial-gradient(circle,rgba(253,185,45,.08),transparent 70%);top:40%;right:10%;animation:blobFloat 26s ease-in-out infinite 4s}
+@keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-30px) scale(1.05)}66%{transform:translate(-25px,20px) scale(.97)}}
+@media(prefers-reduced-motion:reduce){.blob,.blob-1,.blob-2,.blob-3{animation:none}}
+
+/* ---- Glassmorphism card ---- */
+.glass{
+  background:var(--surface);
+  backdrop-filter:blur(16px) saturate(160%);
+  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  border:1px solid var(--line);
+  border-radius:var(--r-card);
+}
+html[data-theme="light"] .glass{box-shadow:0 4px 32px rgba(14,17,22,.08)}
+
+/* ---- Scroll reveal ---- */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}
+.reveal.d2{transition-delay:.16s}
+.reveal.d3{transition-delay:.24s}
+.reveal.d4{transition-delay:.32s}
+.reveal.d5{transition-delay:.40s}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  transition:background .4s var(--ease),border-color .4s,backdrop-filter .4s;
+  border-bottom:1px solid transparent;
+}
+header.scrolled{
+  background:rgba(7,9,26,.88);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--line);
+}
+html[data-theme="light"] header.scrolled{background:rgba(238,241,246,.9)}
+.nav{display:flex;align-items:center;height:72px;gap:0}
+.brand{display:flex;align-items:center;flex-shrink:0;margin-right:32px;gap:0}
+.brand-logo{display:flex;align-items:center;gap:0;transition:opacity .3s}
+.brand-logo:hover{opacity:.85}
+.brand-wordmark{display:flex;flex-direction:column;line-height:1;gap:2px}
+.brand-text{font-family:var(--font-head);font-weight:700;font-size:22px;letter-spacing:-.01em;color:var(--text)}
+.brand-text .brand-text{color:#2E3192}
+.brand-text .pelzer{color:var(--text)}
+html[data-theme="light"] .brand-text .pelzer{color:#0E1116}
+.brand-bar{background:var(--amber);height:3px;width:100%;border-radius:2px;animation:barPulse 4s ease-in-out infinite}
+.brand-group{font-family:var(--font-mono);font-size:8px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;margin-top:1px}
+@keyframes barPulse{0%,100%{opacity:1;transform:scaleX(1)}50%{opacity:.7;transform:scaleX(1.15) translateX(2px)}}
+@media(prefers-reduced-motion:reduce){.brand-bar{animation:none}}
+.nav-links{display:flex;gap:4px;flex:1}
+.nav-links a{
+  font-family:var(--font-body);font-size:13px;font-weight:600;letter-spacing:.02em;
+  color:var(--text-2);padding:7px 12px;border-radius:8px;
+  transition:color .2s,background .2s;white-space:nowrap;
+}
+.nav-links a:hover{color:var(--text);background:var(--surface)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.lang{position:relative}
+.lang-btn{
+  display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line-2);
+  color:var(--text-2);font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.12em;
+  padding:8px 12px;border-radius:8px;cursor:pointer;transition:.2s;text-transform:uppercase;
+}
+.lang-btn:hover{border-color:var(--apg-blue);color:var(--text)}
+.lang-btn svg{width:10px;height:10px;transition:transform .25s}
+.lang.open .lang-btn svg{transform:rotate(180deg)}
+.lang-menu{
+  position:absolute;top:calc(100% + 8px);right:0;min-width:175px;
+  background:var(--bg-2);border:1px solid var(--line-2);border-radius:12px;
+  padding:6px;opacity:0;visibility:hidden;transform:translateY(-8px);
+  transition:.25s var(--ease);box-shadow:0 24px 60px rgba(0,0,0,.6);z-index:300;
+}
+.lang.open .lang-menu{opacity:1;visibility:visible;transform:translateY(0)}
+.lang-menu button{
+  display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;
+  color:var(--text-2);font-family:var(--font-body);font-size:13.5px;font-weight:500;
+  padding:9px 12px;border-radius:8px;cursor:pointer;transition:.15s;text-align:left;
+}
+.lang-menu button:hover{background:var(--surface);color:var(--text)}
+.lang-menu button.active{color:var(--apg-blue)}
+.lang-menu button .code{font-family:var(--font-mono);font-size:10px;color:var(--muted);margin-left:auto}
+.theme-btn{
+  display:flex;align-items:center;justify-content:center;width:36px;height:36px;
+  background:var(--surface);border:1px solid var(--line);border-radius:8px;
+  cursor:pointer;color:var(--text-2);transition:.2s;
+}
+.theme-btn:hover{border-color:var(--apg-blue);color:var(--text)}
+.theme-btn svg{width:16px;height:16px}
+.btn-cta{
+  display:inline-flex;align-items:center;gap:8px;background:var(--apg-blue);color:#fff;
+  font-family:var(--font-body);font-size:13px;font-weight:600;letter-spacing:.02em;
+  padding:10px 18px;border-radius:var(--r-btn);transition:.3s var(--ease);white-space:nowrap;
+}
+.btn-cta:hover{background:#3358A6;transform:translateY(-1px);box-shadow:0 12px 32px var(--apg-blue-glow)}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px;margin-left:8px}
+.burger span{width:22px;height:2px;background:var(--text);transition:.3s;border-radius:2px}
+
+/* Admin btn */
+.admin-fab{
+  position:fixed;bottom:24px;right:24px;z-index:400;
+  width:42px;height:42px;border-radius:50%;
+  background:rgba(46,49,146,.8);border:1px solid var(--line-2);
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:.25s;backdrop-filter:blur(8px);
+}
+.admin-fab:hover{background:var(--apg-blue);transform:scale(1.08)}
+.admin-fab svg{width:18px;height:18px}
+
+/* mobile drawer */
+.drawer{
+  position:fixed;inset:0;z-index:250;background:rgba(7,9,26,.97);
+  backdrop-filter:blur(16px);transform:translateX(100%);transition:.35s var(--ease);
+  display:flex;flex-direction:column;padding:24px 28px;
+}
+.drawer.open{transform:none}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px}
+.drawer-close{background:none;border:0;color:var(--text-2);font-size:28px;cursor:pointer;line-height:1}
+.drawer a{font-family:var(--font-head);font-size:24px;font-weight:500;color:var(--text);padding:14px 0;border-bottom:1px solid var(--line);display:block;transition:.2s}
+.drawer a:hover{color:var(--amber)}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  min-height:100vh;min-height:100svh;
+  display:flex;align-items:center;
+  padding:120px 0 80px;
+  overflow:hidden;
+  background:var(--bg);
+}
+#waveCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.85}
+.hero-grid{
+  position:absolute;inset:0;z-index:1;
+  background-image:linear-gradient(rgba(46,49,146,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(46,49,146,.07) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 80% 70% at 70% 30%,#000 20%,transparent 70%);
+}
+.hero .wrap{position:relative;z-index:2;width:100%}
+.hero-inner{max-width:960px}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(46,49,146,.15);border:1px solid rgba(46,49,146,.3);
+  border-radius:100px;padding:6px 16px;
+  font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.2em;
+  color:rgba(160,172,230,.9);text-transform:uppercase;
+  margin-bottom:28px;
+  animation:fadeUp .8s var(--ease) .2s both;
+}
+.hero-eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--apg-blue);flex-shrink:0;animation:dotBlink 2s ease-in-out infinite}
+@keyframes dotBlink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{
+  font-size:clamp(42px,6.5vw,88px);
+  font-weight:700;color:var(--text);
+  letter-spacing:-.035em;
+  line-height:1.02;
+  margin-bottom:28px;
+}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line span{display:block;transform:translateY(110%);animation:rise 1s var(--ease) forwards}
+.hero h1 .line:nth-child(2) span{animation-delay:.1s}
+.hero h1 .line:nth-child(3) span{animation-delay:.2s}
+.hero h1 .accent{color:var(--apg-blue)}
+@keyframes rise{to{transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.hero h1 .line span{transform:none;animation:none}}
+.hero .lede{animation:fadeUp 1s var(--ease) .5s both;font-size:clamp(17px,1.6vw,20px);max-width:68ch;margin-bottom:40px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp 1s var(--ease) .65s both}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--apg-blue);color:#fff;
+  font-family:var(--font-body);font-weight:600;font-size:15px;
+  padding:15px 28px;border-radius:var(--r-btn);
+  transition:.3s var(--ease);
+}
+.btn-primary:hover{background:#3358A6;transform:translateY(-2px);box-shadow:0 20px 50px var(--apg-blue-glow)}
+.btn-primary svg,.btn-ghost svg{width:16px;height:16px}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:10px;
+  color:var(--text);border:1px solid var(--line-2);
+  font-family:var(--font-body);font-weight:600;font-size:15px;
+  padding:15px 28px;border-radius:var(--r-btn);
+  transition:.3s var(--ease);
+}
+.btn-ghost:hover{border-color:var(--text);background:var(--surface)}
+.hero-tags{
+  position:absolute;bottom:36px;left:0;right:0;z-index:2;
+  border-top:1px solid var(--line);
+}
+.hero-tags .wrap{display:flex;gap:36px;padding-top:20px;flex-wrap:wrap;animation:fadeUp 1s var(--ease) .85s both}
+.hero-tags span{font-family:var(--font-mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.hero-tags span b{color:var(--amber);font-weight:700}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* ============================================================
+   STATS STRIP
+   ============================================================ */
+.stats-strip{
+  background:linear-gradient(135deg,var(--apg-blue),#26398F 60%,#1a1f6e);
+  padding:0;
+  position:relative;overflow:hidden;
+}
+.stats-strip::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(253,185,45,.06),transparent 60%);
+}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);position:relative;z-index:1}
+.stat{
+  padding:44px 32px;
+  border-right:1px solid rgba(255,255,255,.14);
+  position:relative;
+}
+.stat:last-child{border-right:0}
+.stat .num{
+  font-family:var(--font-mono);font-weight:700;
+  font-size:clamp(32px,4vw,52px);
+  color:var(--amber);line-height:1;
+  display:block;
+}
+.stat .lbl{
+  font-family:var(--font-body);font-size:13px;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;
+  margin-top:10px;color:rgba(255,255,255,.8);
+}
+
+/* ============================================================
+   SECTION SHELL
+   ============================================================ */
+.sec{padding:clamp(80px,9vw,140px) 0;position:relative;overflow:hidden}
+.sec.dark{background:var(--bg)}
+.sec.darker{background:var(--bg-2)}
+.sec.light{background:#EEF1F6}
+html[data-theme="dark"] .sec.light{background:#0d1020}
+html[data-theme="light"] .sec.dark,html[data-theme="light"] .sec.darker{background:#EEF1F6}
+.sec-head{max-width:760px;margin-bottom:56px}
+.sec-head.center{margin:0 auto 56px;text-align:center}
+.sec-head.center .eyebrow{margin-left:auto;margin-right:auto}
+.sec-head h2{font-size:clamp(28px,4vw,54px);margin:18px 0;letter-spacing:-.03em;font-weight:700}
+
+/* ============================================================
+   BENTO GRID — Engineering Excellence
+   ============================================================ */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto auto;gap:16px;margin-top:16px}
+.bento-tile{
+  position:relative;padding:32px;overflow:hidden;cursor:default;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease);
+}
+.bento-tile:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 24px 64px rgba(46,49,146,.25)}
+.bento-tile .t-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+.bento-tile h3{font-size:clamp(18px,2vw,26px);font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:-.02em}
+.bento-tile p{font-size:14px;color:var(--muted);line-height:1.6}
+/* Wave decoration inside bento */
+.bento-wave{position:absolute;bottom:0;right:0;width:180px;height:100px;opacity:.12}
+/* Large tile */
+.bento-lg{grid-column:span 2;grid-row:span 2;min-height:360px;
+  background:linear-gradient(135deg,rgba(46,49,146,.25) 0%,rgba(46,49,146,.08) 100%);
+  border:1px solid rgba(46,49,146,.3);border-radius:var(--r-card)}
+.bento-lg .t-num{font-family:var(--font-mono);font-size:80px;font-weight:700;color:var(--apg-blue);opacity:.15;position:absolute;bottom:16px;right:20px;line-height:1}
+/* Medium tile */
+.bento-md{grid-column:span 2;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card)}
+/* Small tiles */
+.bento-sm{grid-column:span 1;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:24px}
+.bento-sm .ico{width:36px;height:36px;color:var(--apg-blue);margin-bottom:14px}
+.bento-sm h4{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px}
+.bento-sm p{font-size:12.5px;color:var(--muted)}
+
+/* ============================================================
+   EXPLODED VEHICLE
+   ============================================================ */
+.exploded{background:linear-gradient(180deg,var(--bg-2),var(--bg));overflow:hidden}
+.exp-stage{position:relative;margin-top:40px;border:1px solid var(--line);border-radius:var(--r-card);
+  background:radial-gradient(130% 100% at 50% 0%,#0f1530,#07091a);padding:24px}
+.exp-layout{display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:stretch}
+.exp-canvas{position:relative;min-height:440px}
+.exp-svg{width:100%;height:auto;display:block}
+.exp-part{cursor:pointer;transition:transform .9s var(--ease),opacity .6s}
+.exp-part .body{transition:fill .3s,stroke .3s}
+.exp-stage.go .exp-part{transform:translate(var(--dx),var(--dy))}
+.exp-part:hover .body,.exp-part.sel .body{fill:var(--apg-blue);stroke:var(--text)}
+.exp-dot{cursor:pointer}
+.exp-dot circle.h{fill:var(--apg-blue);opacity:0;transform-origin:center}
+.exp-dot:hover circle.h,.exp-dot.sel circle.h{opacity:.2;animation:ping 1.8s ease-out infinite}
+@keyframes ping{0%{transform:scale(1);opacity:.4}100%{transform:scale(2.6);opacity:0}}
+.exp-info{background:rgba(7,9,26,.8);border:1px solid var(--line);border-radius:12px;padding:26px;display:flex;flex-direction:column;backdrop-filter:blur(12px)}
+.exp-info .tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber)}
+.exp-info h3{color:var(--text);font-size:22px;margin:10px 0 12px}
+.exp-info p{color:var(--text-2);font-size:14px;margin-bottom:16px}
+.exp-info ul{list-style:none;margin-top:auto}
+.exp-info li{font-size:13px;color:var(--text-2);padding:8px 0;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.exp-info li::before{content:"";width:4px;height:4px;background:var(--apg-blue);flex-shrink:0;border-radius:50%}
+.exp-zones{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.exp-zones button{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--surface);border:1px solid var(--line);color:var(--text-2);
+  padding:8px 12px;border-radius:8px;cursor:pointer;transition:.2s;
+}
+.exp-zones button:hover{border-color:var(--muted);color:var(--text)}
+.exp-zones button.active{background:var(--apg-blue);border-color:var(--apg-blue);color:#fff}
+
+/* ============================================================
+   PRODUCTS SECTION
+   ============================================================ */
+.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
+.prod{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);
+  padding:28px;transition:.35s var(--ease);position:relative;overflow:hidden;
+}
+.prod:hover{border-color:rgba(46,49,146,.5);transform:translateY(-4px);box-shadow:0 16px 48px rgba(46,49,146,.2)}
+.prod .n{font-family:var(--font-mono);font-size:11px;color:var(--apg-blue);letter-spacing:.1em;display:block;margin-bottom:12px}
+.prod h4{color:var(--text);font-size:17px;margin-bottom:10px;font-weight:700;letter-spacing:-.01em}
+.prod p{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.55}
+.prod .chips{display:flex;flex-wrap:wrap;gap:6px}
+.prod .chips span{
+  font-size:10.5px;color:var(--text-2);
+  background:rgba(46,49,146,.12);border:1px solid rgba(46,49,146,.2);
+  padding:4px 9px;border-radius:100px;font-family:var(--font-mono);letter-spacing:.04em;
+}
+
+/* ============================================================
+   GLOBAL MAP
+   ============================================================ */
+.map-wrap{position:relative;margin-top:40px;border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;background:rgba(7,9,26,.6)}
+.world{width:100%;display:block}
+.world .land{fill:rgba(46,49,146,.22);stroke:rgba(46,49,146,.35);stroke-width:.3}
+.mk .core{fill:var(--apg-blue);transition:.2s}
+.mk .pulse{fill:var(--apg-blue);animation:mapPulse 3s ease-out infinite;opacity:.35}
+.mk.hq .core{fill:var(--amber)}
+.mk.hq .pulse{fill:var(--amber)}
+.mk .labbg{fill:rgba(7,9,26,.85);stroke:var(--line);stroke-width:.5}
+.mk .lab{fill:var(--text-2);font-family:"Space Mono",monospace;font-size:6.5px;text-anchor:middle;letter-spacing:.5px}
+@keyframes mapPulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(3.5);opacity:0}}
+.map-legend{display:flex;gap:24px;padding:18px 24px;border-top:1px solid var(--line);background:var(--surface-3);flex-wrap:wrap}
+.map-legend .lg{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.1em;display:flex;align-items:center;gap:8px}
+.map-legend .lg b{color:var(--amber);font-size:14px}
+.map-legend .lg i{width:8px;height:8px;border-radius:50%;background:var(--apg-blue);flex-shrink:0}
+
+/* ============================================================
+   ACOUSTICS / TECHNOLOGY
+   ============================================================ */
+.acoustic-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.wave-box{background:rgba(7,9,26,.8);border:1px solid var(--line);border-radius:var(--r-card);padding:28px;position:relative;overflow:hidden;backdrop-filter:blur(10px)}
+.wave-box .cap-lbl{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.wave-svg{width:100%;height:190px}
+.wave-svg path.curve{fill:none;stroke:var(--apg-blue);stroke-width:2.5;stroke-dasharray:1400;stroke-dashoffset:1400}
+.wave-box.go .wave-svg path.curve{animation:draw 2.4s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.wave-svg path.fillc{fill:url(#wg);opacity:0;transition:opacity 1s 1.4s}
+.wave-box.go .wave-svg path.fillc{opacity:.4}
+.acoustic-list{list-style:none}
+.acoustic-list li{padding:18px 0;border-top:1px solid var(--line);display:flex;gap:16px;align-items:flex-start}
+.acoustic-list li .k{font-family:var(--font-mono);color:var(--amber);font-size:12px;flex-shrink:0;width:32px;font-weight:700}
+.acoustic-list li .t b{color:var(--text);font-weight:600;display:block;margin-bottom:3px;font-family:var(--font-head)}
+.acoustic-list li .t span{color:var(--muted);font-size:13.5px}
+
+/* ============================================================
+   MISSION — 7 Ps
+   ============================================================ */
+.ps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden}
+.pcard{
+  background:var(--bg);padding:32px 26px;min-height:220px;
+  display:flex;flex-direction:column;transition:.4s var(--ease);position:relative;overflow:hidden;
+}
+.pcard::after{
+  content:attr(data-p);position:absolute;right:-6px;bottom:-20px;
+  font-family:var(--font-head);font-weight:700;font-size:110px;
+  color:rgba(255,255,255,.03);line-height:1;pointer-events:none;
+}
+.pcard:hover{background:var(--apg-blue)}
+.pcard:hover *{color:#fff!important}
+.pcard .pk{font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;color:var(--apg-blue);margin-bottom:10px;text-transform:uppercase}
+.pcard h3{font-size:19px;color:var(--text);margin-bottom:6px}
+.pcard .sub{font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:10px;font-family:var(--font-mono);letter-spacing:.04em}
+.pcard p{font-size:13px;color:var(--muted);position:relative;z-index:2;line-height:1.55}
+.pcard.worldwide{background:var(--apg-blue);align-items:center;justify-content:center;text-align:center}
+.pcard.worldwide h3{font-size:24px;color:#fff;letter-spacing:.04em}
+
+/* ============================================================
+   TIMELINE
+   ============================================================ */
+.tl-track{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;margin-top:48px}
+.tl-track::before{
+  content:"";position:absolute;top:44px;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--apg-blue),rgba(46,49,146,.15));
+}
+.tl-item{padding-right:24px;position:relative}
+.tl-item .yr{font-family:var(--font-head);font-weight:700;font-size:28px;color:var(--apg-blue);letter-spacing:-.02em}
+.tl-item .dot{
+  width:14px;height:14px;border-radius:50%;background:var(--apg-blue);
+  margin:16px 0;position:relative;z-index:2;
+  box-shadow:0 0 0 6px rgba(46,49,146,.18),0 0 20px rgba(46,49,146,.4);
+}
+.tl-item h4{font-size:15px;color:var(--text);margin-bottom:6px;font-weight:700}
+.tl-item p{font-size:13px;color:var(--muted);line-height:1.55}
+
+/* ============================================================
+   SUSTAINABILITY
+   ============================================================ */
+.sus-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.sus{
+  padding:28px 22px;border:1px solid var(--line);border-radius:var(--r-card);
+  transition:.35s var(--ease);background:var(--surface);
+}
+.sus:hover{border-color:rgba(46,49,146,.4);transform:translateY(-4px);box-shadow:0 20px 48px rgba(46,49,146,.15)}
+.sus .ico{width:36px;height:36px;color:var(--apg-blue);margin-bottom:14px}
+.sus h4{font-size:15px;color:var(--text);margin-bottom:8px;font-weight:700}
+.sus p{font-size:13px;color:var(--muted);line-height:1.55}
+.policy-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px}
+.policy-row a{
+  display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;
+  color:var(--text-2);border:1px solid var(--line);padding:10px 14px;border-radius:10px;transition:.25s;
+}
+.policy-row a:hover{border-color:var(--apg-blue);color:var(--apg-blue)}
+.policy-row a svg{width:14px;height:14px}
+
+/* ============================================================
+   PARTNERS MARQUEE
+   ============================================================ */
+.marquee-wrap{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:28px 0;background:var(--surface-3)}
+.marquee-track{display:flex;gap:48px;animation:marquee 25s linear infinite}
+.marquee-track:hover{animation-play-state:paused}
+.oem-logo{
+  font-family:var(--font-head);font-weight:700;font-size:15px;letter-spacing:.08em;
+  color:var(--muted);white-space:nowrap;transition:.25s;flex-shrink:0;
+}
+.oem-logo:hover{color:var(--text)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.marquee-track{animation:none}}
+
+/* ============================================================
+   NEWS
+   ============================================================ */
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:16px}
+.news-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);
+  overflow:hidden;transition:.35s var(--ease);display:flex;flex-direction:column;
+}
+.news-card:hover{border-color:rgba(46,49,146,.4);transform:translateY(-4px);box-shadow:0 20px 48px rgba(46,49,146,.15)}
+.news-ph{
+  height:180px;position:relative;
+  background:linear-gradient(135deg,rgba(46,49,146,.3),rgba(7,9,26,.8));
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.news-ph svg{width:56px;height:56px;color:rgba(46,49,146,.5)}
+.news-ph .cat{
+  position:absolute;top:14px;left:14px;
+  background:rgba(46,49,146,.8);color:#fff;
+  font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  padding:5px 10px;border-radius:6px;backdrop-filter:blur(8px);
+}
+.news-body{padding:22px;flex:1;display:flex;flex-direction:column}
+.news-body h4{font-size:17px;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:-.01em;line-height:1.3}
+.news-body p{font-size:13.5px;color:var(--muted);flex:1;line-height:1.55;margin-bottom:16px}
+.news-more{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--amber);letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.news-more::after{content:"→";transition:transform .2s}
+.news-card:hover .news-more::after{transform:translateX(4px)}
+
+/* ============================================================
+   CONTACT / RFQ
+   ============================================================ */
+.contact-split{display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:start}
+.contact-info h3{font-size:clamp(20px,2.5vw,32px);font-weight:700;color:var(--text);margin-bottom:20px}
+.contact-info p{font-size:15px;color:var(--muted);margin-bottom:32px;line-height:1.65}
+.contact-detail{display:flex;flex-direction:column;gap:18px;margin-bottom:36px}
+.c-row{display:flex;align-items:flex-start;gap:14px}
+.c-row .icon{width:36px;height:36px;background:rgba(46,49,146,.15);border:1px solid rgba(46,49,146,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.c-row .icon svg{width:16px;height:16px;color:var(--apg-blue)}
+.c-row .label{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.c-row .val{font-size:14px;color:var(--text-2);font-weight:500}
+.rfq-form{padding:36px;background:var(--surface);border:1px solid var(--line);border-radius:20px;backdrop-filter:blur(16px)}
+.rfq-form h3{font-size:22px;font-weight:700;color:var(--text);margin-bottom:8px}
+.rfq-form .sub{font-size:14px;color:var(--muted);margin-bottom:28px}
+.field{margin-bottom:18px;position:relative}
+.field label{display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:700}
+.field input,.field select,.field textarea{
+  width:100%;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:10px;
+  color:var(--text);font-family:var(--font-body);font-size:14px;padding:12px 16px;
+  transition:.2s;outline:none;
+}
+html[data-theme="light"] .field input,html[data-theme="light"] .field select,html[data-theme="light"] .field textarea{
+  background:rgba(14,17,22,.04);color:#0E1116;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--apg-blue);box-shadow:0 0 0 3px rgba(46,49,146,.15)}
+.field.err input,.field.err select,.field.err textarea{border-color:#e05555}
+.field.err::after{content:attr(data-msg);position:absolute;bottom:-18px;left:0;font-size:11px;color:#e05555;font-family:var(--font-mono)}
+.field select{cursor:pointer}
+.field select option{background:var(--bg-2)}
+.field textarea{min-height:120px;resize:vertical}
+.f-privacy{font-size:11.5px;color:var(--muted);margin-bottom:20px;line-height:1.5}
+.btn-submit{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--apg-blue);color:#fff;
+  font-family:var(--font-body);font-weight:600;font-size:15px;
+  padding:16px;border-radius:var(--r-btn);border:none;cursor:pointer;
+  transition:.3s var(--ease);
+}
+.btn-submit:hover{background:#3358A6;transform:translateY(-1px);box-shadow:0 16px 40px var(--apg-blue-glow)}
+#rfqSuccess{display:none;text-align:center;padding:40px}
+#rfqSuccess.show{display:block}
+#rfqSuccess h3{color:var(--amber);font-size:22px;margin-bottom:10px}
+#rfqSuccess p{color:var(--muted);font-size:14px}
+#rfqForm.hide{display:none}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{background:#040510;border-top:1px solid var(--line);padding:80px 0 40px}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:60px}
+.foot-brand .wordmark{font-family:var(--font-head);font-weight:700;font-size:20px;letter-spacing:-.01em;margin-bottom:8px}
+.foot-brand .wordmark .brand-text{color:#2E3192}
+.foot-brand .wordmark .pelzer{color:var(--text)}
+.foot-brand .wordmark .group{color:var(--amber)}
+.foot-brand p{font-size:13px;color:var(--muted);margin-top:12px;line-height:1.6;max-width:28ch}
+.foot-certs{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.foot-cert{
+  font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid rgba(46,49,146,.3);color:rgba(46,49,146,.8);
+  padding:5px 10px;border-radius:6px;
+}
+.foot-col h5{font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--apg-blue);margin-bottom:18px;font-weight:700}
+.foot-col a{display:block;font-size:14px;color:var(--muted);margin-bottom:10px;transition:.2s}
+.foot-col a:hover{color:var(--text)}
+.foot-bottom{
+  border-top:1px solid var(--line);padding-top:28px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+}
+.foot-bottom p{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:.06em}
+.foot-email{font-family:var(--font-mono);font-size:11px;color:var(--apg-blue);letter-spacing:.06em;transition:.2s}
+.foot-email:hover{color:var(--amber)}
+
+/* ============================================================
+   SUBPAGES
+   ============================================================ */
+#subpages{display:none}
+body.subview #subpages{display:block}
+body.subview #main{display:none}
+.subpage{display:none}
+.subpage.active{display:block;animation:pageIn .5s var(--ease)}
+@keyframes pageIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.back-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--line);padding:10px 16px;border-radius:8px;
+  margin-bottom:48px;transition:.2s;
+}
+.back-btn:hover{border-color:var(--apg-blue);color:var(--apg-blue)}
+.subhero{
+  min-height:50vh;display:flex;align-items:flex-end;padding:140px 0 60px;
+  background:linear-gradient(180deg,rgba(46,49,146,.12) 0%,var(--bg) 100%);
+  position:relative;overflow:hidden;
+}
+.sp-head h1{font-size:clamp(32px,5vw,64px);font-weight:700;color:var(--text);margin:20px 0;letter-spacing:-.03em}
+.sp-head .lede{font-size:clamp(16px,1.5vw,18px);color:var(--text-2);max-width:62ch;margin-bottom:32px}
+.sp-ctas{display:flex;gap:14px;flex-wrap:wrap}
+
+/* Career sub-page */
+.area-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.area{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);
+  padding:28px;display:flex;gap:18px;align-items:flex-start;transition:.3s var(--ease);
+}
+.area:hover{border-color:rgba(46,49,146,.4);transform:translateY(-2px)}
+.area .ico{width:40px;height:40px;color:var(--apg-blue);flex-shrink:0}
+.area h4{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px}
+.area p{font-size:13px;color:var(--muted)}
+.life-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px}
+.life-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:28px}
+.life-card .ix{font-family:var(--font-mono);font-size:10px;color:var(--apg-blue);letter-spacing:.15em;margin-bottom:10px}
+.life-card h3{font-size:20px;font-weight:700;color:var(--text);margin-bottom:8px}
+.life-card p{font-size:13.5px;color:var(--muted)}
+
+/* Investor sub-page */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
+.kpi{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);
+  padding:32px 24px;text-align:center;
+}
+.kpi .n{font-family:var(--font-mono);font-size:clamp(28px,3vw,42px);font-weight:700;color:var(--amber);line-height:1}
+.kpi .n em{font-style:normal;color:var(--amber)}
+.kpi .l{font-family:var(--font-body);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:10px;font-weight:600}
+.inv-split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;margin-top:40px}
+.inv-growth h3{font-size:22px;font-weight:700;color:var(--text);margin-bottom:12px}
+.inv-growth p{font-size:14px;color:var(--muted);margin-bottom:20px}
+.chart-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:28px;
+}
+.chart-bars{display:flex;align-items:flex-end;gap:12px;height:130px;margin-bottom:16px}
+.chart-bars .grow-bar{
+  flex:1;background:linear-gradient(180deg,var(--apg-blue),rgba(46,49,146,.4));
+  border-radius:6px 6px 0 0;
+  transform:scaleY(0);transform-origin:bottom;
+  transition:transform .8s var(--ease);
+}
+.subpage.active .grow-bar{transform:scaleY(1)}
+.subpage.active .grow-bar.b2{transition-delay:.1s}
+.subpage.active .grow-bar.b3{transition-delay:.2s}
+.subpage.active .grow-bar.b4{transition-delay:.3s}
+.subpage.active .grow-bar.b5{transition-delay:.4s}
+#invChartLabels{display:flex;gap:12px;font-family:var(--font-mono);font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;justify-content:space-around}
+
+/* Supplier sub-page */
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:16px}
+.how-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:28px;
+}
+.how-card .ix{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;color:var(--apg-blue);margin-bottom:12px}
+.how-card .ix.bl{color:var(--apg-blue)}
+.how-card h3{font-size:18px;font-weight:700;color:var(--text);margin-bottom:10px}
+.how-card p{font-size:13px;color:var(--muted)}
+.big-fact-box{
+  background:linear-gradient(135deg,rgba(46,49,146,.2),rgba(46,49,146,.08));
+  border:1px solid rgba(46,49,146,.2);border-radius:var(--r-card);padding:40px;
+  text-align:center;margin-bottom:32px;
+}
+.big-fact{font-family:var(--font-mono);font-weight:700;font-size:clamp(36px,5vw,60px);color:var(--amber);line-height:1;margin-bottom:10px}
+.big-fact small{display:block;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.16em;font-weight:400;margin-top:8px}
+
+/* ============================================================
+   ADMIN PANEL
+   ============================================================ */
+.admin-panel{
+  position:fixed;top:0;right:0;bottom:0;width:380px;z-index:500;
+  background:rgba(7,9,26,.97);border-left:1px solid var(--line);
+  backdrop-filter:blur(20px);overflow-y:auto;
+  transform:translateX(100%);transition:.35s var(--ease);
+}
+.admin-panel.open{transform:none}
+.admin-panel-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;
+  background:rgba(7,9,26,.95);backdrop-filter:blur(16px);z-index:2;
+}
+.admin-panel-head h4{font-size:15px;font-weight:700;color:var(--text)}
+.admin-close{background:none;border:0;color:var(--muted);font-size:22px;cursor:pointer;line-height:1;transition:.2s}
+.admin-close:hover{color:var(--text)}
+.admin-body{padding:20px 22px}
+.admin-section{margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.admin-section h5{font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--apg-blue);margin-bottom:14px;font-weight:700}
+.admin-status{font-family:var(--font-mono);font-size:11px;color:var(--amber);min-height:18px;margin-bottom:8px}
+.admin-btn{
+  display:inline-flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--line);
+  color:var(--text-2);font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.08em;
+  padding:9px 14px;border-radius:8px;cursor:pointer;transition:.2s;text-transform:uppercase;
+}
+.admin-btn:hover{border-color:var(--apg-blue);color:var(--text)}
+.admin-btn.danger{border-color:rgba(224,85,85,.3);color:#e05555}
+.admin-btn.danger:hover{border-color:#e05555;background:rgba(224,85,85,.1)}
+.admin-btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.admin-item{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px}
+.admin-item .row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.admin-item .thumb{width:40px;height:40px;object-fit:cover;border-radius:6px;background:var(--surface-2);flex-shrink:0}
+.field-row{display:flex;gap:8px;margin-bottom:8px}
+.field-row input{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:6px;color:var(--text);font-family:var(--font-body);font-size:12px;padding:7px 10px;outline:none}
+.field-row input:focus{border-color:var(--apg-blue)}
+.admin-item textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:6px;color:var(--text);font-family:var(--font-body);font-size:12px;padding:8px 10px;outline:none;resize:vertical;min-height:70px}
+.admin-item textarea:focus{border-color:var(--apg-blue)}
+.icon-btn{
+  background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text-2);
+  width:28px;height:28px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:13px;transition:.2s;flex-shrink:0;
+}
+.icon-btn:hover{background:var(--surface-2);color:var(--text)}
+.news-cat,.news-title{flex:1}
+
+/* ============================================================
+   CUSTOMERS / OEM SPLIT
+   ============================================================ */
+.oem-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.oem-badge{
+  font-family:var(--font-head);font-weight:600;font-size:13px;letter-spacing:.05em;
+  color:var(--text-2);border:1px solid var(--line);padding:9px 16px;border-radius:8px;transition:.25s;
+}
+.oem-badge:hover{border-color:var(--apg-blue);color:var(--text)}
+.partners-split{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden}
+.partners-split>div{background:var(--bg);padding:44px 38px}
+.partners-split h3{color:var(--text);font-size:24px;font-weight:700;margin:14px 0}
+.partners-split p{color:var(--muted);font-size:14.5px;margin-bottom:14px;line-height:1.65}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1100px){
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .bento-lg{grid-column:span 2}
+  .bento-md{grid-column:span 2}
+  .bento-sm{grid-column:span 1}
+  .prod-grid{grid-template-columns:repeat(2,1fr)}
+  .ps-grid{grid-template-columns:repeat(4,1fr)}
+  .sus-grid{grid-template-columns:repeat(3,1fr)}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:32px}
+}
+@media(max-width:860px){
+  .nav-links{display:none}
+  .burger{display:flex}
+  .acoustic-grid,.contact-split,.about-grid,.inv-split,.partners-split{grid-template-columns:1fr}
+  .ps-grid{grid-template-columns:repeat(2,1fr)}
+  .tl-track{grid-template-columns:1fr;gap:0}
+  .tl-track::before{display:none}
+  .tl-item{padding:0 0 28px 32px;border-left:2px solid rgba(46,49,146,.3)}
+  .tl-item .dot{position:absolute;left:-7px;top:6px;margin:0}
+  .tl-item{position:relative}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat{border-bottom:1px solid rgba(255,255,255,.1)}
+  .area-grid,.how-grid,.life-grid,.kpi-row{grid-template-columns:1fr}
+  .news-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .bento{grid-template-columns:1fr}
+  .bento-lg,.bento-md{grid-column:span 1}
+  .exp-layout{grid-template-columns:1fr}
+  .sus-grid{grid-template-columns:repeat(2,1fr)}
+  .wrap{padding:0 18px}
+}
+@media(max-width:500px){
+  .hero-tags{display:none}
+  .hero-cta{flex-direction:column}
+  .btn-primary,.btn-ghost{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- AMBIENT BLOBS -->
+<div class="blob blob-1" aria-hidden="true"></div>
+<div class="blob blob-2" aria-hidden="true"></div>
+<div class="blob blob-3" aria-hidden="true"></div>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header id="hdr">
+  <div class="wrap">
+    <nav class="nav">
+      <a href="#top" class="brand brand-logo" data-home>
+        <div class="brand-wordmark">
+          <div class="brand-text"><span class="adler">adler</span><span class="pelzer">pelzer</span></div>
+          <div class="brand-bar"></div>
+          <div class="brand-group">GROUP</div>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="#about" data-i18n="nav.about">About Us</a>
+        <a href="#products" data-i18n="nav.products">Products & Technologies</a>
+        <a href="#map" data-i18n="nav.about">Global Presence</a>
+        <a href="#sustainability" data-i18n="sus.eyebrow">Sustainability</a>
+        <a href="#career">Career</a>
+        <a href="#investor">Investors</a>
+      </div>
+      <div class="nav-right">
+        <div class="lang" id="lang">
+          <button class="lang-btn" id="langBtn" aria-expanded="false" aria-haspopup="true">
+            <span id="langCur">EN</span>
+            <svg viewBox="0 0 10 10" fill="none"><path d="M2 3.5l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="lang-menu" role="menu">
+            <button data-lang="en" role="menuitem">English <span class="code">EN</span></button>
+            <button data-lang="de" role="menuitem">Deutsch <span class="code">DE</span></button>
+            <button data-lang="zh" role="menuitem">中文 <span class="code">ZH</span></button>
+            <button data-lang="pt" role="menuitem">Português <span class="code">BR</span></button>
+            <button data-lang="es" role="menuitem">Español <span class="code">ES</span></button>
+          </div>
+        </div>
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+          <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="3.6" stroke="currentColor" stroke-width="1.5"/><path d="M9 1v2.2M9 14.8V17M1 9h2.2M14.8 9H17M3.5 3.5l1.6 1.6M12.9 12.9l1.6 1.6M14.5 3.5l-1.6 1.6M5.1 12.9l-1.6 1.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <a href="#contact" class="btn-cta" data-i18n="nav.contact">Contact Us</a>
+        <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- MOBILE DRAWER -->
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Navigation">
+  <div class="drawer-head">
+    <div class="brand-text"><span class="adler" style="color:#2E3192">adler</span><span class="pelzer">pelzer</span> <span style="color:var(--amber)">GROUP</span></div>
+    <button class="drawer-close" id="drawerClose" aria-label="Close">&times;</button>
+  </div>
+  <a href="#about" data-i18n="nav.about">About Us</a>
+  <a href="#products" data-i18n="nav.products">Products</a>
+  <a href="#map">Global Presence</a>
+  <a href="#sustainability">Sustainability</a>
+  <a href="#career">Career</a>
+  <a href="#investor">Investors</a>
+  <a href="#contact" data-i18n="nav.contact">Contact</a>
+</div>
+
+<!-- ADMIN FAB -->
+<button class="admin-fab" id="adminBtn" aria-label="Admin / Edit mode" aria-pressed="false">
+  <svg viewBox="0 0 20 20" fill="none"><path d="M10 13a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="1.5"/><path d="M17.7 8.2l-1.4-.5a6.9 6.9 0 00-.4-1l.7-1.3-1.9-1.9-1.3.7a7 7 0 00-1-.4L12 2.3h-2.6l-.4 1.5a7 7 0 00-1 .4L6.7 3.5 4.8 5.4l.7 1.3a7 7 0 00-.4 1l-1.5.4v2.6l1.5.4a7 7 0 00.4 1l-.7 1.3 1.9 1.9 1.3-.7a7 7 0 001 .4l.4 1.5H12l.4-1.5a7 7 0 001-.4l1.3.7 1.9-1.9-.7-1.3a7 7 0 00.4-1l1.4-.4V8.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+</button>
+
+<!-- ADMIN PANEL -->
+<aside class="admin-panel" id="adminPanel" hidden aria-label="Edit mode panel">
+  <div class="admin-panel-head">
+    <h4 data-i18n="admin.title">Edit mode</h4>
+    <button class="admin-close" id="adminPanelClose" aria-label="Close">&times;</button>
+  </div>
+  <div class="admin-body">
+    <p class="admin-status" id="adminStatus"></p>
+    <div class="admin-section">
+      <h5 data-i18n="admin.news">News items</h5>
+      <div id="adminNewsList"></div>
+      <button class="admin-btn" id="adminNewsAdd" data-i18n="admin.news.add">+ Add news</button>
+    </div>
+    <div class="admin-section">
+      <h5 data-i18n="admin.plants">Map markers</h5>
+      <div id="adminPlantsList"></div>
+      <button class="admin-btn" id="adminPlantsAdd" data-i18n="admin.plants.add">+ Add marker</button>
+    </div>
+    <div class="admin-section">
+      <h5 data-i18n="admin.data">Data</h5>
+      <div class="admin-btn-row">
+        <button class="admin-btn" id="adminExport" data-i18n="admin.export">Export JSON</button>
+        <button class="admin-btn" id="adminImportBtn" data-i18n="admin.import">Import JSON</button>
+        <input type="file" id="adminImportFile" accept="application/json" hidden>
+        <button class="admin-btn danger" id="adminReset" data-i18n="admin.reset">Reset</button>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ============================================================
+     MAIN
+     ============================================================ -->
+<main id="main">
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <canvas id="waveCanvas"></canvas>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="hero-eyebrow" data-i18n="hero.eyebrow"><i></i> Acoustic &amp; Thermal Systems · Worldwide</div>
+      <h1>
+        <span class="line"><span data-i18n="hero.t1">We engineer</span></span>
+        <span class="line"><span class="accent" data-i18n="hero.t2">automotive silence</span></span>
+        <span class="line"><span data-i18n="hero.t3">&amp; thermal comfort</span></span>
+      </h1>
+      <p class="lede" data-i18n="hero.lede">A worldwide leader in the design, engineering and manufacturing of acoustic and thermal components and systems for the automotive sector — delivering quieter, lighter, more efficient vehicles to OEMs across the globe.</p>
+      <div class="hero-cta">
+        <a href="#products" class="btn-primary" data-i18n="hero.cta1">Explore our technologies
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </a>
+        <a href="#about" class="btn-ghost" data-i18n="hero.cta2">Who we are
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-tags" aria-hidden="true">
+    <div class="wrap">
+      <span><b data-i18n="hero.tag1b">B2B</b> &nbsp;<span data-i18n="hero.tag1">OEM Tier-1 supplier</span></span>
+      <span><b>23</b> &nbsp;<span data-i18n="hero.tag2">countries</span></span>
+      <span><b>15,000+</b> &nbsp;<span data-i18n="hero.tag3">people</span></span>
+      <span><b data-i18n="hero.tag4b">NVH</b> &nbsp;<span data-i18n="hero.tag4">acoustic prediction</span></span>
+      <span><b>€2.5M</b> &nbsp;<span data-i18n="par.s.fact">raw materials purchased every day</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip" id="statsStrip">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat reveal">
+        <span class="num" data-count="15000" data-suffix="+" id="s1">15,000+</span>
+        <div class="lbl" data-i18n="stats.people">People worldwide</div>
+      </div>
+      <div class="stat reveal d1">
+        <span class="num" data-count="23" id="s2">23</span>
+        <div class="lbl" data-i18n="stats.countries">Countries</div>
+      </div>
+      <div class="stat reveal d2">
+        <span class="num" data-prefix="€" data-count="2.5" data-suffix="M" id="s3">€2.5M</span>
+        <div class="lbl" data-i18n="stats.raw">Raw materials / day</div>
+      </div>
+      <div class="stat reveal d3">
+        <span class="num" data-raw="1960s" id="s4">1960s</span>
+        <div class="lbl" data-i18n="stats.since">Heritage since</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="sec dark" id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-i18n="about.eyebrow">About Us — We Today</span>
+      <h2 data-i18n="about.h">Engineering driven by constant innovation</h2>
+    </div>
+    <div class="about-grid" style="display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center">
+      <div class="about-copy reveal d1">
+        <p data-i18n="about.p1">We are engineering driven by constant innovation in our products and technologies, working in close cooperation with our customers' needs and future trends.</p>
+        <p style="margin-top:14px" data-i18n="about.p2">We have a global footprint and a global strategy, led by a strong central management team and deployed according to local needs — flexible enough to adapt to market demand.</p>
+        <p style="margin-top:14px" data-i18n="about.p3">We grow on two fronts: organically, by gaining market share in emerging markets, segments and technologies; and through carefully scouted acquisitions that consolidate our global position.</p>
+        <p style="margin-top:14px" data-i18n="about.p4">We build our business on continuous improvement, providing competitive and sustainable advantages for our customers as well as for ourselves. We are passionate, competent people.</p>
+        <div style="margin-top:24px;font-family:var(--font-head);font-weight:700;font-size:20px;color:var(--apg-blue)" data-i18n="about.sign">We are Adler Pelzer Group™.</div>
+      </div>
+      <div class="reveal d2" style="position:relative;aspect-ratio:1/1;border-radius:var(--r-card);overflow:hidden;background:radial-gradient(circle at 50% 45%,#1c2441,#07091a);border:1px solid var(--line)">
+        <div style="position:absolute;inset:0;display:grid;place-items:center">
+          <div style="position:absolute;inset:0;display:grid;place-items:center" aria-hidden="true">
+            <i style="position:absolute;border:1px solid rgba(46,49,146,.4);border-radius:50%;opacity:0;animation:pulse 4s var(--ease) infinite;width:60px;height:60px"></i>
+            <i style="position:absolute;border:1px solid rgba(46,49,146,.4);border-radius:50%;opacity:0;animation:pulse 4s var(--ease) 1s infinite;width:60px;height:60px"></i>
+            <i style="position:absolute;border:1px solid rgba(46,49,146,.4);border-radius:50%;opacity:0;animation:pulse 4s var(--ease) 2s infinite;width:60px;height:60px"></i>
+          </div>
+          <div style="position:relative;z-index:2;text-align:center">
+            <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase" data-i18n="about.coretop">Global footprint</div>
+            <div style="font-family:var(--font-head);font-weight:700;font-size:72px;color:var(--text);line-height:1;margin:8px 0">23</div>
+            <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--muted)" data-i18n="about.corebot">Countries · 4 continents</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>@keyframes pulse{0%{width:60px;height:60px;opacity:.9}100%{width:96%;height:96%;opacity:0}}</style>
+
+<!-- BENTO GRID — Engineering Excellence -->
+<section class="sec darker" id="capabilities">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow center">Engineering Excellence</span>
+      <h2>One vertical chain. Infinite applications.</h2>
+      <p class="lede" style="margin:0 auto">From raw material to finished component — acoustic, thermal, lightweight. All engineered with the same world-class process across every continent.</p>
+    </div>
+    <div class="bento reveal d1">
+      <div class="bento-tile bento-lg glass reveal">
+        <div class="t-eyebrow">Acoustic & Thermal Leadership</div>
+        <h3>NVH mastery across the entire vehicle envelope</h3>
+        <p>From the engine bay to the trunk, we manage noise, vibration, harshness and heat — lighter, greener, and predicted before the first prototype.</p>
+        <div class="bento-lg .t-num">APG</div>
+        <svg class="bento-wave" viewBox="0 0 200 100" fill="none" aria-hidden="true">
+          <path d="M0 50 Q25 20 50 50 Q75 80 100 50 Q125 20 150 50 Q175 80 200 50" stroke="rgba(46,49,146,.5)" stroke-width="2" fill="none"/>
+          <path d="M0 65 Q25 35 50 65 Q75 95 100 65 Q125 35 150 65 Q175 95 200 65" stroke="rgba(253,185,45,.3)" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="bento-tile bento-md glass reveal d1">
+        <div class="t-eyebrow">Global Footprint</div>
+        <h3>23 countries · 4 continents</h3>
+        <p>Manufacturing, engineering and sales close to every major automotive hub — from Hagen HQ to Pune, Detroit, Shanghai, Yokohama and beyond.</p>
+      </div>
+      <div class="bento-sm glass reveal d2">
+        <svg class="ico" viewBox="0 0 40 40" fill="none"><path d="M20 8c-6 6-6 12 0 20 6-8 6-14 0-20z" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M12 20c8-6 8 0 16 0" stroke="currentColor" stroke-width="1.8" fill="none" opacity=".5"/></svg>
+        <h4>NVH Treatment</h4>
+        <p>Full noise, vibration &amp; harshness management from cabin to underbody</p>
+      </div>
+      <div class="bento-sm glass reveal d3">
+        <svg class="ico" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="12" stroke="currentColor" stroke-width="1.8"/><path d="M20 12v8l6 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <h4>Thermal Management</h4>
+        <p>Heat shield and encapsulation systems for ICE, BEV &amp; NEV platforms</p>
+      </div>
+      <div class="bento-sm glass reveal d4">
+        <svg class="ico" viewBox="0 0 40 40" fill="none"><path d="M8 32V16l12-8 12 8v16" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/><path d="M16 32V22h8v10" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+        <h4>Lightweight Design</h4>
+        <p>PUR foam, rPET composites and mono-material recyclable structures</p>
+      </div>
+      <div class="bento-sm glass reveal d5">
+        <svg class="ico" viewBox="0 0 40 40" fill="none"><path d="M20 6a6 6 0 016 6c0 4-6 10-6 10s-6-6-6-10a6 6 0 016-6z" stroke="currentColor" stroke-width="1.8" fill="none"/><circle cx="20" cy="12" r="2.5" fill="currentColor"/></svg>
+        <h4>Acoustic Prediction</h4>
+        <p>Self-developed simulation software — predict sound before it exists</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLODED VEHICLE -->
+<section class="sec exploded" id="vehicle">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-i18n="exp.eyebrow">Where our parts live</span>
+      <h2 data-i18n="exp.h">One vehicle. Every acoustic &amp; thermal zone.</h2>
+      <p class="lede" data-i18n="exp.lede">From the engine bay to the trunk, our components manage noise, vibration, harshness and heat across the entire vehicle. Explore each zone to see what we deliver.</p>
+    </div>
+    <div class="exp-stage reveal d1" id="expStage">
+      <div class="exp-layout">
+        <div class="exp-canvas" id="expCanvas"></div>
+        <div class="exp-info" id="expInfo">
+          <div class="tag" id="expTag">ZONE 01</div>
+          <h3 id="expTitle">Engine Compartment</h3>
+          <p id="expDesc">Lightweight PUR foam solutions with improved acoustic and flame-retardancy at reduced density.</p>
+          <ul id="expList"></ul>
+        </div>
+      </div>
+      <div class="exp-zones" id="expZones"></div>
+      <p style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:16px;text-align:center" data-i18n="exp.hint">▸ Scroll to assemble · tap a zone to explore</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS SECTION -->
+<section class="sec dark" id="products">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-i18n="prod.eyebrow">Products &amp; Technologies</span>
+      <h2 data-i18n="prod.h">Materials, processes and products in one vertical chain</h2>
+      <p class="lede" data-i18n="prod.lede">We base product development on material selection, combination and improvement — controlling the full chain from raw material to finished component, with the same equipment worldwide.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px" class="reveal d1">
+      <div class="glass" style="padding:28px">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase;margin-bottom:12px">01 / Materials</div>
+        <h3 style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:10px" data-i18n="prod.m.h">Materials</h3>
+        <p style="font-size:14px;color:var(--muted)" data-i18n="prod.m.p">PUR foams, natural &amp; man-made fibres, thermoplastic compounds and carbon composites — engineered for acoustic and thermal performance, with sustainability built in.</p>
+      </div>
+      <div class="glass" style="padding:28px">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase;margin-bottom:12px">02 / Process</div>
+        <h3 style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:10px" data-i18n="prod.pr.h">Process</h3>
+        <p style="font-size:14px;color:var(--muted)" data-i18n="prod.pr.p">Our patented CIM compounded injection moulding and HMP® hot moulding process deliver homogeneous density, lowest weight and up to 80%+ recycled content.</p>
+      </div>
+      <div class="glass" style="padding:28px">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase;margin-bottom:12px">03 / Products</div>
+        <h3 style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:10px" data-i18n="prod.p.h">Products</h3>
+        <p style="font-size:14px;color:var(--muted)" data-i18n="prod.p.p">Lighter solutions that improve acoustic behaviour while meeting fire, temperature and environmental targets — integrating more functions into every part.</p>
+      </div>
+    </div>
+    <div class="sec-head reveal" style="margin-top:56px">
+      <span class="eyebrow" data-i18n="prod.range">The full product range</span>
+      <p class="lede" style="margin-top:10px" data-i18n="prod.rangesub">Installed across the entire vehicle — each component keeping the innovative spirit of Adler Pelzer Group.</p>
+    </div>
+    <div class="prod-grid reveal d1" id="prodGrid"></div>
+  </div>
+</section>
+
+<!-- GLOBAL PRESENCE MAP -->
+<section class="sec darker" id="map">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow center" data-i18n="map.eyebrow">Global Footprint</span>
+      <h2 data-i18n="map.h">Where we are</h2>
+      <p class="lede" style="margin:0 auto" data-i18n="map.lede">A truly global Tier-1: 23 countries across 4 continents, with manufacturing, engineering and sales close to every major automotive hub — from our headquarters in Hagen to Pune, Detroit, Shanghai and beyond.</p>
+    </div>
+    <div class="map-wrap reveal d1">
+      <svg class="world" viewBox="0 0 1000 500" role="img" aria-label="World map of Adler Pelzer Group locations">
+        <path class="land" d="M670 151 673 152 675 152 676 150 678 150 679 149 680 147 682 146 683 145 684 146 685 146 686 146 688 147 689 147 691 146 692 147 693 146 695 146 695 145 695 144 697 143 698 144 698 145 699 145 698 147 700 148 701 147 702 147 704 146 705 146 708 146 709 147 707 147 706 148 703 148 700 149 698 150 699 151 699 152 698 154 698 155 697 156 694 155 695 157 694 158 692 160 693 161 691 162 690 162 688 162 688 163 686 163 684 165 684 167 681 168 679 168 678 168 677 168 674 169 669 167 672 165 671 163 669 162 669 161 668 158 669 157 668 156 669 154 670 151ZM545 266 546 268 547 270 547 271 549 272 550 272 551 272 553 272 553 271 554 270 556 270 556 269 557 269 557 270 560 270 560 272 561 273 561 275 561 276 562 277 562 281 563 281 565 280 566 280 567 281 566 283 567 284 566 285 567 286 561 286 561 295 563 297 564 299 559 300 553 299 551 298 539 298 537 297 536 297 534 298 533 298 532 296 533 294 534 291 534 290 535 288 535 286 537 285 538 283 538 281 538 280 537 279 536 277 536 275 537 274 536 271 535 269 534 267 535 267 536 267 537 266 545 266ZM340 120 338 121 336 122 334 122 333 123 330 124 329 126 327 126 325 127 323 128 321 129 318 130 316 130 314 131 312 131 310 131 309 130 308 129 308 127 307 125 307 123 308 121 308 119 309 118 311 117 313 117 315 117 316 118 319 118 321 119 323 119 325 119 327 118 329 118 331 118 333 118 335 118 337 118 339 118 340 120ZM428 133 427 134 426 134 425 134 424 133 423 132 422 131 422 130 421 129 421 128 422 127 423 126 424 127 425 127 426 128 427 129 428 130 428 132 428 133ZM488 112 487 113 487 114 486 115 485 115 484 114 483 113 483 112 483 111 484 110 485 110 486 111 487 111 488 112ZM170 84 169 86 168 88 167 89 165 90 163 90 161 90 159 91 157 92 155 92 153 92 151 91 149 90 148 89 147 88 147 86 148 84 149 83 150 82 152 81 154 80 156 79 158 78 160 77 162 77 164 78 166 79 168 80 170 82 170 84ZM148 94 147 95 146 96 144 96 142 96 141 95 140 94 141 93 142 92 144 92 145 92 147 92 148 93 148 94ZM248 80 246 82 244 83 242 83 240 82 238 81 237 79 238 77 240 76 242 76 244 76 246 77 248 78 248 80ZM398 90 396 91 394 91 392 90 391 89 391 87 392 86 394 85 396 85 398 86 398 88 398 90ZM220 110 218 112 216 112 214 111 214 109 215 108 217 107 219 108 220 109 220 110ZM362 154 360 156 358 156 356 155 355 153 356 151 358 150 360 150 362 151 362 153 362 154ZM406 174 404 176 402 176 400 175 399 173 400 171 402 170 404 170 406 171 406 173 406 174Z"/>
+        <!-- Europe -->
+        <path class="land" d="M450 100 452 102 454 102 456 103 458 104 460 105 462 106 464 107 466 108 468 108 470 109 472 110 474 110 476 111 478 111 480 110 482 110 484 110 486 110 488 111 490 111 492 110 494 110 496 109 498 109 500 109 501 110 502 111 503 112 504 112 505 112 506 113 508 113 509 114 510 115 510 116 509 117 508 117 506 116 505 116 503 116 501 117 499 117 497 117 496 118 495 119 494 120 493 121 491 121 490 122 489 122 488 123 487 124 486 125 485 126 484 127 483 128 482 129 481 130 480 131 480 132 480 133 479 134 478 135 477 136 476 137 475 138 473 138 471 138 469 139 467 139 465 139 463 139 461 139 459 139 457 139 455 139 453 138 451 137 449 137 447 136 445 135 443 134 441 133 439 132 437 131 436 130 436 129 436 128 436 127 436 126 436 125 437 124 438 123 439 122 440 121 441 120 441 119 440 118 439 117 438 116 438 115 438 114 438 113 438 112 439 111 440 110 441 109 442 108 443 107 444 106 445 105 446 104 448 103 450 102 450 100Z"/>
+        <!-- Asia broad -->
+        <path class="land" d="M520 100 522 101 524 102 526 103 528 104 530 105 532 106 534 108 536 109 538 110 540 111 542 112 544 113 546 114 548 115 550 116 552 117 554 118 556 119 558 120 560 121 562 122 564 123 566 124 568 125 570 126 572 127 574 128 576 128 578 129 580 130 582 131 584 132 586 133 588 134 590 135 592 136 594 137 596 138 598 139 600 140 602 141 604 142 606 143 608 144 610 145 612 146 614 147 616 147 618 148 620 149 622 150 624 151 626 152 628 153 630 153 632 154 634 155 636 156 638 157 640 158 642 159 644 160 646 161 648 162 650 163 652 163 654 164 656 165 658 165 660 166 660 168 659 170 658 172 656 173 655 174 653 175 651 176 649 177 647 178 645 179 643 180 641 181 639 182 638 183 636 184 634 184 632 185 630 186 628 186 626 187 624 188 622 188 620 189 618 190 616 191 614 191 612 192 610 192 608 193 606 193 604 194 602 194 600 195 598 195 596 195 594 196 592 196 590 196 588 196 586 197 584 197 582 197 580 197 578 197 576 197 574 197 572 197 570 197 568 197 566 196 564 195 562 195 560 194 558 193 556 192 554 191 552 190 550 189 548 188 546 187 544 186 542 185 540 184 538 183 536 182 534 181 532 180 530 179 528 178 526 177 524 176 522 175 520 174 518 173 516 172 514 171 512 170 510 168 509 166 508 165 507 163 506 161 505 159 504 157 503 155 503 153 502 151 502 149 502 147 502 145 502 143 503 141 503 139 504 137 504 135 504 133 504 131 504 129 504 127 504 125 504 123 504 121 504 119 504 117 504 115 504 113 504 111 504 109 504 107 504 105 504 103 504 101 504 99 504 97 504 95 504 93 504 91 504 89 504 87 503 85 502 83 501 81 500 80 499 79 498 78 497 77 495 77 493 77 491 77 489 77 487 77 485 77 483 77 481 77 479 77 477 77 475 77 473 77 471 78 469 79 467 80 466 81 465 82 464 83 463 84 462 85 461 86 460 87 459 88 458 89 457 90 456 91 455 92 454 93 453 94 452 95 451 96 450 97 450 98 450 100 452 100 454 100 456 100 458 100 460 100 462 100 464 100 466 100 468 100 470 100 472 100 474 100 476 100 478 100 480 100 482 100 484 100 486 100 488 100 490 100 492 100 494 100 496 100 498 100 500 100 502 100 504 100 506 100 508 100 510 100 512 100 514 100 516 100 518 100 520 100Z"/>
+        <!-- Africa -->
+        <path class="land" d="M460 200 462 202 464 203 466 204 468 205 470 206 472 207 474 208 476 209 478 210 480 211 481 212 481 214 481 216 481 218 480 220 479 222 478 224 477 226 476 228 475 230 474 232 473 234 473 236 473 238 473 240 474 242 475 244 476 246 476 248 477 250 477 252 477 254 477 256 477 258 477 260 477 262 477 264 476 266 475 268 474 270 473 272 472 273 471 274 470 275 469 276 467 276 465 277 463 277 461 278 459 278 457 279 455 279 453 279 451 279 449 279 447 279 445 278 443 278 441 277 440 276 439 275 438 273 438 271 438 269 438 267 439 265 440 263 440 261 440 259 440 257 440 255 440 253 440 251 440 249 440 247 440 245 440 243 440 241 441 239 442 237 443 235 444 233 444 231 444 229 444 227 444 225 444 223 444 221 443 219 442 217 441 215 440 213 440 211 440 209 440 207 441 205 443 203 445 202 447 201 449 200 451 200 453 200 455 200 457 200 459 200 460 200Z"/>
+        <!-- Americas -->
+        <path class="land" d="M200 80 202 82 204 84 205 86 206 88 207 90 208 92 208 94 208 96 208 98 209 100 210 102 211 103 212 104 213 105 214 106 215 107 216 108 217 109 218 110 218 112 218 114 218 116 217 118 216 120 215 122 215 124 215 126 215 128 215 130 215 132 215 134 215 136 215 138 215 140 215 142 215 144 215 146 215 148 215 150 216 152 217 154 218 156 219 158 220 160 221 162 222 164 222 166 222 168 222 170 222 172 222 174 221 176 220 178 219 180 218 182 217 184 216 186 215 188 214 190 213 192 212 194 212 196 212 198 212 200 213 202 215 204 217 205 219 206 221 206 222 206 223 206 224 206 225 207 225 209 224 211 223 213 222 215 221 217 220 219 220 221 220 223 221 225 222 227 222 229 222 231 221 233 220 235 219 237 218 239 217 241 216 243 215 245 215 247 216 249 217 251 218 253 218 255 218 257 218 259 218 261 217 263 216 265 215 267 214 268 213 269 212 270 211 271 210 272 210 274 210 276 210 278 210 280 209 282 207 283 205 284 203 285 201 285 199 285 197 285 196 284 195 283 194 281 193 280 192 278 191 277 191 275 191 273 192 271 192 269 191 267 190 265 189 263 188 261 188 259 188 257 188 255 188 253 188 251 188 249 189 247 190 245 190 243 190 241 190 239 190 237 190 235 190 233 190 231 190 229 190 227 190 225 190 223 189 221 189 219 188 217 187 215 186 213 185 212 184 211 183 210 181 209 179 208 177 207 175 206 173 205 171 204 170 203 168 202 166 201 164 200 162 199 160 198 158 197 157 196 155 195 153 194 151 194 149 194 147 194 145 194 143 194 141 194 139 194 137 194 135 194 133 194 131 194 129 193 127 192 125 191 124 190 122 189 120 188 119 187 117 186 116 185 115 184 114 183 113 182 112 181 111 180 110 179 110 178 110 177 110 175 110 173 109 171 108 169 107 167 106 165 105 163 104 161 103 159 102 157 101 155 100 153 99 151 99 149 99 148 99 147 99 146 99 145 99 144 99 143 99 142 99 141 99 140 99 139 99 139 98 139 97 140 96 140 95 141 94 141 93 141 92 141 91 142 90 143 89 144 88 145 88 146 87 148 86 150 85 152 84 154 83 156 82 158 82 160 81 162 81 164 80 166 80 168 80 170 80 172 80 174 80 176 80 178 80 180 80 182 80 184 80 186 80 188 80 190 80 192 80 194 80 196 80 198 80 200 80Z"/>
+        <!-- South America -->
+        <path class="land" d="M220 240 222 242 224 244 226 246 228 248 230 250 232 251 234 252 235 253 236 254 237 255 238 256 239 257 240 258 241 260 241 262 241 264 241 266 241 268 241 270 241 272 240 274 239 276 238 278 237 280 237 282 237 284 236 286 235 288 234 289 233 290 232 291 231 292 230 293 229 294 228 295 226 295 224 295 222 295 220 294 218 293 216 292 214 291 213 290 212 289 211 288 210 287 209 285 208 283 207 281 207 279 207 277 207 275 207 273 208 271 209 269 210 267 210 265 210 263 210 261 210 259 210 257 210 255 210 253 210 251 210 249 209 247 208 245 207 243 206 241 205 240 205 238 205 236 206 234 207 232 208 231 209 230 210 229 211 228 213 227 215 226 217 225 219 224 220 243 220 240Z"/>
+        <!-- Australia -->
+        <path class="land" d="M720 280 722 282 724 284 726 286 728 287 730 288 732 289 733 290 734 291 734 292 733 293 732 294 730 295 728 296 726 297 724 297 722 297 720 297 718 297 716 297 714 297 712 296 710 295 709 294 708 293 708 292 708 291 709 290 710 288 712 287 714 286 716 285 718 284 720 283 720 280Z"/>
+        <!-- Map markers group -->
+        <g id="mapMarkers"></g>
+      </svg>
+      <div class="map-legend" id="mapLegend"></div>
+    </div>
+    <p style="font-family:var(--font-mono);font-size:10px;color:var(--muted);letter-spacing:.1em;text-align:center;margin-top:16px;line-height:1.8" data-i18n="map.note">● Headquarters (Hagen, Germany) · ● operating locations</p>
+  </div>
+</section>
+</main>
