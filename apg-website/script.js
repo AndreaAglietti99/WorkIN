@@ -1,1 +1,1310 @@
-PLACEHOLDER_SCRIPT
+/* ============================================================
+   ADLER PELZER GROUP — interactions & i18n
+   ============================================================ */
+(function(){
+"use strict";
+
+/* ---------- ZONE / VEHICLE DATA ---------- */
+const ZONES = [
+  {id:"engine",  dot:[210,250], dx:-150, dy:-30},
+  {id:"dash",    dot:[345,210], dx:-20,  dy:-120},
+  {id:"interior",dot:[440,165], dx:30,   dy:-140},
+  {id:"trunk",   dot:[600,210], dx:170,  dy:-110},
+  {id:"floor",   dot:[430,300], dx:-40,  dy:120},
+  {id:"exterior",dot:[610,330], dx:150,  dy:120}
+];
+const PRODUCTS = ["engine","dash","interior","insulation","floor","trunk","exterior","carbon"];
+const PS = ["passion","paradigma","people","pace","process","products","performance","worldwide"];
+const TIMELINE = ["t1960","t1990","t2010","t2020","t2023"];
+const SUS = ["work","others","dev","env","future"];
+const NEWS = ["ford","hayashi","faurecia"];
+
+/* ============================================================
+   DICTIONARY
+   ============================================================ */
+const D = {};
+D.en = {
+ "nav.about":"About Us","nav.products":"Products & Technologies","nav.mission":"Mission & Vision","nav.history":"History","nav.news":"News","nav.contact":"Contact Us",
+ "hero.eyebrow":"Acoustic & Thermal Systems · Worldwide","hero.t1":"We engineer","hero.t2":"automotive silence","hero.t3":"& thermal comfort",
+ "hero.lede":"A worldwide leader in the design, engineering and manufacturing of acoustic and thermal components and systems for the automotive sector — delivering quieter, lighter, more efficient vehicles to OEMs across the globe.",
+ "hero.cta1":"Explore our technologies","hero.cta2":"Who we are",
+ "hero.tag1b":"B2B","hero.tag1":"OEM Tier-1 supplier","hero.tag2":"countries","hero.tag3":"people","hero.tag4b":"NVH","hero.tag4":"acoustic prediction",
+ "stats.people":"People worldwide","stats.countries":"Countries","stats.raw":"Raw materials / day","stats.since":"Heritage since",
+ "about.eyebrow":"About Us — We Today","about.h":"Engineering driven by constant innovation",
+ "about.p1":"We are engineering driven by constant innovation in our products and technologies, working in close cooperation with our customers' needs and future trends.",
+ "about.p2":"We have a global footprint and a global strategy, led by a strong central management team and deployed according to local needs — flexible enough to adapt to market demand.",
+ "about.p3":"We grow on two fronts: organically, by gaining market share in emerging markets, segments and technologies; and through carefully scouted acquisitions that consolidate our global position.",
+ "about.p4":"We build our business on continuous improvement, providing competitive and sustainable advantages for our customers as well as for ourselves. We are passionate, competent people.",
+ "about.sign":"We are Adler Pelzer Group™.","about.coretop":"Global footprint","about.corebot":"Countries · 4 continents",
+ "exp.eyebrow":"Where our parts live","exp.h":"One vehicle. Every acoustic & thermal zone.",
+ "exp.lede":"From the engine bay to the trunk, our components manage noise, vibration, harshness and heat across the entire vehicle. Explore each zone to see what we deliver.",
+ "exp.hint":"▸ Scroll to assemble · tap a zone to explore",
+ "prod.eyebrow":"Products & Technologies","prod.h":"Materials, processes and products in one vertical chain",
+ "prod.lede":"We base product development on material selection, combination and improvement — controlling the full chain from raw material to finished component, with the same equipment worldwide.",
+ "prod.m.h":"Materials","prod.m.p":"PUR foams, natural & man-made fibres, thermoplastic compounds and carbon composites — engineered for acoustic and thermal performance, with sustainability built in.",
+ "prod.pr.h":"Process","prod.pr.p":"Our patented CIM compounded injection moulding and HMP® hot moulding process deliver homogeneous density, lowest weight and up to 80%+ recycled content.",
+ "prod.p.h":"Products","prod.p.p":"Lighter solutions that improve acoustic behaviour while meeting fire, temperature and environmental targets — integrating more functions into every part.",
+ "prod.range":"The full product range","prod.rangesub":"Installed across the entire vehicle — each component keeping the innovative spirit of Adler Pelzer Group.",
+ "ac.eyebrow":"Acoustics & Innovation","ac.h":"We predict sound before it exists",
+ "ac.lede":"Using advanced mathematical methods, self-developed software and a deep understanding of material physics, we give our customers a competitive advantage in acoustic prediction — reducing time-to-market, weight and noise.",
+ "ac.l1t":"Characterisation of materials","ac.l1s":"Full acoustic and thermal material characterisation.",
+ "ac.l2t":"Product testing & fine tuning","ac.l2s":"Acoustic fine tuning at component and vehicle level.",
+ "ac.l3t":"Acoustic simulation tools","ac.l3s":"Self-developed procedures, software and simulation packages.",
+ "ac.l4t":"Innovation network","ac.l4s":"Universities, research centres, customers and suppliers as partners.",
+ "ac.wave1":"Transmission loss","ac.wave2":"dB · frequency",
+ "mis.eyebrow":"Mission & Vision","mis.h":"We do business differently",
+ "mis.lede":"We will grow intelligently, profitably and in a socially and environmentally friendly manner — true to our historical, family-based roots, working in partnership with our customers to be the global leader in our field.",
+ "his.eyebrow":"Our History","his.h":"A story of people, families and entrepreneurship",
+ "his.lede":"Ours is a story of families that, around the 1960s, decided to start their journeys in the automotive industry. The entrepreneurial spirit of the founders was — and still is — one of the cornerstones of who we are today.",
+ "par.eyebrow":"Customers & Suppliers","par.h":"We grow together with our partners",
+ "par.c.eyebrow":"Customers","par.c.h":"Our customers are part of us",
+ "par.c.p":"We consider our customers as partners. From build-to-print to co-development and pre-development, our dedicated global teams serve OEMs worldwide — guided by our State-of-the-art Product Development Process (PDP), aligned to APQP and adapted to each customer.",
+ "par.s.eyebrow":"Suppliers","par.s.h":"A global network of top-class partners",
+ "par.s.p":"We cooperate with premium, highly specialised local companies and well-established multinationals — constantly scouting new talented companies that excel in quality, service and competitiveness.",
+ "par.s.fact":"Raw materials, equipment & services purchased every day",
+ "sus.eyebrow":"Corporate Social Responsibility","sus.h":"People at the centre of everything",
+ "sus.lede":"Having people at the centre of our interest, our Corporate Social Responsibility is built around them — across five dimensions.",
+ "sus.pol1":"Code of Conduct","sus.pol2":"Anti-Bribery Policy","sus.pol3":"Modern Slavery Statement","sus.pol4":"Whistleblowing Policy",
+ "news.eyebrow":"News & Media","news.h":"Latest from the Group","news.more":"Read more",
+ "con.eyebrow":"Contact Us","con.h":"Let's engineer what's next",
+ "con.lede":"We support our customers at all levels, in all locations, through our global sales network and dedicated regional teams. Reach out to start a conversation.",
+ "con.cta":"Email our team","con.hq":"Headquarters","con.phone":"Phone","con.email":"E-mail","con.ceo":"Management",
+ "foot.tag":"A worldwide leader in automotive acoustic and thermal components and systems.","foot.explore":"Explore","foot.company":"Company",
+ "foot.career":"Career","foot.investor":"Investor","foot.supplier":"Supplier","foot.legal":"Legal Disclaimer","foot.rights":"All rights reserved.",
+ "z.engine.t":"Engine Compartment","z.engine.d":"Lightweight PUR foam solutions with improved acoustic and flame-retardancy at reduced density — cutting pass-by noise and CO₂.",
+ "z.engine.i":["Motor encapsulation ICE & BEV/NEV","Hood insulation","Acoustic heat shield","Engine under shield","Outer dash & tunnel insulation"],
+ "z.dash.t":"Dash Inner","z.dash.d":"The acoustic barrier between engine and cabin — best performance at the lowest weight via our CIM and HMP® technologies.",
+ "z.dash.i":["Insulation inner dash","Insulation inner tunnel","Tailor-made CIM solutions"],
+ "z.interior.t":"Interior Trim & Insulation","z.interior.d":"Multilayer composite trim for premium look and feel, plus pillar, door, roof and seat insulations with anti-aging and odour control.",
+ "z.interior.i":["Headliner · dashboard · door panel","Pillar & door insulation","Roof stiffener","HVAC encapsulation"],
+ "z.trunk.t":"Trunk","z.trunk.d":"Lightweight optic and acoustic comfort with recyclable sandwich structures — including our all-PET MONOlite load floor.",
+ "z.trunk.i":["Load floor & insulation","Trunk & parcel-shelf carpet","Trunk side trim","MONOlite all-PET technology"],
+ "z.floor.t":"Floor Carpet","z.floor.d":"A major NVH component combining acoustics, aesthetics and function — including one-shot HMPtex and recycled MONOtex® / ACOUSTItex® systems.",
+ "z.floor.i":["Integrated floor carpet","Floor insulation","Tufted & dilour carpet","rPET MONOtex® systems"],
+ "z.exterior.t":"Exterior & Underbody","z.exterior.d":"Reducing tyre, road and aerodynamic noise while improving aerodynamics, efficiency and sustainability targets.",
+ "z.exterior.i":["Wheel arch liner front & rear","Underbody shield","Battery-pack encapsulation","Fender insulation · damping"],
+ "p.engine.t":"Engine Compartment","p.engine.d":"Innovative lightweight solutions for acoustic and flame-retardancy performance at reduced density.","p.engine.c":["Encapsulation","Hood insulation","Heat shield"],
+ "p.dash.t":"Dash Inner","p.dash.d":"The spatial separation of engine and passenger compartment — best acoustics at lowest weight.","p.dash.c":["CIM","HMP®","Inner tunnel"],
+ "p.interior.t":"Interior Trim","p.interior.d":"Multilayered composites for highest comfort, premium look and sound reduction.","p.interior.c":["Headliner","Dashboard","Door panel"],
+ "p.insulation.t":"Interior Insulations","p.insulation.d":"Sandwich constructions for pillars, doors, roof and seats with anti-aging and odour control.","p.insulation.c":["Pillar","Roof stiffener","Door shield"],
+ "p.floor.t":"Floor Carpet","p.floor.d":"Light-weight integrated carpet via one-shot HMP® with recycled rPET surfaces.","p.floor.c":["HMPtex","MONOtex®","ACOUSTItex®"],
+ "p.trunk.t":"Trunk","p.trunk.d":"Light composite sandwich structures with recyclable, renewable surface materials.","p.trunk.c":["Load floor","MONOlite","Parcel shelf"],
+ "p.exterior.t":"Exterior","p.exterior.d":"Reducing noise from tyres, road and aerodynamics while improving fuel efficiency.","p.exterior.c":["Wheel arch","Underbody","Battery pack"],
+ "p.carbon.t":"Composites & Carbon","p.carbon.d":"Carbon-fibre solutions for premium, racing and aerospace — high performance-to-weight, clear-coat carbon look.","p.carbon.c":["Pre-preg","Autoclave","Thermoplastic"],
+ "ps.passion.t":"Passion","ps.passion.s":"Our entrepreneurial spirit","ps.passion.p":"We take responsibility for what we do and tackle each issue as if the company were our own. We are passionate, simply because we enjoy it.",
+ "ps.paradigma.t":"Paradigma","ps.paradigma.s":"Innovative thinking","ps.paradigma.p":"We aim to lead our field and to create trends. We push to change the paradigm — envisioning is our first step. Innovation is the door to our future.",
+ "ps.people.t":"People","ps.people.s":"Believe, it is possible","ps.people.p":"We believe in ourselves to achieve what others deem impossible. We never give up, and we allow ourselves to make mistakes — the only way to grow.",
+ "ps.pace.t":"Pace","ps.pace.s":"Fast execution","ps.pace.p":"We are fast in executing decisions — essential for our results. We are energetic; it is part of our DNA. We talk the walk.",
+ "ps.process.t":"Process","ps.process.s":"Engineering driven","ps.process.p":"We strive for technological excellence. We think process and are passionate about our products. We deliver solutions.",
+ "ps.products.t":"Products","ps.products.s":"Customer oriented","ps.products.p":"We consider our customer part of us — partners for growth. We maximise our value chain to streamline it for us and for them.",
+ "ps.performance.t":"Performance","ps.performance.s":"Delivering the future","ps.performance.p":"We are trustworthy in meeting objectives and constantly challenge our own performance. Envisioning and delivering is our virtuous circle.",
+ "ps.worldwide.t":"Worldwide.","ps.worldwide.s":"","ps.worldwide.p":"",
+ "tl.t1960.y":"1960s","tl.t1960.t":"The founding journeys","tl.t1960.d":"Families begin their respective journeys in the automotive industry — the entrepreneurial roots of the Group.",
+ "tl.t1990.y":"1990s","tl.t1990.t":"Building expertise","tl.t1990.d":"Decades of specialisation in acoustic and thermal management for vehicle NVH treatment.",
+ "tl.t2010.y":"2010s","tl.t2010.t":"Global expansion","tl.t2010.d":"Dual growth — organic share in emerging markets and strategic acquisitions consolidating a worldwide footprint.",
+ "tl.t2020.y":"2020s","tl.t2020.t":"Sustainable innovation","tl.t2020.d":"All-PET technologies, recycled materials and acoustic prediction software driving lighter, greener parts.",
+ "tl.t2023.y":"Today","tl.t2023.t":"A worldwide leader","tl.t2023.d":"15,000+ people across 23 countries — acquiring Faurecia's Acoustics & Soft Trim business and strengthening global partnerships.",
+ "su.work.t":"People at Work","su.work.d":"Committed to a zero-accident target and to safety and labour conditions worthy of our own family.",
+ "su.others.t":"Working with Others","su.others.d":"Our Code of Business Conduct upholds integrity, honesty and responsibility with suppliers, customers and communities.",
+ "su.dev.t":"People Development","su.dev.d":"Market-benchmark pay, training and competence building for a sustainable, improvable future.",
+ "su.env.t":"People & Environment","su.env.d":"Zero or low-impact materials, less energy, minimal waste and sustainable recycling through vertical integration.",
+ "su.future.t":"People Future","su.future.d":"Respecting and anticipating governmental rules and customer specifications in a long-term sustainable perspective.",
+ "n.ford.c":"Customers","n.ford.t":"Honored with a prestigious award from Ford Otosan","n.ford.d":"Adler Pelzer Group is proud to announce it received a distinguished Supplier of the Year bronze award from Ford Otosan.",
+ "n.hayashi.c":"Corporate","n.hayashi.t":"Strengthening the link with Hayashi Telempu Corporation","n.hayashi.d":"Hayashi Telempu Corporation and Adler Pelzer Group further strengthen their long-standing strategic relationship.",
+ "n.faurecia.c":"Corporate","n.faurecia.t":"Closing the acquisition of Faurecia's Acoustics & Soft Trim business","n.faurecia.d":"Eight plants across Europe — France, Luxembourg, the United Kingdom and Spain — join the Group."
+};
+D.de = {
+ "nav.about":"Über uns","nav.products":"Produkte & Technologien","nav.mission":"Mission & Vision","nav.history":"Geschichte","nav.news":"News","nav.contact":"Kontakt",
+ "hero.eyebrow":"Akustik- & Thermosysteme · Weltweit","hero.t1":"Wir entwickeln","hero.t2":"automobile Stille","hero.t3":"& thermischen Komfort",
+ "hero.lede":"Ein weltweit führendes Unternehmen in Design, Engineering und Fertigung von Akustik- und Thermokomponenten und -systemen für die Automobilbranche — für leisere, leichtere und effizientere Fahrzeuge bei OEMs weltweit.",
+ "hero.cta1":"Unsere Technologien entdecken","hero.cta2":"Wer wir sind",
+ "hero.tag1b":"B2B","hero.tag1":"OEM-Tier-1-Zulieferer","hero.tag2":"Länder","hero.tag3":"Mitarbeitende","hero.tag4b":"NVH","hero.tag4":"Akustikprognose",
+ "stats.people":"Mitarbeitende weltweit","stats.countries":"Länder","stats.raw":"Rohstoffe / Tag","stats.since":"Tradition seit",
+ "about.eyebrow":"Über uns — Heute","about.h":"Engineering, getrieben von ständiger Innovation",
+ "about.p1":"Wir sind Engineering, getrieben von ständiger Innovation in Produkten und Technologien — in enger Zusammenarbeit mit den Anforderungen unserer Kunden und den Trends der Zukunft.",
+ "about.p2":"Wir verfügen über eine globale Präsenz und Strategie, geführt von einem starken zentralen Management und umgesetzt nach lokalen Bedürfnissen — flexibel genug, um sich an die Marktnachfrage anzupassen.",
+ "about.p3":"Wir wachsen zweigleisig: organisch durch Marktanteile in Wachstumsmärkten, Segmenten und Technologien sowie durch gezielte Akquisitionen, die unsere globale Position festigen.",
+ "about.p4":"Wir bauen unser Geschäft auf kontinuierlicher Verbesserung auf und schaffen wettbewerbsfähige, nachhaltige Vorteile für unsere Kunden und für uns selbst. Wir sind leidenschaftliche, kompetente Menschen.",
+ "about.sign":"Wir sind die Adler Pelzer Group™.","about.coretop":"Globale Präsenz","about.corebot":"Länder · 4 Kontinente",
+ "exp.eyebrow":"Wo unsere Teile sitzen","exp.h":"Ein Fahrzeug. Jede Akustik- & Thermozone.",
+ "exp.lede":"Vom Motorraum bis zum Kofferraum steuern unsere Komponenten Geräusch, Vibration, Rauheit und Wärme im gesamten Fahrzeug. Entdecken Sie jede Zone.",
+ "exp.hint":"▸ Scrollen zum Zusammenbau · Zone antippen",
+ "prod.eyebrow":"Produkte & Technologien","prod.h":"Materialien, Prozesse und Produkte in einer vertikalen Kette",
+ "prod.lede":"Wir stützen die Produktentwicklung auf Materialauswahl, -kombination und -verbesserung — und beherrschen die gesamte Kette vom Rohstoff bis zum Bauteil, mit weltweit identischen Anlagen.",
+ "prod.m.h":"Materialien","prod.m.p":"PUR-Schäume, natürliche & synthetische Fasern, thermoplastische Compounds und Carbon-Verbundwerkstoffe — für Akustik- und Thermoleistung mit eingebauter Nachhaltigkeit.",
+ "prod.pr.h":"Prozess","prod.pr.p":"Unser patentiertes CIM-Spritzgießverfahren und der HMP®-Heißformprozess liefern homogene Dichte, geringstes Gewicht und über 80 % Recyclinganteil.",
+ "prod.p.h":"Produkte","prod.p.p":"Leichtere Lösungen, die das Akustikverhalten verbessern und zugleich Brand-, Temperatur- und Umweltziele erfüllen — mit mehr integrierten Funktionen pro Bauteil.",
+ "prod.range":"Das gesamte Produktspektrum","prod.rangesub":"Im gesamten Fahrzeug verbaut — jedes Bauteil im innovativen Geist der Adler Pelzer Group.",
+ "ac.eyebrow":"Akustik & Innovation","ac.h":"Wir berechnen den Klang, bevor er entsteht",
+ "ac.lede":"Mit fortschrittlichen mathematischen Methoden, selbst entwickelter Software und tiefem Verständnis der Materialphysik verschaffen wir unseren Kunden einen Vorsprung in der Akustikprognose — kürzere Time-to-Market, weniger Gewicht und Geräusch.",
+ "ac.l1t":"Materialcharakterisierung","ac.l1s":"Vollständige akustische und thermische Charakterisierung.",
+ "ac.l2t":"Produkttests & Feinabstimmung","ac.l2s":"Akustische Feinabstimmung auf Bauteil- und Fahrzeugebene.",
+ "ac.l3t":"Akustik-Simulationstools","ac.l3s":"Selbst entwickelte Verfahren, Software und Simulationspakete.",
+ "ac.l4t":"Innovationsnetzwerk","ac.l4s":"Universitäten, Forschungszentren, Kunden und Lieferanten als Partner.",
+ "ac.wave1":"Schalldämmung","ac.wave2":"dB · Frequenz",
+ "mis.eyebrow":"Mission & Vision","mis.h":"Wir machen Geschäfte anders",
+ "mis.lede":"Wir wachsen intelligent, profitabel sowie sozial und ökologisch verantwortungsvoll — treu unseren historischen, familiären Wurzeln und in Partnerschaft mit unseren Kunden, um globaler Marktführer zu sein.",
+ "his.eyebrow":"Unsere Geschichte","his.h":"Eine Geschichte von Menschen, Familien und Unternehmergeist",
+ "his.lede":"Unsere Geschichte handelt von Familien, die um 1960 ihren Weg in die Automobilindustrie begannen. Der Unternehmergeist der Gründer war — und ist — ein Eckpfeiler dessen, was wir heute sind.",
+ "par.eyebrow":"Kunden & Lieferanten","par.h":"Wir wachsen gemeinsam mit unseren Partnern",
+ "par.c.eyebrow":"Kunden","par.c.h":"Unsere Kunden sind ein Teil von uns",
+ "par.c.p":"Wir betrachten unsere Kunden als Partner. Von Build-to-Print über Co-Development bis Pre-Development bedienen unsere globalen Teams OEMs weltweit — geführt von unserem State-of-the-art Product Development Process (PDP), APQP-konform und kundenindividuell.",
+ "par.s.eyebrow":"Lieferanten","par.s.h":"Ein globales Netzwerk erstklassiger Partner",
+ "par.s.p":"Wir arbeiten mit hochspezialisierten lokalen Unternehmen und etablierten Multinationals zusammen — stets auf der Suche nach talentierten Firmen mit herausragender Qualität, Service und Wettbewerbsfähigkeit.",
+ "par.s.fact":"Rohstoffe, Anlagen & Dienstleistungen — täglich eingekauft",
+ "sus.eyebrow":"Soziale Verantwortung","sus.h":"Der Mensch im Mittelpunkt",
+ "sus.lede":"Mit dem Menschen im Mittelpunkt unseres Interesses ist unsere soziale Verantwortung um ihn herum aufgebaut — in fünf Dimensionen.",
+ "sus.pol1":"Verhaltenskodex","sus.pol2":"Anti-Korruptions-Richtlinie","sus.pol3":"Erklärung zu moderner Sklaverei","sus.pol4":"Whistleblowing-Richtlinie",
+ "news.eyebrow":"News & Medien","news.h":"Neuigkeiten aus der Gruppe","news.more":"Mehr lesen",
+ "con.eyebrow":"Kontakt","con.h":"Lassen Sie uns die Zukunft entwickeln",
+ "con.lede":"Wir unterstützen unsere Kunden auf allen Ebenen und an allen Standorten — über unser globales Vertriebsnetz und engagierte regionale Teams. Sprechen Sie uns an.",
+ "con.cta":"Team kontaktieren","con.hq":"Hauptsitz","con.phone":"Telefon","con.email":"E-Mail","con.ceo":"Geschäftsführung",
+ "foot.tag":"Weltweit führend bei Akustik- und Thermokomponenten und -systemen für die Automobilbranche.","foot.explore":"Entdecken","foot.company":"Unternehmen",
+ "foot.career":"Karriere","foot.investor":"Investor","foot.supplier":"Lieferant","foot.legal":"Impressum","foot.rights":"Alle Rechte vorbehalten.",
+ "z.engine.t":"Motorraum","z.engine.d":"Leichte PUR-Schaumlösungen mit verbesserter Akustik und Flammhemmung bei reduzierter Dichte — weniger Vorbeifahrgeräusch und CO₂.",
+ "z.engine.i":["Motorkapselung ICE & BEV/NEV","Haubendämmung","Akustik-Hitzeschild","Motor-Unterschutz","Außendämmung Stirnwand & Tunnel"],
+ "z.dash.t":"Stirnwand innen","z.dash.d":"Die akustische Barriere zwischen Motor und Kabine — beste Leistung bei geringstem Gewicht durch CIM und HMP®.",
+ "z.dash.i":["Innendämmung Stirnwand","Innendämmung Tunnel","Maßgeschneiderte CIM-Lösungen"],
+ "z.interior.t":"Interieur & Dämmung","z.interior.d":"Mehrschichtige Verbund-Verkleidungen für Premium-Anmutung plus Dämmung von Säulen, Türen, Dach und Sitzen.",
+ "z.interior.i":["Dachhimmel · Armaturen · Türverkleidung","Säulen- & Türdämmung","Dachversteifung","HVAC-Kapselung"],
+ "z.trunk.t":"Kofferraum","z.trunk.d":"Leichter optischer und akustischer Komfort mit recycelbaren Sandwichstrukturen — inklusive MONOlite-Ladeboden aus reinem PET.",
+ "z.trunk.i":["Ladeboden & Dämmung","Kofferraum- & Hutablagenteppich","Seitenverkleidung","MONOlite All-PET-Technologie"],
+ "z.floor.t":"Bodenteppich","z.floor.d":"Eine zentrale NVH-Komponente aus Akustik, Ästhetik und Funktion — inkl. One-Shot-HMPtex und recyceltem MONOtex® / ACOUSTItex®.",
+ "z.floor.i":["Integrierter Bodenteppich","Bodendämmung","Tufting- & Dilour-Teppich","rPET MONOtex®-Systeme"],
+ "z.exterior.t":"Exterieur & Unterboden","z.exterior.d":"Reduziert Reifen-, Roll- und Aerodynamikgeräusche und verbessert zugleich Aerodynamik, Effizienz und Nachhaltigkeit.",
+ "z.exterior.i":["Radhausschale vorn & hinten","Unterbodenschutz","Batterie-Kapselung","Kotflügeldämmung · Damping"],
+ "p.engine.t":"Motorraum","p.engine.d":"Innovative Leichtbaulösungen für Akustik und Flammhemmung bei reduzierter Dichte.","p.engine.c":["Kapselung","Haubendämmung","Hitzeschild"],
+ "p.dash.t":"Stirnwand innen","p.dash.d":"Die räumliche Trennung von Motor und Fahrgastraum — beste Akustik bei geringstem Gewicht.","p.dash.c":["CIM","HMP®","Innentunnel"],
+ "p.interior.t":"Interieur-Verkleidung","p.interior.d":"Mehrschichtige Verbundwerkstoffe für höchsten Komfort, Premium-Optik und Geräuschreduktion.","p.interior.c":["Dachhimmel","Armaturen","Türverkleidung"],
+ "p.insulation.t":"Innendämmung","p.insulation.d":"Sandwichkonstruktionen für Säulen, Türen, Dach und Sitze mit Anti-Aging und Geruchskontrolle.","p.insulation.c":["Säule","Dachversteifung","Türschutz"],
+ "p.floor.t":"Bodenteppich","p.floor.d":"Leichter integrierter Teppich per One-Shot-HMP® mit recycelten rPET-Oberflächen.","p.floor.c":["HMPtex","MONOtex®","ACOUSTItex®"],
+ "p.trunk.t":"Kofferraum","p.trunk.d":"Leichte Verbund-Sandwichstrukturen mit recycelbaren, nachwachsenden Oberflächen.","p.trunk.c":["Ladeboden","MONOlite","Hutablage"],
+ "p.exterior.t":"Exterieur","p.exterior.d":"Reduziert Geräusche von Reifen, Straße und Aerodynamik und verbessert die Effizienz.","p.exterior.c":["Radhaus","Unterboden","Batteriepack"],
+ "p.carbon.t":"Verbund & Carbon","p.carbon.d":"Carbonfaserlösungen für Premium, Racing und Aerospace — hohes Leistungs-Gewichts-Verhältnis, Klarlack-Carbon-Look.","p.carbon.c":["Pre-preg","Autoklav","Thermoplast"],
+ "ps.passion.t":"Passion","ps.passion.s":"Unser Unternehmergeist","ps.passion.p":"Wir übernehmen Verantwortung und behandeln jedes Thema, als wäre das Unternehmen unser eigenes. Wir sind leidenschaftlich, weil es uns Freude macht.",
+ "ps.paradigma.t":"Paradigma","ps.paradigma.s":"Innovatives Denken","ps.paradigma.p":"Wir wollen führen und Trends setzen. Wir verschieben das Paradigma — Visionen sind unser erster Schritt. Innovation ist das Tor zur Zukunft.",
+ "ps.people.t":"People","ps.people.s":"Glaube, es ist möglich","ps.people.p":"Wir glauben an uns, um zu erreichen, was andere für unmöglich halten. Wir geben nie auf und erlauben uns Fehler — der einzige Weg zu wachsen.",
+ "ps.pace.t":"Pace","ps.pace.s":"Schnelle Umsetzung","ps.pace.p":"Wir setzen Entscheidungen schnell um — entscheidend für Ergebnisse. Wir sind energiegeladen; das ist Teil unserer DNA.",
+ "ps.process.t":"Process","ps.process.s":"Engineering-getrieben","ps.process.p":"Wir streben nach technologischer Exzellenz. Wir denken in Prozessen und lieben unsere Produkte. Wir liefern Lösungen.",
+ "ps.products.t":"Products","ps.products.s":"Kundenorientiert","ps.products.p":"Wir sehen den Kunden als Teil von uns — Partner für Wachstum. Wir maximieren unsere Wertschöpfungskette für ihn und uns.",
+ "ps.performance.t":"Performance","ps.performance.s":"Die Zukunft liefern","ps.performance.p":"Wir sind verlässlich beim Erreichen von Zielen und fordern unsere Leistung ständig heraus. Visionieren und Liefern ist unser Kreislauf.",
+ "ps.worldwide.t":"Weltweit.","ps.worldwide.s":"","ps.worldwide.p":"",
+ "tl.t1960.y":"1960er","tl.t1960.t":"Die Gründungswege","tl.t1960.d":"Familien beginnen ihren Weg in der Automobilindustrie — die unternehmerischen Wurzeln der Gruppe.",
+ "tl.t1990.y":"1990er","tl.t1990.t":"Expertise aufbauen","tl.t1990.d":"Jahrzehnte der Spezialisierung auf Akustik- und Thermomanagement für die NVH-Behandlung.",
+ "tl.t2010.y":"2010er","tl.t2010.t":"Globale Expansion","tl.t2010.d":"Doppeltes Wachstum — organisch in Wachstumsmärkten und durch strategische Akquisitionen weltweit.",
+ "tl.t2020.y":"2020er","tl.t2020.t":"Nachhaltige Innovation","tl.t2020.d":"All-PET-Technologien, recycelte Materialien und Akustikprognose-Software für leichtere, grünere Teile.",
+ "tl.t2023.y":"Heute","tl.t2023.t":"Weltweit führend","tl.t2023.d":"Über 15.000 Mitarbeitende in 23 Ländern — Übernahme von Faurecias Acoustics & Soft Trim und Stärkung globaler Partnerschaften.",
+ "su.work.t":"Menschen bei der Arbeit","su.work.d":"Verpflichtet auf null Unfälle sowie Sicherheit und Arbeitsbedingungen, wie man sie bei der eigenen Familie erwartet.",
+ "su.others.t":"Mit anderen arbeiten","su.others.d":"Unser Verhaltenskodex wahrt Integrität, Ehrlichkeit und Verantwortung gegenüber Lieferanten, Kunden und Gemeinschaften.",
+ "su.dev.t":"Mitarbeiterentwicklung","su.dev.d":"Marktgerechte Vergütung, Training und Kompetenzaufbau für eine nachhaltige, verbesserbare Zukunft.",
+ "su.env.t":"Mensch & Umwelt","su.env.d":"Materialien mit null oder geringer Auswirkung, weniger Energie, minimaler Abfall und nachhaltiges Recycling durch vertikale Integration.",
+ "su.future.t":"Zukunft der Menschen","su.future.d":"Behördliche Regeln und Kundenvorgaben respektieren und vorwegnehmen — in langfristig nachhaltiger Perspektive.",
+ "n.ford.c":"Kunden","n.ford.t":"Ausgezeichnet mit einem renommierten Preis von Ford Otosan","n.ford.d":"Die Adler Pelzer Group erhielt von Ford Otosan den Bronze Award als Lieferant des Jahres.",
+ "n.hayashi.c":"Konzern","n.hayashi.t":"Die Verbindung zur Hayashi Telempu Corporation wird gestärkt","n.hayashi.d":"Hayashi Telempu Corporation und die Adler Pelzer Group vertiefen ihre langjährige strategische Beziehung.",
+ "n.faurecia.c":"Konzern","n.faurecia.t":"Abschluss der Übernahme des Acoustics & Soft Trim-Geschäfts von Faurecia","n.faurecia.d":"Acht Werke in Europa — Frankreich, Luxemburg, Großbritannien und Spanien — kommen zur Gruppe."
+};
+D.zh = {
+ "nav.about":"关于我们","nav.products":"产品与技术","nav.mission":"使命与愿景","nav.history":"发展历程","nav.news":"新闻","nav.contact":"联系我们",
+ "hero.eyebrow":"声学与热管理系统 · 全球","hero.t1":"我们打造","hero.t2":"汽车的静谧","hero.t3":"与热舒适",
+ "hero.lede":"我们是汽车声学与热管理部件及系统设计、工程与制造领域的全球领导者，为全球整车厂提供更安静、更轻量、更高效的车辆解决方案。",
+ "hero.cta1":"探索我们的技术","hero.cta2":"了解我们",
+ "hero.tag1b":"B2B","hero.tag1":"OEM 一级供应商","hero.tag2":"个国家","hero.tag3":"名员工","hero.tag4b":"NVH","hero.tag4":"声学预测",
+ "stats.people":"全球员工","stats.countries":"国家","stats.raw":"每日原材料采购","stats.since":"传承始于",
+ "about.eyebrow":"关于我们 — 今日","about.h":"以持续创新驱动的工程能力",
+ "about.p1":"我们以工程为本，以产品与技术的持续创新为驱动，紧密贴合客户需求与未来趋势。",
+ "about.p2":"我们拥有全球布局与全球战略，由强大的中央管理团队主导，并根据本地需求灵活落地，快速适应市场变化。",
+ "about.p3":"我们以双轮驱动实现增长：在新兴市场、细分领域与新技术中有机扩大份额，并通过精心甄选的并购巩固全球地位。",
+ "about.p4":"我们以持续改进为根基，为客户与自身创造具有竞争力且可持续的优势。我们是充满热忱、专业能干的团队。",
+ "about.sign":"我们是 Adler Pelzer Group™。","about.coretop":"全球布局","about.corebot":"国家 · 四大洲",
+ "exp.eyebrow":"我们的部件所在之处","exp.h":"一辆车，涵盖每一处声学与热管理区域。",
+ "exp.lede":"从发动机舱到后备厢，我们的部件在整车范围内管理噪声、振动、声振粗糙度与热量。点击各区域查看我们的方案。",
+ "exp.hint":"▸ 滚动以组装 · 点击区域探索",
+ "prod.eyebrow":"产品与技术","prod.h":"将材料、工艺与产品整合于一条垂直链条",
+ "prod.lede":"我们以材料的选择、组合与改进为产品开发的基础，掌控从原材料到成品部件的完整链条，并在全球使用相同设备。",
+ "prod.m.h":"材料","prod.m.p":"聚氨酯泡沫、天然与人造纤维、热塑性复合材料及碳纤维复合材料——为声学与热性能而生，内含可持续理念。",
+ "prod.pr.h":"工艺","prod.pr.p":"我们专利的 CIM 复合注塑工艺与 HMP® 热成型工艺可实现均匀密度、最低重量及超过 80% 的再生材料含量。",
+ "prod.p.h":"产品","prod.p.p":"更轻量的方案在提升声学表现的同时满足防火、耐温与环保目标，并为每个部件集成更多功能。",
+ "prod.range":"完整产品系列","prod.rangesub":"遍布整车——每一个部件都传承 Adler Pelzer Group 的创新精神。",
+ "ac.eyebrow":"声学与创新","ac.h":"在声音产生之前进行预测",
+ "ac.lede":"凭借先进的数学方法、自主研发的软件以及对材料物理的深刻理解，我们在声学预测方面为客户带来竞争优势——缩短上市时间、降低重量与噪声。",
+ "ac.l1t":"材料表征","ac.l1s":"完整的声学与热学材料表征。",
+ "ac.l2t":"产品测试与精调","ac.l2s":"在部件与整车层面进行声学精调。",
+ "ac.l3t":"声学仿真工具","ac.l3s":"自主研发的流程、软件与仿真套件。",
+ "ac.l4t":"创新网络","ac.l4s":"以高校、研究机构、客户与供应商为合作伙伴。",
+ "ac.wave1":"传声损失","ac.wave2":"dB · 频率",
+ "mis.eyebrow":"使命与愿景","mis.h":"我们以不同的方式经营",
+ "mis.lede":"我们将以智慧、盈利且对社会与环境负责的方式增长——忠于源自家族的历史根脉，与客户携手成为所在领域的全球领导者。",
+ "his.eyebrow":"发展历程","his.h":"关于人、家族与创业精神的故事",
+ "his.lede":"这是关于若干家族的故事：他们在 1960 年代左右开启了各自的汽车工业征程。创始人的创业精神曾是、并依然是我们今日的基石。",
+ "par.eyebrow":"客户与供应商","par.h":"与伙伴共同成长",
+ "par.c.eyebrow":"客户","par.c.h":"客户是我们的一部分",
+ "par.c.p":"我们视客户为伙伴。从来图制造到共同开发与预研，我们专属的全球团队服务于世界各地的整车厂——以业界领先的产品开发流程（PDP）为指引，符合 APQP 并因客户而定。",
+ "par.s.eyebrow":"供应商","par.s.h":"由顶级伙伴构成的全球网络",
+ "par.s.p":"我们与高度专业的本地企业及成熟的跨国公司合作，并持续发掘在质量、服务与竞争力上卓越的新锐企业。",
+ "par.s.fact":"每日采购的原材料、设备与服务",
+ "sus.eyebrow":"企业社会责任","sus.h":"以人为本",
+ "sus.lede":"以人为关注的核心，我们的企业社会责任围绕着人而构建——涵盖五个维度。",
+ "sus.pol1":"行为准则","sus.pol2":"反贿赂政策","sus.pol3":"现代奴役声明","sus.pol4":"举报政策",
+ "news.eyebrow":"新闻与媒体","news.h":"集团最新动态","news.more":"阅读更多",
+ "con.eyebrow":"联系我们","con.h":"携手共创未来",
+ "con.lede":"我们通过全球销售网络与专属区域团队，在各个层面、各个地点支持客户。欢迎与我们联系。",
+ "con.cta":"邮件联系团队","con.hq":"总部","con.phone":"电话","con.email":"邮箱","con.ceo":"管理层",
+ "foot.tag":"汽车声学与热管理部件及系统领域的全球领导者。","foot.explore":"探索","foot.company":"公司",
+ "foot.career":"招贤纳士","foot.investor":"投资者","foot.supplier":"供应商","foot.legal":"法律声明","foot.rights":"版权所有。",
+ "z.engine.t":"发动机舱","z.engine.d":"轻量化聚氨酯泡沫方案，在更低密度下提升声学与阻燃性能——降低行驶噪声与 CO₂。",
+ "z.engine.i":["燃油车及纯电/新能源电机包覆","发动机罩隔音","声学隔热板","发动机下护板","前围与通道外隔音"],
+ "z.dash.t":"前围内饰","z.dash.d":"发动机与座舱之间的声学屏障——借助 CIM 与 HMP® 技术，在最低重量下实现最佳性能。",
+ "z.dash.i":["前围内隔音","通道内隔音","定制化 CIM 方案"],
+ "z.interior.t":"内饰与隔音","z.interior.d":"多层复合内饰，呈现高端质感，并提供具备抗老化与气味控制的立柱、车门、车顶及座椅隔音。",
+ "z.interior.i":["顶棚 · 仪表板 · 门板","立柱与车门隔音","车顶加强件","空调系统包覆"],
+ "z.trunk.t":"后备厢","z.trunk.d":"以可回收夹层结构带来轻量的视觉与声学舒适——包括全 PET 的 MONOlite 承载地板。",
+ "z.trunk.i":["承载地板与隔音","后备厢与后搁板地毯","后备厢侧饰板","MONOlite 全 PET 技术"],
+ "z.floor.t":"地板地毯","z.floor.d":"兼具声学、美观与功能的重要 NVH 部件——包括一次成型 HMPtex 及再生 MONOtex® / ACOUSTItex® 系统。",
+ "z.floor.i":["集成式地板地毯","地板隔音","簇绒与 Dilour 地毯","rPET MONOtex® 系统"],
+ "z.exterior.t":"外部与底护板","z.exterior.d":"降低轮胎、路面与空气动力噪声，同时改善空气动力学、效率与可持续目标。",
+ "z.exterior.i":["前后轮罩衬板","底部护板","电池包包覆","翼子板隔音 · 阻尼"],
+ "p.engine.t":"发动机舱","p.engine.d":"在更低密度下兼顾声学与阻燃性能的创新轻量化方案。","p.engine.c":["包覆","机罩隔音","隔热板"],
+ "p.dash.t":"前围内饰","p.dash.d":"发动机与乘员舱之间的空间分隔——最低重量下的最佳声学。","p.dash.c":["CIM","HMP®","内通道"],
+ "p.interior.t":"内饰件","p.interior.d":"多层复合材料，带来卓越舒适、高端外观与降噪效果。","p.interior.c":["顶棚","仪表板","门板"],
+ "p.insulation.t":"内部隔音","p.insulation.d":"用于立柱、车门、车顶与座椅的夹层结构，具备抗老化与气味控制。","p.insulation.c":["立柱","车顶加强件","车门防护"],
+ "p.floor.t":"地板地毯","p.floor.d":"采用一次成型 HMP® 与再生 rPET 表层的轻量集成地毯。","p.floor.c":["HMPtex","MONOtex®","ACOUSTItex®"],
+ "p.trunk.t":"后备厢","p.trunk.d":"采用可回收、可再生表层材料的轻质复合夹层结构。","p.trunk.c":["承载地板","MONOlite","后搁板"],
+ "p.exterior.t":"外部件","p.exterior.d":"降低来自轮胎、路面与空气动力的噪声，同时提升燃油效率。","p.exterior.c":["轮罩","底护板","电池包"],
+ "p.carbon.t":"复合材料与碳纤维","p.carbon.d":"面向高端、赛车与航空的碳纤维方案——高性能重量比、清漆碳纤维外观。","p.carbon.c":["预浸料","高压釜","热塑性"],
+ "ps.passion.t":"Passion 激情","ps.passion.s":"我们的创业精神","ps.passion.p":"我们对所做之事负责，像对待自己的公司一样面对每一个问题。我们充满热忱，只因热爱。",
+ "ps.paradigma.t":"Paradigma 范式","ps.paradigma.s":"创新思维","ps.paradigma.p":"我们志在引领并创造趋势，推动范式的转变——构想是第一步。创新是通往未来之门。",
+ "ps.people.t":"People 人","ps.people.s":"相信，一切皆有可能","ps.people.p":"我们相信自己，去实现他人眼中的不可能。我们永不放弃，也允许犯错——这是成长的唯一途径。",
+ "ps.pace.t":"Pace 节奏","ps.pace.s":"快速执行","ps.pace.p":"我们迅速执行决策——这对业绩至关重要。我们充满活力，这是我们的基因。",
+ "ps.process.t":"Process 流程","ps.process.s":"以工程驱动","ps.process.p":"我们追求技术卓越，注重流程并热爱产品。我们交付解决方案。",
+ "ps.products.t":"Products 产品","ps.products.s":"以客户为中心","ps.products.p":"我们视客户为自身的一部分——共同成长的伙伴。我们优化价值链，为客户也为自己。",
+ "ps.performance.t":"Performance 绩效","ps.performance.s":"交付未来","ps.performance.p":"我们以可信赖的方式达成目标，并不断挑战自身表现。构想并交付，是我们的良性循环。",
+ "ps.worldwide.t":"遍及全球。","ps.worldwide.s":"","ps.worldwide.p":"",
+ "tl.t1960.y":"1960年代","tl.t1960.t":"创业的起点","tl.t1960.d":"多个家族开启汽车工业征程——集团的创业根脉。",
+ "tl.t1990.y":"1990年代","tl.t1990.t":"积累专长","tl.t1990.d":"数十年专注于整车 NVH 的声学与热管理。",
+ "tl.t2010.y":"2010年代","tl.t2010.t":"全球扩张","tl.t2010.d":"双轮增长——在新兴市场有机扩张，并通过战略并购巩固全球版图。",
+ "tl.t2020.y":"2020年代","tl.t2020.t":"可持续创新","tl.t2020.d":"全 PET 技术、再生材料与声学预测软件，推动更轻、更绿色的部件。",
+ "tl.t2023.y":"今天","tl.t2023.t":"全球领导者","tl.t2023.d":"23 个国家逾 15,000 名员工——收购 Faurecia 声学与软饰业务，深化全球合作。",
+ "su.work.t":"工作中的人","su.work.d":"致力于零事故目标，以及如同对待自己家人般的安全与劳动条件。",
+ "su.others.t":"与他人协作","su.others.d":"我们的商业行为准则坚守诚信、正直与责任，面向供应商、客户与社区。",
+ "su.dev.t":"人才发展","su.dev.d":"以市场对标薪酬、培训与能力建设，构建可持续、可提升的未来。",
+ "su.env.t":"人与环境","su.env.d":"采用零或低影响材料、降低能耗、减少废弃，通过垂直整合实现可持续回收。",
+ "su.future.t":"人的未来","su.future.d":"以长期可持续的视角，尊重并主动预见政府法规与客户规范。",
+ "n.ford.c":"客户","n.ford.t":"荣获 Ford Otosan 颁发的重要奖项","n.ford.d":"Adler Pelzer Group 荣获 Ford Otosan 颁发的年度优秀供应商铜奖。",
+ "n.hayashi.c":"企业","n.hayashi.t":"与 Hayashi Telempu 株式会社深化合作","n.hayashi.d":"Hayashi Telempu 与 Adler Pelzer Group 进一步深化长期战略关系。",
+ "n.faurecia.c":"企业","n.faurecia.t":"完成对 Faurecia 声学与软饰业务的收购","n.faurecia.d":"位于法国、卢森堡、英国与西班牙的八家工厂加入集团。"
+};
+D.pt = {
+ "nav.about":"Sobre Nós","nav.products":"Produtos & Tecnologias","nav.mission":"Missão & Visão","nav.history":"História","nav.news":"Notícias","nav.contact":"Fale Conosco",
+ "hero.eyebrow":"Sistemas Acústicos & Térmicos · Mundial","hero.t1":"Nós projetamos","hero.t2":"o silêncio automotivo","hero.t3":"e o conforto térmico",
+ "hero.lede":"Líder mundial no design, engenharia e fabricação de componentes e sistemas acústicos e térmicos para o setor automotivo — entregando veículos mais silenciosos, leves e eficientes para montadoras em todo o mundo.",
+ "hero.cta1":"Explore nossas tecnologias","hero.cta2":"Quem somos",
+ "hero.tag1b":"B2B","hero.tag1":"Fornecedor OEM Tier-1","hero.tag2":"países","hero.tag3":"colaboradores","hero.tag4b":"NVH","hero.tag4":"predição acústica",
+ "stats.people":"Colaboradores no mundo","stats.countries":"Países","stats.raw":"Matéria-prima / dia","stats.since":"Tradição desde",
+ "about.eyebrow":"Sobre Nós — Hoje","about.h":"Engenharia movida por inovação constante",
+ "about.p1":"Somos engenharia movida pela inovação constante em produtos e tecnologias, em estreita cooperação com as necessidades dos clientes e as tendências do futuro.",
+ "about.p2":"Temos presença e estratégia globais, lideradas por uma equipe central forte e implementadas conforme as necessidades locais — flexíveis para nos adaptarmos à demanda do mercado.",
+ "about.p3":"Crescemos em duas frentes: organicamente, ganhando participação em mercados emergentes, segmentos e tecnologias; e por aquisições criteriosas que consolidam nossa posição global.",
+ "about.p4":"Construímos nosso negócio na melhoria contínua, oferecendo vantagens competitivas e sustentáveis para os clientes e para nós. Somos pessoas apaixonadas e competentes.",
+ "about.sign":"Somos o Adler Pelzer Group™.","about.coretop":"Presença global","about.corebot":"Países · 4 continentes",
+ "exp.eyebrow":"Onde nossas peças vivem","exp.h":"Um veículo. Cada zona acústica e térmica.",
+ "exp.lede":"Do compartimento do motor ao porta-malas, nossos componentes gerenciam ruído, vibração, aspereza e calor em todo o veículo. Explore cada zona.",
+ "exp.hint":"▸ Role para montar · toque numa zona para explorar",
+ "prod.eyebrow":"Produtos & Tecnologias","prod.h":"Materiais, processos e produtos em uma cadeia vertical",
+ "prod.lede":"Baseamos o desenvolvimento na seleção, combinação e melhoria de materiais — controlando toda a cadeia, da matéria-prima ao componente, com os mesmos equipamentos no mundo todo.",
+ "prod.m.h":"Materiais","prod.m.p":"Espumas PUR, fibras naturais e sintéticas, compostos termoplásticos e compósitos de carbono — projetados para desempenho acústico e térmico, com sustentabilidade integrada.",
+ "prod.pr.h":"Processo","prod.pr.p":"Nosso processo patenteado CIM de injeção e o processo HMP® de moldagem a quente entregam densidade homogênea, peso mínimo e mais de 80% de conteúdo reciclado.",
+ "prod.p.h":"Produtos","prod.p.p":"Soluções mais leves que melhoram o comportamento acústico e atendem metas de fogo, temperatura e meio ambiente — integrando mais funções em cada peça.",
+ "prod.range":"A linha completa de produtos","prod.rangesub":"Instalados em todo o veículo — cada componente mantendo o espírito inovador do Adler Pelzer Group.",
+ "ac.eyebrow":"Acústica & Inovação","ac.h":"Prevemos o som antes que ele exista",
+ "ac.lede":"Com métodos matemáticos avançados, software próprio e profundo entendimento da física dos materiais, damos aos clientes vantagem competitiva em predição acústica — reduzindo tempo de mercado, peso e ruído.",
+ "ac.l1t":"Caracterização de materiais","ac.l1s":"Caracterização acústica e térmica completa.",
+ "ac.l2t":"Testes e ajuste fino","ac.l2s":"Ajuste fino acústico no componente e no veículo.",
+ "ac.l3t":"Ferramentas de simulação","ac.l3s":"Procedimentos, software e pacotes de simulação próprios.",
+ "ac.l4t":"Rede de inovação","ac.l4s":"Universidades, centros de pesquisa, clientes e fornecedores como parceiros.",
+ "ac.wave1":"Perda de transmissão","ac.wave2":"dB · frequência",
+ "mis.eyebrow":"Missão & Visão","mis.h":"Fazemos negócios de forma diferente",
+ "mis.lede":"Cresceremos de forma inteligente, lucrativa e social e ambientalmente responsável — fiéis às nossas raízes familiares e históricas, em parceria com os clientes, para sermos líderes globais em nosso ramo.",
+ "his.eyebrow":"Nossa História","his.h":"Uma história de pessoas, famílias e empreendedorismo",
+ "his.lede":"Nossa história é de famílias que, por volta de 1960, decidiram iniciar suas jornadas na indústria automotiva. O espírito empreendedor dos fundadores foi — e ainda é — um dos pilares do que somos hoje.",
+ "par.eyebrow":"Clientes & Fornecedores","par.h":"Crescemos junto com nossos parceiros",
+ "par.c.eyebrow":"Clientes","par.c.h":"Nossos clientes fazem parte de nós",
+ "par.c.p":"Consideramos os clientes como parceiros. De build-to-print a co-desenvolvimento e pré-desenvolvimento, nossas equipes globais atendem montadoras no mundo todo — guiadas pelo nosso PDP de ponta, alinhado ao APQP e adaptado a cada cliente.",
+ "par.s.eyebrow":"Fornecedores","par.s.h":"Uma rede global de parceiros de primeira linha",
+ "par.s.p":"Cooperamos com empresas locais altamente especializadas e multinacionais consolidadas — buscando sempre novas empresas talentosas que se destacam em qualidade, serviço e competitividade.",
+ "par.s.fact":"Matérias-primas, equipamentos e serviços comprados todos os dias",
+ "sus.eyebrow":"Responsabilidade Social","sus.h":"Pessoas no centro de tudo",
+ "sus.lede":"Com as pessoas no centro do nosso interesse, nossa Responsabilidade Social Corporativa é construída em torno delas — em cinco dimensões.",
+ "sus.pol1":"Código de Conduta","sus.pol2":"Política Anticorrupção","sus.pol3":"Declaração de Escravidão Moderna","sus.pol4":"Política de Denúncias",
+ "news.eyebrow":"Notícias & Mídia","news.h":"Novidades do Grupo","news.more":"Leia mais",
+ "con.eyebrow":"Fale Conosco","con.h":"Vamos projetar o que vem a seguir",
+ "con.lede":"Apoiamos nossos clientes em todos os níveis e locais, por meio da nossa rede global de vendas e equipes regionais dedicadas. Entre em contato.",
+ "con.cta":"Enviar e-mail à equipe","con.hq":"Sede","con.phone":"Telefone","con.email":"E-mail","con.ceo":"Diretoria",
+ "foot.tag":"Líder mundial em componentes e sistemas acústicos e térmicos para o setor automotivo.","foot.explore":"Explorar","foot.company":"Empresa",
+ "foot.career":"Carreiras","foot.investor":"Investidor","foot.supplier":"Fornecedor","foot.legal":"Aviso Legal","foot.rights":"Todos os direitos reservados.",
+ "z.engine.t":"Compartimento do Motor","z.engine.d":"Soluções leves em espuma PUR com melhor desempenho acústico e retardante de chama em menor densidade — reduzindo ruído de passagem e CO₂.",
+ "z.engine.i":["Encapsulamento de motor ICE & BEV/NEV","Isolamento do capô","Escudo térmico acústico","Protetor inferior do motor","Isolamento externo do painel e túnel"],
+ "z.dash.t":"Painel Interno","z.dash.d":"A barreira acústica entre motor e cabine — melhor desempenho com o menor peso via tecnologias CIM e HMP®.",
+ "z.dash.i":["Isolamento interno do painel","Isolamento interno do túnel","Soluções CIM sob medida"],
+ "z.interior.t":"Acabamento & Isolamento Interno","z.interior.d":"Acabamentos compósitos multicamadas para visual premium, além de isolamentos de colunas, portas, teto e bancos.",
+ "z.interior.i":["Forro de teto · painel · revestimento de porta","Isolamento de coluna e porta","Reforço de teto","Encapsulamento HVAC"],
+ "z.trunk.t":"Porta-malas","z.trunk.d":"Conforto óptico e acústico leve com estruturas sanduíche recicláveis — incluindo o piso de carga MONOlite, todo em PET.",
+ "z.trunk.i":["Piso de carga e isolamento","Carpete do porta-malas e da bandeja","Acabamento lateral","Tecnologia MONOlite all-PET"],
+ "z.floor.t":"Carpete de Piso","z.floor.d":"Um grande componente de NVH unindo acústica, estética e função — incluindo HMPtex em uma etapa e sistemas reciclados MONOtex® / ACOUSTItex®.",
+ "z.floor.i":["Carpete de piso integrado","Isolamento de piso","Carpete tufado e dilour","Sistemas rPET MONOtex®"],
+ "z.exterior.t":"Exterior & Assoalho","z.exterior.d":"Reduz ruído de pneus, estrada e aerodinâmica, melhorando aerodinâmica, eficiência e metas de sustentabilidade.",
+ "z.exterior.i":["Revestimento de caixa de roda diant. e tras.","Escudo de assoalho","Encapsulamento da bateria","Isolamento de paralama · damping"],
+ "p.engine.t":"Compartimento do Motor","p.engine.d":"Soluções leves e inovadoras para desempenho acústico e retardante de chama em menor densidade.","p.engine.c":["Encapsulamento","Isolamento capô","Escudo térmico"],
+ "p.dash.t":"Painel Interno","p.dash.d":"A separação entre motor e habitáculo — melhor acústica com o menor peso.","p.dash.c":["CIM","HMP®","Túnel interno"],
+ "p.interior.t":"Acabamento Interno","p.interior.d":"Compósitos multicamadas para máximo conforto, visual premium e redução de ruído.","p.interior.c":["Forro de teto","Painel","Porta"],
+ "p.insulation.t":"Isolamentos Internos","p.insulation.d":"Estruturas sanduíche para colunas, portas, teto e bancos com antienvelhecimento e controle de odor.","p.insulation.c":["Coluna","Reforço de teto","Proteção de porta"],
+ "p.floor.t":"Carpete de Piso","p.floor.d":"Carpete integrado e leve via HMP® em uma etapa, com superfícies rPET recicladas.","p.floor.c":["HMPtex","MONOtex®","ACOUSTItex®"],
+ "p.trunk.t":"Porta-malas","p.trunk.d":"Estruturas sanduíche compósitas leves com materiais de superfície recicláveis e renováveis.","p.trunk.c":["Piso de carga","MONOlite","Bandeja"],
+ "p.exterior.t":"Exterior","p.exterior.d":"Reduz o ruído de pneus, estrada e aerodinâmica, melhorando a eficiência de combustível.","p.exterior.c":["Caixa de roda","Assoalho","Bateria"],
+ "p.carbon.t":"Compósitos & Carbono","p.carbon.d":"Soluções em fibra de carbono para premium, racing e aeroespacial — alta relação desempenho/peso e visual carbono.","p.carbon.c":["Pré-preg","Autoclave","Termoplástico"],
+ "ps.passion.t":"Passion","ps.passion.s":"Nosso espírito empreendedor","ps.passion.p":"Assumimos responsabilidade pelo que fazemos e tratamos cada questão como se a empresa fosse nossa. Somos apaixonados simplesmente porque gostamos.",
+ "ps.paradigma.t":"Paradigma","ps.paradigma.s":"Pensamento inovador","ps.paradigma.p":"Queremos liderar e criar tendências. Empurramos para mudar o paradigma — visualizar é o primeiro passo. Inovação é a porta para o futuro.",
+ "ps.people.t":"People","ps.people.s":"Acredite, é possível","ps.people.p":"Acreditamos em nós para alcançar o que outros julgam impossível. Nunca desistimos e nos permitimos errar — o único caminho para crescer.",
+ "ps.pace.t":"Pace","ps.pace.s":"Execução rápida","ps.pace.p":"Somos rápidos em executar decisões — essencial para os resultados. Somos energéticos; faz parte do nosso DNA.",
+ "ps.process.t":"Process","ps.process.s":"Movidos por engenharia","ps.process.p":"Buscamos excelência tecnológica. Pensamos em processo e somos apaixonados por produtos. Entregamos soluções.",
+ "ps.products.t":"Products","ps.products.s":"Orientados ao cliente","ps.products.p":"Consideramos o cliente parte de nós — parceiros de crescimento. Maximizamos nossa cadeia de valor para ele e para nós.",
+ "ps.performance.t":"Performance","ps.performance.s":"Entregando o futuro","ps.performance.p":"Somos confiáveis no cumprimento de metas e desafiamos constantemente nosso desempenho. Visualizar e entregar é nosso ciclo virtuoso.",
+ "ps.worldwide.t":"Mundial.","ps.worldwide.s":"","ps.worldwide.p":"",
+ "tl.t1960.y":"Anos 1960","tl.t1960.t":"As jornadas fundadoras","tl.t1960.d":"Famílias iniciam suas jornadas na indústria automotiva — as raízes empreendedoras do Grupo.",
+ "tl.t1990.y":"Anos 1990","tl.t1990.t":"Construindo expertise","tl.t1990.d":"Décadas de especialização em gestão acústica e térmica para o tratamento de NVH.",
+ "tl.t2010.y":"Anos 2010","tl.t2010.t":"Expansão global","tl.t2010.d":"Crescimento duplo — orgânico em mercados emergentes e aquisições estratégicas consolidando presença mundial.",
+ "tl.t2020.y":"Anos 2020","tl.t2020.t":"Inovação sustentável","tl.t2020.d":"Tecnologias all-PET, materiais reciclados e software de predição acústica por peças mais leves e verdes.",
+ "tl.t2023.y":"Hoje","tl.t2023.t":"Líder mundial","tl.t2023.d":"Mais de 15.000 pessoas em 23 países — adquirindo o negócio Acoustics & Soft Trim da Faurecia e fortalecendo parcerias globais.",
+ "su.work.t":"Pessoas no Trabalho","su.work.d":"Comprometidos com a meta de zero acidente e com segurança e condições dignas de nossa própria família.",
+ "su.others.t":"Trabalhando com Outros","su.others.d":"Nosso Código de Conduta mantém integridade, honestidade e responsabilidade com fornecedores, clientes e comunidades.",
+ "su.dev.t":"Desenvolvimento de Pessoas","su.dev.d":"Remuneração de mercado, treinamento e desenvolvimento de competências para um futuro sustentável e aprimorável.",
+ "su.env.t":"Pessoas & Meio Ambiente","su.env.d":"Materiais de zero ou baixo impacto, menos energia, mínimo desperdício e reciclagem sustentável via integração vertical.",
+ "su.future.t":"Futuro das Pessoas","su.future.d":"Respeitar e antecipar regras governamentais e especificações dos clientes numa perspectiva sustentável de longo prazo.",
+ "n.ford.c":"Clientes","n.ford.t":"Premiado com importante reconhecimento da Ford Otosan","n.ford.d":"O Adler Pelzer Group recebeu da Ford Otosan o prêmio bronze de Fornecedor do Ano.",
+ "n.hayashi.c":"Corporativo","n.hayashi.t":"Fortalecendo o vínculo com a Hayashi Telempu Corporation","n.hayashi.d":"Hayashi Telempu Corporation e Adler Pelzer Group aprofundam sua longa relação estratégica.",
+ "n.faurecia.c":"Corporativo","n.faurecia.t":"Concluída a aquisição do negócio Acoustics & Soft Trim da Faurecia","n.faurecia.d":"Oito plantas na Europa — França, Luxemburgo, Reino Unido e Espanha — integram o Grupo."
+};
+D.es = {
+ "nav.about":"Nosotros","nav.products":"Productos & Tecnologías","nav.mission":"Misión & Visión","nav.history":"Historia","nav.news":"Noticias","nav.contact":"Contáctenos",
+ "hero.eyebrow":"Sistemas Acústicos & Térmicos · Mundial","hero.t1":"Diseñamos","hero.t2":"el silencio automotriz","hero.t3":"y el confort térmico",
+ "hero.lede":"Líder mundial en el diseño, la ingeniería y la fabricación de componentes y sistemas acústicos y térmicos para el sector automotriz — entregando vehículos más silenciosos, ligeros y eficientes a fabricantes de todo el mundo.",
+ "hero.cta1":"Explore nuestras tecnologías","hero.cta2":"Quiénes somos",
+ "hero.tag1b":"B2B","hero.tag1":"Proveedor OEM Tier-1","hero.tag2":"países","hero.tag3":"personas","hero.tag4b":"NVH","hero.tag4":"predicción acústica",
+ "stats.people":"Personas en el mundo","stats.countries":"Países","stats.raw":"Materia prima / día","stats.since":"Tradición desde",
+ "about.eyebrow":"Nosotros — Hoy","about.h":"Ingeniería impulsada por la innovación constante",
+ "about.p1":"Somos ingeniería impulsada por la innovación constante en productos y tecnologías, en estrecha cooperación con las necesidades de nuestros clientes y las tendencias del futuro.",
+ "about.p2":"Tenemos presencia y estrategia globales, lideradas por un sólido equipo central y desplegadas según las necesidades locales — con flexibilidad para adaptarnos a la demanda del mercado.",
+ "about.p3":"Crecemos en dos frentes: orgánicamente, ganando cuota en mercados emergentes, segmentos y tecnologías; y mediante adquisiciones seleccionadas que consolidan nuestra posición global.",
+ "about.p4":"Construimos nuestro negocio sobre la mejora continua, brindando ventajas competitivas y sostenibles para nuestros clientes y para nosotros. Somos personas apasionadas y competentes.",
+ "about.sign":"Somos Adler Pelzer Group™.","about.coretop":"Presencia global","about.corebot":"Países · 4 continentes",
+ "exp.eyebrow":"Dónde viven nuestras piezas","exp.h":"Un vehículo. Cada zona acústica y térmica.",
+ "exp.lede":"Del vano motor al maletero, nuestros componentes gestionan ruido, vibración, aspereza y calor en todo el vehículo. Explore cada zona.",
+ "exp.hint":"▸ Desplácese para ensamblar · toque una zona",
+ "prod.eyebrow":"Productos & Tecnologías","prod.h":"Materiales, procesos y productos en una cadena vertical",
+ "prod.lede":"Basamos el desarrollo en la selección, combinación y mejora de materiales — controlando toda la cadena, de la materia prima al componente, con los mismos equipos en todo el mundo.",
+ "prod.m.h":"Materiales","prod.m.p":"Espumas PUR, fibras naturales y sintéticas, compuestos termoplásticos y compuestos de carbono — diseñados para desempeño acústico y térmico, con sostenibilidad integrada.",
+ "prod.pr.h":"Proceso","prod.pr.p":"Nuestro proceso patentado CIM de inyección y el proceso HMP® de moldeo en caliente logran densidad homogénea, peso mínimo y más del 80% de contenido reciclado.",
+ "prod.p.h":"Productos","prod.p.p":"Soluciones más ligeras que mejoran el comportamiento acústico y cumplen objetivos de fuego, temperatura y medio ambiente — integrando más funciones en cada pieza.",
+ "prod.range":"La gama completa de productos","prod.rangesub":"Instalados en todo el vehículo — cada componente mantiene el espíritu innovador de Adler Pelzer Group.",
+ "ac.eyebrow":"Acústica & Innovación","ac.h":"Predecimos el sonido antes de que exista",
+ "ac.lede":"Con métodos matemáticos avanzados, software propio y un profundo conocimiento de la física de los materiales, damos a nuestros clientes ventaja competitiva en predicción acústica — reduciendo tiempo de salida, peso y ruido.",
+ "ac.l1t":"Caracterización de materiales","ac.l1s":"Caracterización acústica y térmica completa.",
+ "ac.l2t":"Pruebas y ajuste fino","ac.l2s":"Ajuste fino acústico a nivel de componente y vehículo.",
+ "ac.l3t":"Herramientas de simulación","ac.l3s":"Procedimientos, software y paquetes de simulación propios.",
+ "ac.l4t":"Red de innovación","ac.l4s":"Universidades, centros de investigación, clientes y proveedores como socios.",
+ "ac.wave1":"Pérdida de transmisión","ac.wave2":"dB · frecuencia",
+ "mis.eyebrow":"Misión & Visión","mis.h":"Hacemos negocios de otra manera",
+ "mis.lede":"Creceremos de forma inteligente, rentable y social y ambientalmente responsable — fieles a nuestras raíces históricas y familiares, en alianza con los clientes, para ser líderes globales en nuestro campo.",
+ "his.eyebrow":"Nuestra Historia","his.h":"Una historia de personas, familias y espíritu emprendedor",
+ "his.lede":"La nuestra es una historia de familias que, hacia 1960, iniciaron sus trayectorias en la industria automotriz. El espíritu emprendedor de los fundadores fue — y sigue siendo — uno de los pilares de lo que somos hoy.",
+ "par.eyebrow":"Clientes & Proveedores","par.h":"Crecemos junto a nuestros socios",
+ "par.c.eyebrow":"Clientes","par.c.h":"Nuestros clientes son parte de nosotros",
+ "par.c.p":"Consideramos a los clientes como socios. De build-to-print a co-desarrollo y pre-desarrollo, nuestros equipos globales atienden a fabricantes en todo el mundo — guiados por nuestro PDP de vanguardia, alineado a APQP y adaptado a cada cliente.",
+ "par.s.eyebrow":"Proveedores","par.s.h":"Una red global de socios de primer nivel",
+ "par.s.p":"Colaboramos con empresas locales altamente especializadas y multinacionales consolidadas — buscando siempre nuevas empresas talentosas que destacan en calidad, servicio y competitividad.",
+ "par.s.fact":"Materias primas, equipos y servicios comprados cada día",
+ "sus.eyebrow":"Responsabilidad Social","sus.h":"Las personas en el centro de todo",
+ "sus.lede":"Con las personas en el centro de nuestro interés, nuestra Responsabilidad Social Corporativa se construye en torno a ellas — en cinco dimensiones.",
+ "sus.pol1":"Código de Conducta","sus.pol2":"Política Anticorrupción","sus.pol3":"Declaración sobre Esclavitud Moderna","sus.pol4":"Política de Denuncias",
+ "news.eyebrow":"Noticias & Medios","news.h":"Lo último del Grupo","news.more":"Leer más",
+ "con.eyebrow":"Contáctenos","con.h":"Diseñemos lo que viene",
+ "con.lede":"Apoyamos a nuestros clientes en todos los niveles y lugares, a través de nuestra red global de ventas y equipos regionales dedicados. Póngase en contacto.",
+ "con.cta":"Escribir al equipo","con.hq":"Sede","con.phone":"Teléfono","con.email":"Correo","con.ceo":"Dirección",
+ "foot.tag":"Líder mundial en componentes y sistemas acústicos y térmicos para el sector automotriz.","foot.explore":"Explorar","foot.company":"Empresa",
+ "foot.career":"Carreras","foot.investor":"Inversores","foot.supplier":"Proveedor","foot.legal":"Aviso Legal","foot.rights":"Todos los derechos reservados.",
+ "z.engine.t":"Vano Motor","z.engine.d":"Soluciones ligeras de espuma PUR con mejor desempeño acústico y retardante de llama a menor densidad — reduciendo ruido de paso y CO₂.",
+ "z.engine.i":["Encapsulado de motor ICE & BEV/NEV","Aislamiento del capó","Escudo térmico acústico","Protector inferior del motor","Aislamiento exterior de salpicadero y túnel"],
+ "z.dash.t":"Salpicadero Interior","z.dash.d":"La barrera acústica entre motor y habitáculo — mejor desempeño con el menor peso mediante CIM y HMP®.",
+ "z.dash.i":["Aislamiento interior salpicadero","Aislamiento interior túnel","Soluciones CIM a medida"],
+ "z.interior.t":"Revestimiento & Aislamiento Interior","z.interior.d":"Revestimientos compuestos multicapa para acabado premium, más aislamientos de pilares, puertas, techo y asientos.",
+ "z.interior.i":["Techo · salpicadero · panel de puerta","Aislamiento de pilar y puerta","Refuerzo de techo","Encapsulado HVAC"],
+ "z.trunk.t":"Maletero","z.trunk.d":"Confort óptico y acústico ligero con estructuras sándwich reciclables — incluido el piso de carga MONOlite, todo en PET.",
+ "z.trunk.i":["Piso de carga y aislamiento","Alfombra de maletero y bandeja","Revestimiento lateral","Tecnología MONOlite all-PET"],
+ "z.floor.t":"Alfombra de Piso","z.floor.d":"Un componente NVH clave que une acústica, estética y función — incluido HMPtex en una etapa y sistemas reciclados MONOtex® / ACOUSTItex®.",
+ "z.floor.i":["Alfombra de piso integrada","Aislamiento de piso","Alfombra tufting y dilour","Sistemas rPET MONOtex®"],
+ "z.exterior.t":"Exterior & Bajos","z.exterior.d":"Reduce ruido de neumáticos, carretera y aerodinámica, mejorando aerodinámica, eficiencia y metas de sostenibilidad.",
+ "z.exterior.i":["Pasarruedas delantero y trasero","Escudo de bajos","Encapsulado de batería","Aislamiento de aleta · damping"],
+ "p.engine.t":"Vano Motor","p.engine.d":"Soluciones ligeras e innovadoras para desempeño acústico y retardante de llama a menor densidad.","p.engine.c":["Encapsulado","Aislamiento capó","Escudo térmico"],
+ "p.dash.t":"Salpicadero Interior","p.dash.d":"La separación entre motor y habitáculo — mejor acústica con el menor peso.","p.dash.c":["CIM","HMP®","Túnel interior"],
+ "p.interior.t":"Revestimiento Interior","p.interior.d":"Compuestos multicapa para máximo confort, acabado premium y reducción de ruido.","p.interior.c":["Techo","Salpicadero","Puerta"],
+ "p.insulation.t":"Aislamientos Interiores","p.insulation.d":"Estructuras sándwich para pilares, puertas, techo y asientos con antienvejecimiento y control de olor.","p.insulation.c":["Pilar","Refuerzo de techo","Protección de puerta"],
+ "p.floor.t":"Alfombra de Piso","p.floor.d":"Alfombra integrada ligera mediante HMP® en una etapa, con superficies rPET recicladas.","p.floor.c":["HMPtex","MONOtex®","ACOUSTItex®"],
+ "p.trunk.t":"Maletero","p.trunk.d":"Estructuras sándwich compuestas ligeras con materiales de superficie reciclables y renovables.","p.trunk.c":["Piso de carga","MONOlite","Bandeja"],
+ "p.exterior.t":"Exterior","p.exterior.d":"Reduce el ruido de neumáticos, carretera y aerodinámica mejorando la eficiencia de combustible.","p.exterior.c":["Pasarruedas","Bajos","Batería"],
+ "p.carbon.t":"Compuestos & Carbono","p.carbon.d":"Soluciones en fibra de carbono para premium, racing y aeroespacial — alta relación desempeño/peso y acabado carbono.","p.carbon.c":["Pre-preg","Autoclave","Termoplástico"],
+ "ps.passion.t":"Passion","ps.passion.s":"Nuestro espíritu emprendedor","ps.passion.p":"Asumimos la responsabilidad de lo que hacemos y afrontamos cada tema como si la empresa fuera nuestra. Somos apasionados, simplemente porque lo disfrutamos.",
+ "ps.paradigma.t":"Paradigma","ps.paradigma.s":"Pensamiento innovador","ps.paradigma.p":"Aspiramos a liderar y crear tendencias. Empujamos para cambiar el paradigma — visualizar es el primer paso. La innovación es la puerta al futuro.",
+ "ps.people.t":"People","ps.people.s":"Cree, es posible","ps.people.p":"Creemos en nosotros para lograr lo que otros consideran imposible. Nunca nos rendimos y nos permitimos errar — la única forma de crecer.",
+ "ps.pace.t":"Pace","ps.pace.s":"Ejecución rápida","ps.pace.p":"Somos rápidos al ejecutar decisiones — esencial para los resultados. Somos enérgicos; es parte de nuestro ADN.",
+ "ps.process.t":"Process","ps.process.s":"Impulsados por la ingeniería","ps.process.p":"Buscamos la excelencia tecnológica. Pensamos en proceso y nos apasionan los productos. Entregamos soluciones.",
+ "ps.products.t":"Products","ps.products.s":"Orientados al cliente","ps.products.p":"Consideramos al cliente parte de nosotros — socios para el crecimiento. Maximizamos nuestra cadena de valor para él y para nosotros.",
+ "ps.performance.t":"Performance","ps.performance.s":"Entregando el futuro","ps.performance.p":"Somos confiables al cumplir objetivos y desafiamos constantemente nuestro desempeño. Visualizar y entregar es nuestro círculo virtuoso.",
+ "ps.worldwide.t":"Mundial.","ps.worldwide.s":"","ps.worldwide.p":"",
+ "tl.t1960.y":"Años 1960","tl.t1960.t":"Las trayectorias fundadoras","tl.t1960.d":"Familias inician sus trayectorias en la industria automotriz — las raíces emprendedoras del Grupo.",
+ "tl.t1990.y":"Años 1990","tl.t1990.t":"Construyendo experiencia","tl.t1990.d":"Décadas de especialización en gestión acústica y térmica para el tratamiento de NVH.",
+ "tl.t2010.y":"Años 2010","tl.t2010.t":"Expansión global","tl.t2010.d":"Crecimiento doble — orgánico en mercados emergentes y adquisiciones estratégicas que consolidan presencia mundial.",
+ "tl.t2020.y":"Años 2020","tl.t2020.t":"Innovación sostenible","tl.t2020.d":"Tecnologías all-PET, materiales reciclados y software de predicción acústica para piezas más ligeras y verdes.",
+ "tl.t2023.y":"Hoy","tl.t2023.t":"Líder mundial","tl.t2023.d":"Más de 15.000 personas en 23 países — adquiriendo el negocio Acoustics & Soft Trim de Faurecia y reforzando alianzas globales.",
+ "su.work.t":"Personas en el Trabajo","su.work.d":"Comprometidos con la meta de cero accidentes y con seguridad y condiciones dignas de nuestra propia familia.",
+ "su.others.t":"Trabajando con Otros","su.others.d":"Nuestro Código de Conducta mantiene integridad, honestidad y responsabilidad con proveedores, clientes y comunidades.",
+ "su.dev.t":"Desarrollo de Personas","su.dev.d":"Retribución de mercado, formación y desarrollo de competencias para un futuro sostenible y mejorable.",
+ "su.env.t":"Personas & Medio Ambiente","su.env.d":"Materiales de cero o bajo impacto, menos energía, mínimo desperdicio y reciclaje sostenible mediante integración vertical.",
+ "su.future.t":"Futuro de las Personas","su.future.d":"Respetar y anticipar normas gubernamentales y especificaciones de clientes en una perspectiva sostenible a largo plazo.",
+ "n.ford.c":"Clientes","n.ford.t":"Galardonado con un prestigioso premio de Ford Otosan","n.ford.d":"Adler Pelzer Group recibió de Ford Otosan el premio bronce a Proveedor del Año.",
+ "n.hayashi.c":"Corporativo","n.hayashi.t":"Reforzando el vínculo con Hayashi Telempu Corporation","n.hayashi.d":"Hayashi Telempu Corporation y Adler Pelzer Group profundizan su larga relación estratégica.",
+ "n.faurecia.c":"Corporativo","n.faurecia.t":"Cierre de la adquisición del negocio Acoustics & Soft Trim de Faurecia","n.faurecia.d":"Ocho plantas en Europa — Francia, Luxemburgo, Reino Unido y España — se integran al Grupo."
+};
+
+/* ---- contact card + RFQ form keys (merged) ---- */
+Object.assign(D.en,{
+ "con.global":"Global network","con.globalv":"23 countries · 4 continents · regional sales & engineering teams",
+ "f.h":"Send us an inquiry","f.sub":"For quotations, partnerships or general questions — our regional teams respond fast.",
+ "f.type":"Inquiry type","f.type.rfq":"RFQ / Quotation","f.type.partner":"Partnership / Co-development","f.type.supplier":"Become a supplier","f.type.press":"Press & Media","f.type.career":"Career","f.type.general":"General enquiry",
+ "f.name":"Full name","f.company":"Company","f.email":"Business email","f.country":"Country / Region","f.program":"Vehicle program / segment","f.message":"Message",
+ "f.privacy":"By submitting, you consent to your details being used to handle your request.","f.send":"Send inquiry",
+ "f.err.req":"This field is required.","f.err.email":"Please enter a valid email address.",
+ "f.ok.h":"Thank you — your inquiry is ready","f.ok.p":"Your email app will open with the details pre-filled. We'll get back to you shortly."
+});
+Object.assign(D.de,{
+ "con.global":"Globales Netzwerk","con.globalv":"23 Länder · 4 Kontinente · regionale Vertriebs- & Engineering-Teams",
+ "f.h":"Senden Sie uns eine Anfrage","f.sub":"Für Angebote, Partnerschaften oder allgemeine Fragen — unsere regionalen Teams antworten schnell.",
+ "f.type":"Art der Anfrage","f.type.rfq":"Anfrage / Angebot","f.type.partner":"Partnerschaft / Co-Entwicklung","f.type.supplier":"Lieferant werden","f.type.press":"Presse & Medien","f.type.career":"Karriere","f.type.general":"Allgemeine Anfrage",
+ "f.name":"Vollständiger Name","f.company":"Unternehmen","f.email":"Geschäftliche E-Mail","f.country":"Land / Region","f.program":"Fahrzeugprogramm / Segment","f.message":"Nachricht",
+ "f.privacy":"Mit dem Absenden stimmen Sie zu, dass Ihre Angaben zur Bearbeitung Ihrer Anfrage verwendet werden.","f.send":"Anfrage senden",
+ "f.err.req":"Dieses Feld ist erforderlich.","f.err.email":"Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+ "f.ok.h":"Vielen Dank — Ihre Anfrage ist bereit","f.ok.p":"Ihre E-Mail-App öffnet sich mit den vorausgefüllten Angaben. Wir melden uns in Kürze."
+});
+Object.assign(D.zh,{
+ "con.global":"全球网络","con.globalv":"23 个国家 · 四大洲 · 区域销售与工程团队",
+ "f.h":"向我们发送咨询","f.sub":"无论是报价、合作还是一般问题——我们的区域团队都会快速回应。",
+ "f.type":"咨询类型","f.type.rfq":"询价 / 报价","f.type.partner":"合作 / 共同开发","f.type.supplier":"成为供应商","f.type.press":"媒体与新闻","f.type.career":"招聘","f.type.general":"一般咨询",
+ "f.name":"姓名","f.company":"公司","f.email":"企业邮箱","f.country":"国家 / 地区","f.program":"车型项目 / 细分市场","f.message":"留言",
+ "f.privacy":"提交即表示您同意我们使用您的信息来处理您的请求。","f.send":"发送咨询",
+ "f.err.req":"此项为必填。","f.err.email":"请输入有效的邮箱地址。",
+ "f.ok.h":"感谢您——您的咨询已准备就绪","f.ok.p":"您的邮件应用将打开并预填详细信息。我们会尽快回复您。"
+});
+Object.assign(D.pt,{
+ "con.global":"Rede global","con.globalv":"23 países · 4 continentes · equipes regionais de vendas e engenharia",
+ "f.h":"Envie-nos uma solicitação","f.sub":"Para cotações, parcerias ou dúvidas gerais — nossas equipes regionais respondem rápido.",
+ "f.type":"Tipo de solicitação","f.type.rfq":"RFQ / Cotação","f.type.partner":"Parceria / Co-desenvolvimento","f.type.supplier":"Tornar-se fornecedor","f.type.press":"Imprensa & Mídia","f.type.career":"Carreiras","f.type.general":"Dúvida geral",
+ "f.name":"Nome completo","f.company":"Empresa","f.email":"E-mail corporativo","f.country":"País / Região","f.program":"Programa de veículo / segmento","f.message":"Mensagem",
+ "f.privacy":"Ao enviar, você concorda que seus dados sejam usados para tratar sua solicitação.","f.send":"Enviar solicitação",
+ "f.err.req":"Este campo é obrigatório.","f.err.email":"Informe um e-mail válido.",
+ "f.ok.h":"Obrigado — sua solicitação está pronta","f.ok.p":"Seu aplicativo de e-mail abrirá com os dados preenchidos. Retornaremos em breve."
+});
+Object.assign(D.es,{
+ "con.global":"Red global","con.globalv":"23 países · 4 continentes · equipos regionales de ventas e ingeniería",
+ "f.h":"Envíenos una consulta","f.sub":"Para cotizaciones, alianzas o preguntas generales — nuestros equipos regionales responden rápido.",
+ "f.type":"Tipo de consulta","f.type.rfq":"RFQ / Cotización","f.type.partner":"Alianza / Co-desarrollo","f.type.supplier":"Ser proveedor","f.type.press":"Prensa & Medios","f.type.career":"Carreras","f.type.general":"Consulta general",
+ "f.name":"Nombre completo","f.company":"Empresa","f.email":"Correo corporativo","f.country":"País / Región","f.program":"Programa de vehículo / segmento","f.message":"Mensaje",
+ "f.privacy":"Al enviar, acepta que sus datos se usen para gestionar su solicitud.","f.send":"Enviar consulta",
+ "f.err.req":"Este campo es obligatorio.","f.err.email":"Introduzca un correo válido.",
+ "f.ok.h":"Gracias — su consulta está lista","f.ok.p":"Su aplicación de correo se abrirá con los datos rellenados. Le responderemos en breve."
+});
+
+/* ---- subpage keys (Career / Investor / Supplier) ---- */
+Object.assign(D.en,{
+ "sp.back":"Back to home",
+ "cr.eyebrow":"Career","cr.h":"Engineer the quiet, cleaner future of mobility","cr.lede":"15,000+ people in 23 countries turn acoustics and materials science into the comfort millions feel every day. Bring your talent to a global Tier-1 that grows by believing the impossible is possible.","cr.cta1":"View open positions","cr.cta2":"Send a spontaneous application",
+ "cr.areas.eyebrow":"Where you fit in","cr.areas.h":"Careers across the value chain","cr.life.eyebrow":"Life at APG","cr.life.h":"We invest in people","cr.life.lede":"Market-benchmark pay, structured training and real responsibility early — we let people grow, and we allow ourselves to make mistakes, the only way to grow.",
+ "cr.a.eng.t":"Engineering & R&D","cr.a.eng.d":"Acoustic simulation, product design, CAE and material development.",
+ "cr.a.mfg.t":"Manufacturing & Operations","cr.a.mfg.d":"Run world-class plants with the same processes and equipment worldwide.",
+ "cr.a.acoustics.t":"Acoustics & Materials Science","cr.a.acoustics.d":"Characterise materials and predict sound before it exists.",
+ "cr.a.commercial.t":"Commercial & Program Management","cr.a.commercial.d":"Own customer programs from quotation to start of production.",
+ "cr.a.supply.t":"Supply Chain & Quality","cr.a.supply.d":"Steer a €2.5M/day materials flow to APQP quality standards.",
+ "cr.a.corporate.t":"Corporate Functions","cr.a.corporate.d":"Finance, HR, IT, legal and sustainability supporting a global group.",
+ "cr.l1.t":"Grow fast","cr.l1.d":"Real responsibility early and structured training to build competence.",
+ "cr.l2.t":"Global mobility","cr.l2.d":"23 countries, 4 continents — careers that can cross borders.",
+ "cr.l3.t":"Fair & safe","cr.l3.d":"Market-benchmark pay and a zero-accident safety commitment.",
+ "inv.eyebrow":"Investor","inv.h":"A resilient, global Tier-1 platform","inv.lede":"A worldwide leader in automotive acoustics and thermal management, growing intelligently and profitably across powertrains — ICE, BEV and NEV — through organic share gains and disciplined acquisitions.",
+ "inv.kpi.eyebrow":"At a glance","inv.kpi.h":"The Group in figures","inv.str.eyebrow":"Equity story","inv.str.h":"Dual-engine growth","inv.str.lede":"We expand organically by winning share in emerging markets, segments and technologies — and inorganically through carefully scouted acquisitions, such as Faurecia's Acoustics & Soft Trim business.",
+ "inv.chart1":"Global footprint","inv.chart2":"illustrative","inv.k1.n":"15,000+","inv.k1.l":"People worldwide","inv.k2.n":"23","inv.k2.l":"Countries","inv.k3.n":"€2.5M","inv.k3.l":"Raw materials / day","inv.k4.n":"4","inv.k4.l":"Continents",
+ "inv.r1":"EMEA","inv.r2":"Asia-Pacific","inv.r3":"Americas","inv.r4":"Other",
+ "sup.eyebrow":"Supplier","sup.h":"Grow with a global supply network","sup.lede":"We purchase €2.5M of raw materials, equipment and services every day, and constantly scout talented companies that excel in quality, service and competitiveness.","sup.cta1":"Become a supplier","sup.cta2":"Supplier portal",
+ "sup.how.eyebrow":"How we work","sup.how.h":"Partnership, standards, performance","sup.std.eyebrow":"Our standards","sup.std.h":"What we expect from partners","sup.std.lede":"Every partner is held to the same principles of integrity, quality and sustainability that define the Group.",
+ "sup.h1.t":"Co-development partnership","sup.h1.d":"From build-to-print to co- and pre-development, guided by our PDP aligned to APQP.",
+ "sup.h2.t":"Uncompromising quality","sup.h2.d":"Excellence in quality, service and competitiveness across every part.",
+ "sup.h3.t":"Sustainable sourcing","sup.h3.d":"Low-impact materials and responsible practices through vertical integration."
+});
+Object.assign(D.de,{
+ "sp.back":"Zur Startseite",
+ "cr.eyebrow":"Karriere","cr.h":"Gestalten Sie die leise, sauberere Zukunft der Mobilität","cr.lede":"Über 15.000 Menschen in 23 Ländern verwandeln Akustik und Materialwissenschaft in den Komfort, den Millionen täglich spüren. Bringen Sie Ihr Talent zu einem globalen Tier-1.","cr.cta1":"Offene Stellen ansehen","cr.cta2":"Initiativbewerbung senden",
+ "cr.areas.eyebrow":"Wo Sie hinpassen","cr.areas.h":"Karrieren entlang der Wertschöpfungskette","cr.life.eyebrow":"Leben bei APG","cr.life.h":"Wir investieren in Menschen","cr.life.lede":"Marktgerechte Vergütung, strukturiertes Training und früh echte Verantwortung — wir lassen Menschen wachsen und erlauben uns Fehler, den einzigen Weg zu wachsen.",
+ "cr.a.eng.t":"Engineering & F&E","cr.a.eng.d":"Akustiksimulation, Produktdesign, CAE und Materialentwicklung.",
+ "cr.a.mfg.t":"Fertigung & Betrieb","cr.a.mfg.d":"Weltklasse-Werke mit weltweit gleichen Prozessen und Anlagen.",
+ "cr.a.acoustics.t":"Akustik & Materialwissenschaft","cr.a.acoustics.d":"Materialien charakterisieren und Klang berechnen, bevor er entsteht.",
+ "cr.a.commercial.t":"Vertrieb & Programm-Management","cr.a.commercial.d":"Kundenprogramme vom Angebot bis zum Serienstart verantworten.",
+ "cr.a.supply.t":"Supply Chain & Qualität","cr.a.supply.d":"Einen Materialfluss von 2,5 Mio. €/Tag nach APQP steuern.",
+ "cr.a.corporate.t":"Zentralfunktionen","cr.a.corporate.d":"Finanzen, HR, IT, Recht und Nachhaltigkeit für eine globale Gruppe.",
+ "cr.l1.t":"Schnell wachsen","cr.l1.d":"Früh echte Verantwortung und strukturiertes Training für Kompetenz.",
+ "cr.l2.t":"Globale Mobilität","cr.l2.d":"23 Länder, 4 Kontinente — Karrieren über Grenzen hinweg.",
+ "cr.l3.t":"Fair & sicher","cr.l3.d":"Marktgerechte Vergütung und Verpflichtung auf null Unfälle.",
+ "inv.eyebrow":"Investor","inv.h":"Eine robuste, globale Tier-1-Plattform","inv.lede":"Weltweit führend in Automobilakustik und Thermomanagement — intelligentes, profitables Wachstum über alle Antriebe (ICE, BEV, NEV) durch organische Marktanteile und disziplinierte Akquisitionen.",
+ "inv.kpi.eyebrow":"Auf einen Blick","inv.kpi.h":"Die Gruppe in Zahlen","inv.str.eyebrow":"Equity Story","inv.str.h":"Wachstum mit zwei Motoren","inv.str.lede":"Wir wachsen organisch durch Marktanteile in Wachstumsmärkten, Segmenten und Technologien — und anorganisch durch sorgfältig ausgewählte Akquisitionen wie Faurecias Acoustics & Soft Trim.",
+ "inv.chart1":"Globale Präsenz","inv.chart2":"illustrativ","inv.k1.n":"15.000+","inv.k1.l":"Mitarbeitende weltweit","inv.k2.n":"23","inv.k2.l":"Länder","inv.k3.n":"2,5 Mio. €","inv.k3.l":"Rohstoffe / Tag","inv.k4.n":"4","inv.k4.l":"Kontinente",
+ "inv.r1":"EMEA","inv.r2":"Asien-Pazifik","inv.r3":"Amerika","inv.r4":"Übrige",
+ "sup.eyebrow":"Lieferant","sup.h":"Wachsen Sie mit einem globalen Netzwerk","sup.lede":"Wir kaufen täglich Rohstoffe, Anlagen und Dienstleistungen für 2,5 Mio. € ein und suchen ständig talentierte Unternehmen mit herausragender Qualität, Service und Wettbewerbsfähigkeit.","sup.cta1":"Lieferant werden","sup.cta2":"Lieferantenportal",
+ "sup.how.eyebrow":"Wie wir arbeiten","sup.how.h":"Partnerschaft, Standards, Leistung","sup.std.eyebrow":"Unsere Standards","sup.std.h":"Was wir von Partnern erwarten","sup.std.lede":"Jeder Partner verpflichtet sich denselben Prinzipien von Integrität, Qualität und Nachhaltigkeit, die die Gruppe ausmachen.",
+ "sup.h1.t":"Co-Development-Partnerschaft","sup.h1.d":"Von Build-to-Print bis Co- und Pre-Development, geführt von unserem APQP-konformen PDP.",
+ "sup.h2.t":"Kompromisslose Qualität","sup.h2.d":"Exzellenz in Qualität, Service und Wettbewerbsfähigkeit in jedem Bauteil.",
+ "sup.h3.t":"Nachhaltige Beschaffung","sup.h3.d":"Materialien mit geringer Auswirkung und verantwortungsvolle Praktiken durch vertikale Integration."
+});
+Object.assign(D.zh,{
+ "sp.back":"返回首页",
+ "cr.eyebrow":"招聘","cr.h":"打造更安静、更清洁的出行未来","cr.lede":"23 个国家逾 15,000 名员工，将声学与材料科学转化为数百万人每天感受到的舒适。把你的才华带到一家全球一级供应商。","cr.cta1":"查看在招职位","cr.cta2":"投递自荐简历",
+ "cr.areas.eyebrow":"你的位置","cr.areas.h":"贯穿价值链的职业机会","cr.life.eyebrow":"APG 的工作","cr.life.h":"我们投资于人","cr.life.lede":"市场对标薪酬、系统化培训与尽早的实质责任——我们让人成长，也允许犯错，因为这是成长的唯一途径。",
+ "cr.a.eng.t":"工程与研发","cr.a.eng.d":"声学仿真、产品设计、CAE 与材料开发。",
+ "cr.a.mfg.t":"制造与运营","cr.a.mfg.d":"以全球统一的工艺与设备运营世界级工厂。",
+ "cr.a.acoustics.t":"声学与材料科学","cr.a.acoustics.d":"表征材料，在声音产生之前进行预测。",
+ "cr.a.commercial.t":"商务与项目管理","cr.a.commercial.d":"从报价到量产，全程负责客户项目。",
+ "cr.a.supply.t":"供应链与质量","cr.a.supply.d":"以 APQP 标准管理每日 250 万欧元的材料流。",
+ "cr.a.corporate.t":"职能部门","cr.a.corporate.d":"财务、人力、IT、法务与可持续，支撑全球集团运转。",
+ "cr.l1.t":"快速成长","cr.l1.d":"尽早承担实质责任，配合系统化培训培养能力。",
+ "cr.l2.t":"全球流动","cr.l2.d":"23 个国家、四大洲——可跨境发展的职业。",
+ "cr.l3.t":"公平与安全","cr.l3.d":"市场对标薪酬与零事故安全承诺。",
+ "inv.eyebrow":"投资者","inv.h":"稳健的全球一级供应平台","inv.lede":"汽车声学与热管理领域的全球领导者，跨越各类动力（燃油、纯电、新能源），以有机份额增长与稳健并购实现智慧而盈利的成长。",
+ "inv.kpi.eyebrow":"概览","inv.kpi.h":"数字中的集团","inv.str.eyebrow":"投资亮点","inv.str.h":"双引擎增长","inv.str.lede":"我们在新兴市场、细分领域与新技术中有机扩张份额，并通过精心甄选的并购（如收购 Faurecia 声学与软饰业务）实现外延增长。",
+ "inv.chart1":"全球布局","inv.chart2":"示意","inv.k1.n":"15,000+","inv.k1.l":"全球员工","inv.k2.n":"23","inv.k2.l":"国家","inv.k3.n":"€2.5M","inv.k3.l":"每日原材料","inv.k4.n":"4","inv.k4.l":"大洲",
+ "inv.r1":"欧洲中东非","inv.r2":"亚太","inv.r3":"美洲","inv.r4":"其他",
+ "sup.eyebrow":"供应商","sup.h":"与全球供应网络共同成长","sup.lede":"我们每天采购价值 250 万欧元的原材料、设备与服务，并持续发掘在质量、服务与竞争力上卓越的优秀企业。","sup.cta1":"成为供应商","sup.cta2":"供应商门户",
+ "sup.how.eyebrow":"合作方式","sup.how.h":"合作、标准、绩效","sup.std.eyebrow":"我们的标准","sup.std.h":"我们对伙伴的期望","sup.std.lede":"每一位伙伴都需遵循与集团一致的诚信、质量与可持续原则。",
+ "sup.h1.t":"共同开发伙伴","sup.h1.d":"从来图制造到共同与预先开发，以符合 APQP 的 PDP 为指引。",
+ "sup.h2.t":"质量不妥协","sup.h2.d":"在每个部件上追求质量、服务与竞争力的卓越。",
+ "sup.h3.t":"可持续采购","sup.h3.d":"通过垂直整合采用低影响材料与负责任的做法。"
+});
+Object.assign(D.pt,{
+ "sp.back":"Voltar ao início",
+ "cr.eyebrow":"Carreiras","cr.h":"Projete o futuro mais silencioso e limpo da mobilidade","cr.lede":"Mais de 15.000 pessoas em 23 países transformam acústica e ciência dos materiais no conforto que milhões sentem todos os dias. Traga seu talento para um Tier-1 global.","cr.cta1":"Ver vagas abertas","cr.cta2":"Enviar candidatura espontânea",
+ "cr.areas.eyebrow":"Onde você se encaixa","cr.areas.h":"Carreiras em toda a cadeia de valor","cr.life.eyebrow":"Vida na APG","cr.life.h":"Investimos em pessoas","cr.life.lede":"Remuneração de mercado, treinamento estruturado e responsabilidade real desde cedo — deixamos as pessoas crescerem e nos permitimos errar, o único caminho para crescer.",
+ "cr.a.eng.t":"Engenharia & P&D","cr.a.eng.d":"Simulação acústica, design de produto, CAE e desenvolvimento de materiais.",
+ "cr.a.mfg.t":"Manufatura & Operações","cr.a.mfg.d":"Operar plantas de classe mundial com os mesmos processos e equipamentos.",
+ "cr.a.acoustics.t":"Acústica & Ciência dos Materiais","cr.a.acoustics.d":"Caracterizar materiais e prever o som antes que ele exista.",
+ "cr.a.commercial.t":"Comercial & Gestão de Programas","cr.a.commercial.d":"Conduzir programas de clientes da cotação ao início de produção.",
+ "cr.a.supply.t":"Supply Chain & Qualidade","cr.a.supply.d":"Gerir um fluxo de € 2,5 mi/dia de materiais conforme o APQP.",
+ "cr.a.corporate.t":"Funções Corporativas","cr.a.corporate.d":"Finanças, RH, TI, jurídico e sustentabilidade apoiando o grupo global.",
+ "cr.l1.t":"Cresça rápido","cr.l1.d":"Responsabilidade real desde cedo e treinamento estruturado.",
+ "cr.l2.t":"Mobilidade global","cr.l2.d":"23 países, 4 continentes — carreiras que cruzam fronteiras.",
+ "cr.l3.t":"Justo & seguro","cr.l3.d":"Remuneração de mercado e compromisso de zero acidente.",
+ "inv.eyebrow":"Investidor","inv.h":"Uma plataforma Tier-1 global e resiliente","inv.lede":"Líder mundial em acústica e gestão térmica automotiva, crescendo de forma inteligente e lucrativa em todos os powertrains — ICE, BEV e NEV — por meio de ganhos orgânicos e aquisições disciplinadas.",
+ "inv.kpi.eyebrow":"Resumo","inv.kpi.h":"O Grupo em números","inv.str.eyebrow":"Tese de investimento","inv.str.h":"Crescimento de motor duplo","inv.str.lede":"Crescemos organicamente ganhando participação em mercados emergentes, segmentos e tecnologias — e inorganicamente por aquisições criteriosas, como o negócio Acoustics & Soft Trim da Faurecia.",
+ "inv.chart1":"Presença global","inv.chart2":"ilustrativo","inv.k1.n":"15.000+","inv.k1.l":"Colaboradores no mundo","inv.k2.n":"23","inv.k2.l":"Países","inv.k3.n":"€2,5 mi","inv.k3.l":"Matéria-prima / dia","inv.k4.n":"4","inv.k4.l":"Continentes",
+ "inv.r1":"EMEA","inv.r2":"Ásia-Pacífico","inv.r3":"Américas","inv.r4":"Outros",
+ "sup.eyebrow":"Fornecedor","sup.h":"Cresça com uma rede global de suprimentos","sup.lede":"Compramos € 2,5 milhões em matérias-primas, equipamentos e serviços todos os dias, e buscamos constantemente empresas talentosas que se destacam em qualidade, serviço e competitividade.","sup.cta1":"Tornar-se fornecedor","sup.cta2":"Portal do fornecedor",
+ "sup.how.eyebrow":"Como trabalhamos","sup.how.h":"Parceria, padrões, desempenho","sup.std.eyebrow":"Nossos padrões","sup.std.h":"O que esperamos dos parceiros","sup.std.lede":"Cada parceiro segue os mesmos princípios de integridade, qualidade e sustentabilidade que definem o Grupo.",
+ "sup.h1.t":"Parceria de co-desenvolvimento","sup.h1.d":"De build-to-print a co- e pré-desenvolvimento, guiados pelo nosso PDP alinhado ao APQP.",
+ "sup.h2.t":"Qualidade sem concessões","sup.h2.d":"Excelência em qualidade, serviço e competitividade em cada peça.",
+ "sup.h3.t":"Compras sustentáveis","sup.h3.d":"Materiais de baixo impacto e práticas responsáveis via integração vertical."
+});
+Object.assign(D.es,{
+ "sp.back":"Volver al inicio",
+ "cr.eyebrow":"Carreras","cr.h":"Diseñe el futuro más silencioso y limpio de la movilidad","cr.lede":"Más de 15.000 personas en 23 países convierten la acústica y la ciencia de materiales en el confort que sienten millones cada día. Traiga su talento a un Tier-1 global.","cr.cta1":"Ver vacantes","cr.cta2":"Enviar candidatura espontánea",
+ "cr.areas.eyebrow":"Dónde encaja","cr.areas.h":"Carreras en toda la cadena de valor","cr.life.eyebrow":"Vida en APG","cr.life.h":"Invertimos en las personas","cr.life.lede":"Retribución de mercado, formación estructurada y responsabilidad real desde el inicio — dejamos crecer a las personas y nos permitimos errar, la única forma de crecer.",
+ "cr.a.eng.t":"Ingeniería & I+D","cr.a.eng.d":"Simulación acústica, diseño de producto, CAE y desarrollo de materiales.",
+ "cr.a.mfg.t":"Manufactura & Operaciones","cr.a.mfg.d":"Operar plantas de clase mundial con los mismos procesos y equipos.",
+ "cr.a.acoustics.t":"Acústica & Ciencia de Materiales","cr.a.acoustics.d":"Caracterizar materiales y predecir el sonido antes de que exista.",
+ "cr.a.commercial.t":"Comercial & Gestión de Programas","cr.a.commercial.d":"Liderar programas de clientes desde la cotización al inicio de producción.",
+ "cr.a.supply.t":"Cadena de Suministro & Calidad","cr.a.supply.d":"Gestionar un flujo de 2,5 M€/día de materiales según APQP.",
+ "cr.a.corporate.t":"Funciones Corporativas","cr.a.corporate.d":"Finanzas, RR. HH., TI, legal y sostenibilidad para un grupo global.",
+ "cr.l1.t":"Crezca rápido","cr.l1.d":"Responsabilidad real desde el inicio y formación estructurada.",
+ "cr.l2.t":"Movilidad global","cr.l2.d":"23 países, 4 continentes — carreras que cruzan fronteras.",
+ "cr.l3.t":"Justo & seguro","cr.l3.d":"Retribución de mercado y compromiso de cero accidentes.",
+ "inv.eyebrow":"Inversores","inv.h":"Una plataforma Tier-1 global y resiliente","inv.lede":"Líder mundial en acústica y gestión térmica automotriz, creciendo de forma inteligente y rentable en todos los powertrains — ICE, BEV y NEV — mediante ganancias orgánicas y adquisiciones disciplinadas.",
+ "inv.kpi.eyebrow":"De un vistazo","inv.kpi.h":"El Grupo en cifras","inv.str.eyebrow":"Tesis de inversión","inv.str.h":"Crecimiento de doble motor","inv.str.lede":"Crecemos orgánicamente ganando cuota en mercados emergentes, segmentos y tecnologías — e inorgánicamente mediante adquisiciones seleccionadas, como el negocio Acoustics & Soft Trim de Faurecia.",
+ "inv.chart1":"Presencia global","inv.chart2":"ilustrativo","inv.k1.n":"15.000+","inv.k1.l":"Personas en el mundo","inv.k2.n":"23","inv.k2.l":"Países","inv.k3.n":"2,5 M€","inv.k3.l":"Materia prima / día","inv.k4.n":"4","inv.k4.l":"Continentes",
+ "inv.r1":"EMEA","inv.r2":"Asia-Pacífico","inv.r3":"Américas","inv.r4":"Otros",
+ "sup.eyebrow":"Proveedor","sup.h":"Crezca con una red global de suministro","sup.lede":"Compramos 2,5 M€ en materias primas, equipos y servicios cada día, y buscamos constantemente empresas talentosas que destacan en calidad, servicio y competitividad.","sup.cta1":"Ser proveedor","sup.cta2":"Portal de proveedores",
+ "sup.how.eyebrow":"Cómo trabajamos","sup.how.h":"Alianza, estándares, desempeño","sup.std.eyebrow":"Nuestros estándares","sup.std.h":"Lo que esperamos de los socios","sup.std.lede":"Cada socio se rige por los mismos principios de integridad, calidad y sostenibilidad que definen al Grupo.",
+ "sup.h1.t":"Alianza de co-desarrollo","sup.h1.d":"De build-to-print a co- y pre-desarrollo, guiados por nuestro PDP alineado a APQP.",
+ "sup.h2.t":"Calidad sin concesiones","sup.h2.d":"Excelencia en calidad, servicio y competitividad en cada pieza.",
+ "sup.h3.t":"Abastecimiento sostenible","sup.h3.d":"Materiales de bajo impacto y prácticas responsables mediante integración vertical."
+});
+
+/* ---- world map keys ---- */
+Object.assign(D.en,{"map.eyebrow":"Global Footprint","map.h":"Where we are","map.lede":"A truly global Tier-1: 23 countries across 4 continents, with manufacturing, engineering and sales close to every major automotive hub — from our headquarters in Hagen to Pune, Detroit, Shanghai and beyond.","map.note":"● Headquarters (Hagen, Germany) · ● operating locations — illustrative of our global footprint across 23 countries.","map.lg.countries":"Countries","map.lg.continents":"Continents","map.lg.people":"People"});
+Object.assign(D.de,{"map.eyebrow":"Globale Präsenz","map.h":"Wo wir sind","map.lede":"Ein wahrhaft globaler Tier-1: 23 Länder auf 4 Kontinenten, mit Fertigung, Engineering und Vertrieb nahe jedem großen Automobil-Hub — vom Hauptsitz in Hagen bis Pune, Detroit, Shanghai und darüber hinaus.","map.note":"● Hauptsitz (Hagen, Deutschland) · ● Standorte — illustrativ für unsere globale Präsenz in 23 Ländern.","map.lg.countries":"Länder","map.lg.continents":"Kontinente","map.lg.people":"Mitarbeitende"});
+Object.assign(D.zh,{"map.eyebrow":"全球布局","map.h":"我们的所在","map.lede":"真正意义上的全球一级供应商：覆盖四大洲、23 个国家，制造、工程与销售贴近每一个主要汽车枢纽——从总部黑根到浦那、底特律、上海乃至更远。","map.note":"● 总部（德国黑根） · ● 运营基地——示意我们覆盖 23 个国家的全球布局。","map.lg.countries":"国家","map.lg.continents":"大洲","map.lg.people":"员工"});
+Object.assign(D.pt,{"map.eyebrow":"Presença Global","map.h":"Onde estamos","map.lede":"Um Tier-1 verdadeiramente global: 23 países em 4 continentes, com manufatura, engenharia e vendas perto de cada grande polo automotivo — da sede em Hagen a Pune, Detroit, Xangai e além.","map.note":"● Sede (Hagen, Alemanha) · ● unidades operacionais — ilustrativo da nossa presença global em 23 países.","map.lg.countries":"Países","map.lg.continents":"Continentes","map.lg.people":"Colaboradores"});
+Object.assign(D.es,{"map.eyebrow":"Presencia Global","map.h":"Dónde estamos","map.lede":"Un Tier-1 verdaderamente global: 23 países en 4 continentes, con fabricación, ingeniería y ventas cerca de cada gran polo automotriz — desde la sede en Hagen hasta Pune, Detroit, Shanghái y más allá.","map.note":"● Sede (Hagen, Alemania) · ● ubicaciones operativas — ilustrativo de nuestra presencia global en 23 países.","map.lg.countries":"Países","map.lg.continents":"Continentes","map.lg.people":"Personas"});
+
+/* ---- admin / edit-mode keys ---- */
+Object.assign(D.en,{
+ "admin.title":"Edit mode","admin.hint":"Click any highlighted heading or text to edit it inline. Manage news and plant markers below.",
+ "admin.news":"News items","admin.news.add":"+ Add news item","admin.news.title":"Title","admin.news.cat":"Category","admin.news.body":"Body text",
+ "admin.news.img":"Image","admin.news.up":"Move up","admin.news.down":"Move down","admin.news.del":"Delete","admin.news.upload":"Upload image",
+ "admin.plants":"Map markers","admin.plants.add":"+ Add marker","admin.plants.city":"Name / city","admin.plants.lat":"Latitude","admin.plants.lon":"Longitude","admin.plants.hq":"HQ","admin.plants.del":"Delete",
+ "admin.data":"Data","admin.export":"Export JSON","admin.import":"Import JSON","admin.reset":"Reset to defaults",
+ "admin.saved":"Saved.","admin.exported":"Exported apg-admin-state.json","admin.imported":"Import successful.","admin.import.err":"Import failed: invalid file.","admin.reset.done":"Reset to defaults."
+});
+Object.assign(D.de,{
+ "admin.title":"Bearbeitungsmodus","admin.hint":"Klicken Sie auf eine hervorgehobene Überschrift oder einen Text, um ihn direkt zu bearbeiten. News und Standortmarker unten verwalten.",
+ "admin.news":"News-Einträge","admin.news.add":"+ News hinzufügen","admin.news.title":"Titel","admin.news.cat":"Kategorie","admin.news.body":"Text",
+ "admin.news.img":"Bild","admin.news.up":"Nach oben","admin.news.down":"Nach unten","admin.news.del":"Löschen","admin.news.upload":"Bild hochladen",
+ "admin.plants":"Kartenmarker","admin.plants.add":"+ Marker hinzufügen","admin.plants.city":"Name / Stadt","admin.plants.lat":"Breitengrad","admin.plants.lon":"Längengrad","admin.plants.hq":"Hauptsitz","admin.plants.del":"Löschen",
+ "admin.data":"Daten","admin.export":"JSON exportieren","admin.import":"JSON importieren","admin.reset":"Auf Standard zurücksetzen",
+ "admin.saved":"Gespeichert.","admin.exported":"apg-admin-state.json exportiert","admin.imported":"Import erfolgreich.","admin.import.err":"Import fehlgeschlagen: ungültige Datei.","admin.reset.done":"Auf Standard zurückgesetzt."
+});
+Object.assign(D.zh,{
+ "admin.title":"编辑模式","admin.hint":"点击任意高亮的标题或文本即可直接编辑。可在下方管理新闻与地图标记。",
+ "admin.news":"新闻条目","admin.news.add":"+ 添加新闻","admin.news.title":"标题","admin.news.cat":"分类","admin.news.body":"正文",
+ "admin.news.img":"图片","admin.news.up":"上移","admin.news.down":"下移","admin.news.del":"删除","admin.news.upload":"上传图片",
+ "admin.plants":"地图标记","admin.plants.add":"+ 添加标记","admin.plants.city":"名称 / 城市","admin.plants.lat":"纬度","admin.plants.lon":"经度","admin.plants.hq":"总部","admin.plants.del":"删除",
+ "admin.data":"数据","admin.export":"导出 JSON","admin.import":"导入 JSON","admin.reset":"恢复默认设置",
+ "admin.saved":"已保存。","admin.exported":"已导出 apg-admin-state.json","admin.imported":"导入成功。","admin.import.err":"导入失败：文件无效。","admin.reset.done":"已恢复默认设置。"
+});
+Object.assign(D.pt,{
+ "admin.title":"Modo de edição","admin.hint":"Clique em qualquer título ou texto destacado para editá-lo diretamente. Gerencie notícias e marcadores do mapa abaixo.",
+ "admin.news":"Itens de notícias","admin.news.add":"+ Adicionar notícia","admin.news.title":"Título","admin.news.cat":"Categoria","admin.news.body":"Texto",
+ "admin.news.img":"Imagem","admin.news.up":"Mover para cima","admin.news.down":"Mover para baixo","admin.news.del":"Excluir","admin.news.upload":"Enviar imagem",
+ "admin.plants":"Marcadores do mapa","admin.plants.add":"+ Adicionar marcador","admin.plants.city":"Nome / cidade","admin.plants.lat":"Latitude","admin.plants.lon":"Longitude","admin.plants.hq":"Sede","admin.plants.del":"Excluir",
+ "admin.data":"Dados","admin.export":"Exportar JSON","admin.import":"Importar JSON","admin.reset":"Restaurar padrões",
+ "admin.saved":"Salvo.","admin.exported":"apg-admin-state.json exportado","admin.imported":"Importação bem-sucedida.","admin.import.err":"Falha na importação: arquivo inválido.","admin.reset.done":"Restaurado para os padrões."
+});
+Object.assign(D.es,{
+ "admin.title":"Modo de edición","admin.hint":"Haga clic en cualquier título o texto resaltado para editarlo en línea. Gestione noticias y marcadores del mapa abajo.",
+ "admin.news":"Elementos de noticias","admin.news.add":"+ Añadir noticia","admin.news.title":"Título","admin.news.cat":"Categoría","admin.news.body":"Texto",
+ "admin.news.img":"Imagen","admin.news.up":"Subir","admin.news.down":"Bajar","admin.news.del":"Eliminar","admin.news.upload":"Subir imagen",
+ "admin.plants":"Marcadores del mapa","admin.plants.add":"+ Añadir marcador","admin.plants.city":"Nombre / ciudad","admin.plants.lat":"Latitud","admin.plants.lon":"Longitud","admin.plants.hq":"Sede","admin.plants.del":"Eliminar",
+ "admin.data":"Datos","admin.export":"Exportar JSON","admin.import":"Importar JSON","admin.reset":"Restaurar valores predeterminados",
+ "admin.saved":"Guardado.","admin.exported":"apg-admin-state.json exportado","admin.imported":"Importación correcta.","admin.import.err":"Error al importar: archivo no válido.","admin.reset.done":"Restaurado a los valores predeterminados."
+});
+
+/* ============================================================
+   STATE + HELPERS
+   ============================================================ */
+let lang = localStorage.getItem("apg_lang") || "en";
+if(!D[lang]) lang = "en";
+const $  = (s,c)=> (c||document).querySelector(s);
+const $$ = (s,c)=> Array.from((c||document).querySelectorAll(s));
+const t  = k => {
+  const ov = (window.ADMIN && ADMIN.state && ADMIN.state.textOverrides && ADMIN.state.textOverrides[lang]) || null;
+  if(ov && ov[k]!==undefined) return ov[k];
+  return (D[lang] && D[lang][k]!==undefined) ? D[lang][k] : (D.en[k]!==undefined?D.en[k]:k);
+};
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+/* ============================================================
+   VEHICLE SVG (signature exploded view)
+   ============================================================ */
+function buildVehicle(){
+  const dots = ZONES.map((z,i)=>{
+    const [x,y]=z.dot, ex=x+z.dx, ey=y+z.dy;
+    return `<g class="lead" data-zone="${z.id}">
+      <line x1="${x}" y1="${y}" x2="${ex}" y2="${ey}" stroke="rgba(255,255,255,.22)" stroke-width="1" stroke-dasharray="3 3"/>
+      <g class="exp-dot" data-zone="${z.id}">
+        <circle class="h" cx="${x}" cy="${y}" r="11"/>
+        <circle cx="${x}" cy="${y}" r="5.5" fill="#0E1116" stroke="#2E47B0" stroke-width="2"/>
+        <circle cx="${x}" cy="${y}" r="2" fill="#2E47B0"/>
+      </g></g>`;
+  }).join("");
+
+  const blocks = ZONES.map((z,i)=>{
+    const [x,y]=z.dot, cx=x+z.dx, cy=y+z.dy, w=92, h=46;
+    const n = String(i+1).padStart(2,"0");
+    return `<g class="exp-part" data-zone="${z.id}" style="--dx:${-z.dx}px;--dy:${-z.dy}px">
+      <rect class="body" x="${cx-w/2}" y="${cy-h/2}" width="${w}" height="${h}" rx="5"
+            fill="#161d29" stroke="rgba(255,255,255,.18)" stroke-width="1.4"/>
+      <text x="${cx-w/2+13}" y="${cy+2}" font-family="Space Grotesk,sans-serif" font-weight="700" font-size="20" fill="#2E47B0">${n}</text>
+      <text x="${cx-w/2+13}" y="${cy+16}" font-family="Space Mono,monospace" font-size="7.5" letter-spacing="1.5" fill="#9AA3AF">ZONE</text>
+      <circle cx="${cx+w/2-15}" cy="${cy}" r="9" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1.3"/>
+      <circle cx="${cx+w/2-15}" cy="${cy}" r="3" fill="#2E47B0"/>
+    </g>`;
+  }).join("");
+
+  return `<svg class="exp-svg" viewBox="0 0 820 470" role="img" aria-label="Exploded vehicle showing acoustic and thermal zones">
+    <defs>
+      <linearGradient id="bodyg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#202a39"/><stop offset="1" stop-color="#10151d"/>
+      </linearGradient>
+      <linearGradient id="glassg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#2f3d52"/><stop offset="1" stop-color="#1a2330"/>
+      </linearGradient>
+    </defs>
+    <!-- ground -->
+    <line x1="40" y1="408" x2="780" y2="408" stroke="rgba(255,255,255,.10)" stroke-width="1.5"/>
+    <ellipse cx="410" cy="412" rx="320" ry="14" fill="#000" opacity=".35"/>
+    <!-- car body -->
+    <g class="car-base">
+      <path d="M70,330 L88,300 Q96,286 150,282 L255,250 Q272,246 300,206
+               L320,162 Q326,150 352,148 L520,146 Q548,148 560,170 L600,224
+               Q610,238 720,244 Q742,248 752,290 L760,330 Z"
+            fill="url(#bodyg)" stroke="rgba(255,255,255,.16)" stroke-width="1.6" stroke-linejoin="round"/>
+      <!-- greenhouse glass -->
+      <path d="M330,164 L352,156 L516,154 Q536,156 546,172 L588,222 L320,222 Q314,200 330,164 Z"
+            fill="url(#glassg)" opacity=".9"/>
+      <line x1="438" y1="155" x2="438" y2="222" stroke="rgba(14,17,22,.6)" stroke-width="3"/>
+      <!-- belt + sill lines -->
+      <line x1="150" y1="282" x2="752" y2="290" stroke="rgba(46,71,176,.5)" stroke-width="1.4" opacity=".5"/>
+      <!-- wheels -->
+      <g>
+        <circle cx="212" cy="332" r="62" fill="#0c1118" stroke="rgba(255,255,255,.18)" stroke-width="2"/>
+        <circle cx="212" cy="332" r="34" fill="#161d29" stroke="rgba(255,255,255,.22)" stroke-width="2"/>
+        <circle cx="212" cy="332" r="7" fill="#2E47B0"/>
+        <circle cx="610" cy="332" r="62" fill="#0c1118" stroke="rgba(255,255,255,.18)" stroke-width="2"/>
+        <circle cx="610" cy="332" r="34" fill="#161d29" stroke="rgba(255,255,255,.22)" stroke-width="2"/>
+        <circle cx="610" cy="332" r="7" fill="#2E47B0"/>
+      </g>
+    </g>
+    ${dots}
+    ${blocks}
+  </svg>`;
+}
+
+/* ============================================================
+   DYNAMIC RENDER
+   ============================================================ */
+function renderProducts(){
+  $("#prodGrid").innerHTML = PRODUCTS.map((p,i)=>{
+    const chips=(t("p."+p+".c")||[]).map(c=>`<span>${esc(c)}</span>`).join("");
+    return `<div class="prod"><h4><span class="n">${String(i+1).padStart(2,"0")}</span>${esc(t("p."+p+".t"))}</h4>
+      <p>${esc(t("p."+p+".d"))}</p><div class="chips">${chips}</div></div>`;
+  }).join("");
+}
+function renderPs(){
+  $("#psGrid").innerHTML = PS.map((p)=>{
+    if(p==="worldwide") return `<div class="pcard worldwide"><h3>${esc(t("ps.worldwide.t"))}</h3></div>`;
+    return `<div class="pcard" data-p="${esc(t("ps."+p+".t")).charAt(0)}">
+      <div class="pk">${esc(t("ps."+p+".t"))}</div>
+      <h3>${esc(t("ps."+p+".s"))}</h3>
+      <p>${esc(t("ps."+p+".p"))}</p></div>`;
+  }).join("");
+}
+function renderTimeline(){
+  $("#tlTrack").innerHTML = TIMELINE.map(x=>`<div class="tl-item">
+    <div class="yr">${esc(t("tl."+x+".y"))}</div><div class="dot"></div>
+    <h4>${esc(t("tl."+x+".t"))}</h4><p>${esc(t("tl."+x+".d"))}</p></div>`).join("");
+}
+function renderSus(){
+  const ico=['<path d="M20 6a6 6 0 016 6c0 4-6 10-6 10s-6-6-6-10a6 6 0 016-6z" stroke="currentColor" stroke-width="2" fill="none"/>',
+   '<circle cx="20" cy="13" r="5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M10 32c0-6 4-9 10-9s10 3 10 9" stroke="currentColor" stroke-width="2" fill="none"/>',
+   '<path d="M8 30V14l12-7 12 7v16" stroke="currentColor" stroke-width="2" fill="none"/><path d="M16 30V20h8v10" stroke="currentColor" stroke-width="2" fill="none"/>',
+   '<path d="M20 8c-6 6-6 12 0 20 6-8 6-14 0-20z" stroke="currentColor" stroke-width="2" fill="none"/><path d="M20 16v12" stroke="currentColor" stroke-width="2"/>',
+   '<circle cx="20" cy="20" r="12" stroke="currentColor" stroke-width="2" fill="none"/><path d="M20 12v8l6 4" stroke="currentColor" stroke-width="2"/>'];
+  $("#susGrid").innerHTML = SUS.map((s,i)=>`<div class="sus">
+    <svg class="ico" viewBox="0 0 40 40">${ico[i]}</svg>
+    <h4>${esc(t("su."+s+".t"))}</h4><p>${esc(t("su."+s+".d"))}</p></div>`).join("");
+}
+function renderNews(){
+  const ph=['<path d="M10 50l14-16 9 9 12-15 9 11" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="22" cy="22" r="5" stroke="currentColor" stroke-width="2" fill="none"/>',
+   '<path d="M14 14h36v28H14z" stroke="currentColor" stroke-width="2" fill="none"/><path d="M14 24h36M26 14v28" stroke="currentColor" stroke-width="2"/>',
+   '<circle cx="32" cy="32" r="20" stroke="currentColor" stroke-width="2" fill="none"/><path d="M32 18v14l10 6" stroke="currentColor" stroke-width="2"/>'];
+  const items = (window.ADMIN && ADMIN.state && ADMIN.state.news && ADMIN.state.news.length)
+    ? ADMIN.state.news
+    : NEWS.map(n=>({cat:t("n."+n+".c"), title:t("n."+n+".t"), body:t("n."+n+".d"), img:null}));
+  $("#newsGrid").innerHTML = items.map((n,i)=>`<a class="news" href="https://www.adlerpelzer.com/news-media" target="_blank" rel="noopener">
+    <div class="ph"${n.img?` style="background-image:url('${n.img}');background-size:cover;background-position:center"`:""}><span class="cat">${esc(n.cat)}</span>${n.img?"":`<svg viewBox="0 0 64 64">${ph[i%ph.length]}</svg>`}</div>
+    <div class="bd"><h4>${esc(n.title)}</h4><p>${esc(n.body)}</p>
+    <span class="more">${esc(t("news.more"))} →</span></div></a>`).join("");
+}
+
+/* ============================================================
+   EXPLODED ZONE SELECTION
+   ============================================================ */
+let selZone = "engine";
+function selectZone(id){
+  selZone = id;
+  $$(".exp-part").forEach(e=>e.classList.toggle("sel", e.dataset.zone===id));
+  $$(".exp-dot").forEach(e=>e.classList.toggle("sel", e.dataset.zone===id));
+  $$("#expZones button").forEach(b=>b.classList.toggle("active", b.dataset.zone===id));
+  const idx = ZONES.findIndex(z=>z.id===id);
+  $("#expTag").textContent = "ZONE "+String(idx+1).padStart(2,"0");
+  $("#expTitle").textContent = t("z."+id+".t");
+  $("#expDesc").textContent  = t("z."+id+".d");
+  $("#expList").innerHTML = (t("z."+id+".i")||[]).map(x=>`<li>${esc(x)}</li>`).join("");
+}
+function renderZoneButtons(){
+  $("#expZones").innerHTML = ZONES.map((z,i)=>`<button data-zone="${z.id}">${String(i+1).padStart(2,"0")} · ${esc(t("z."+z.id+".t"))}</button>`).join("");
+  $$("#expZones button").forEach(b=>b.addEventListener("click",()=>selectZone(b.dataset.zone)));
+}
+
+/* ============================================================
+/* ============================================================
+   WORLD MAP
+   ============================================================ */
+const PLANTS=[
+ {city:"Hagen (HQ)",lat:51.36,lon:7.47,hq:true},
+ {city:"Italy",lat:42.5,lon:13.4},{city:"France",lat:48.2,lon:2.4},{city:"Spain",lat:40.4,lon:-3.7},
+ {city:"Portugal",lat:40.2,lon:-8.4},{city:"United Kingdom",lat:52.6,lon:-1.6},{city:"Luxembourg",lat:49.7,lon:6.1},
+ {city:"Poland",lat:51.5,lon:19.2},{city:"Czechia",lat:49.8,lon:15.5},{city:"Türkiye",lat:40.0,lon:32.5},
+ {city:"Morocco",lat:33.6,lon:-7.6},{city:"South Africa",lat:-29.6,lon:30.4},
+ {city:"United States",lat:42.3,lon:-83.1},{city:"Mexico",lat:25.7,lon:-100.3},{city:"Brazil",lat:-23.5,lon:-46.6},
+ {city:"China",lat:31.2,lon:121.5},{city:"Pune, India",lat:18.52,lon:73.86},{city:"Japan",lat:35.7,lon:139.7},
+ {city:"South Korea",lat:37.5,lon:127.0},{city:"Thailand",lat:13.7,lon:100.5}
+];
+function mapXY(lon,lat){return [((lon+180)/360*1000),((90-lat)/180*500)];}
+function currentPlants(){
+  return (window.ADMIN && ADMIN.state && ADMIN.state.plants && ADMIN.state.plants.length) ? ADMIN.state.plants : PLANTS;
+}
+function renderMap(){
+  const g=$("#mapMarkers"); if(g){
+    g.innerHTML=currentPlants().map(p=>{
+      const [x,y]=mapXY(p.lon,p.lat); const lw=Math.max(40,p.city.length*5.4);
+      return `<g class="mk${p.hq?' hq':''}">
+        <circle class="pulse" cx="${x}" cy="${y}" r="4"/>
+        <circle class="core" cx="${x}" cy="${y}" r="${p.hq?4.5:3.4}"/>
+        <rect class="labbg" x="${x-lw/2}" y="${y-22}" width="${lw}" height="14" rx="3"/>
+        <text class="lab" x="${x}" y="${y-12}">${esc(p.city)}</text></g>`;
+    }).join("");
+  }
+  const lg=$("#mapLegend"); if(lg) lg.innerHTML=
+    `<span class="lg"><i></i><b>23</b> ${esc(t("map.lg.countries"))}</span>`+
+    `<span class="lg"><b>4</b> ${esc(t("map.lg.continents"))}</span>`+
+    `<span class="lg"><b>15,000+</b> ${esc(t("map.lg.people"))}</span>`;
+}
+
+/* ============================================================
+   SUBPAGE RENDER + ROUTER
+   ============================================================ */
+const CAREER_AREAS=[
+ ["eng",'<path d="M20 4l14 8v16l-14 8-14-8V12z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M20 4v32M6 12l14 8 14-8" stroke="currentColor" stroke-width="2"/>'],
+ ["mfg",'<circle cx="20" cy="20" r="6" stroke="currentColor" stroke-width="2" fill="none"/><path d="M20 4v6M20 30v6M4 20h6M30 20h6M9 9l4 4M27 27l4 4M31 9l-4 4M13 27l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'],
+ ["acoustics",'<path d="M6 24c6-2 9-12 16-12s10 12 12 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M6 31c6-2 9-12 16-12s10 12 12 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity=".5"/>'],
+ ["commercial",'<rect x="6" y="10" width="28" height="22" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M14 10V7a2 2 0 012-2h8a2 2 0 012 2v3M6 20h28" stroke="currentColor" stroke-width="2"/>'],
+ ["supply",'<path d="M4 14l16-8 16 8-16 8z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M4 14v12l16 8 16-8V14M20 22v12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'],
+ ["corporate",'<circle cx="20" cy="13" r="5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M9 33c0-6 5-9 11-9s11 3 11 9" stroke="currentColor" stroke-width="2" fill="none"/>']
+];
+const CAREER_LIFE=["l1","l2","l3"];
+const SUP_HOW=["h1","h2","h3"];
+const DOCS=[
+ ["sus.pol1","https://www.adlerpelzer.com/fileadmin/pdf/CoC/APG_Code_of_Conduct_EN_25-01-28.pdf"],
+ ["sus.pol2","https://www.adlerpelzer.com/fileadmin/pdf/CoC/APG_Anti-Bribery-Policy_EN.pdf"],
+ ["sus.pol3","https://www.adlerpelzer.com/fileadmin/pdf/Modern_Slavery_2024.pdf"],
+ ["sus.pol4","https://adlerpelzer.integrityline.com/"]
+];
+function docLink(key,url){return `<a href="${url}" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="none"><path d="M4 2h6l4 4v8H4z" stroke="currentColor" stroke-width="1.4"/><path d="M10 2v4h4" stroke="currentColor" stroke-width="1.4"/></svg><span>${esc(t(key))}</span></a>`;}
+
+function renderCareer(){
+  const a=$("#careerAreas"); if(a) a.innerHTML=CAREER_AREAS.map(([id,ico])=>`<div class="area">
+    <svg class="ico" viewBox="0 0 40 40">${ico}</svg>
+    <div><h4>${esc(t("cr.a."+id+".t"))}</h4><p>${esc(t("cr.a."+id+".d"))}</p></div></div>`).join("");
+  const l=$("#careerLife"); if(l) l.innerHTML=CAREER_LIFE.map((x,i)=>`<div>
+    <div class="ix">0${i+1} / APG</div><h3>${esc(t("cr."+x+".t"))}</h3><p>${esc(t("cr."+x+".d"))}</p></div>`).join("");
+}
+function renderInvestor(){
+  const k=$("#invKpi"); if(k) k.innerHTML=[1,2,3,4].map(i=>{
+    const n=esc(t("inv.k"+i+".n")); const nn=(i===3)?`<em>${n}</em>`:n;
+    return `<div class="kpi"><div class="n">${nn}</div><div class="l">${esc(t("inv.k"+i+".l"))}</div></div>`;}).join("");
+  const d=$("#invDocs"); if(d) d.innerHTML=DOCS.slice(0,3).map(([key,url])=>docLink(key,url)).join("");
+  const cl=$("#invChartLabels"); if(cl) cl.innerHTML=["inv.r1","inv.r2","inv.r3","inv.r4"].map(r=>`<span>${esc(t(r))}</span>`).join("");
+}
+function renderSupplier(){
+  const h=$("#supHow"); if(h) h.innerHTML=SUP_HOW.map((x,i)=>`<div>
+    <div class="ix bl">0${i+1} / APG</div><h3>${esc(t("sup."+x+".t"))}</h3><p>${esc(t("sup."+x+".d"))}</p></div>`).join("");
+  const d=$("#supDocs"); if(d) d.innerHTML=DOCS.map(([key,url])=>docLink(key,url)).join("");
+}
+
+const PAGES={career:"#page-career",investor:"#page-investor",supplier:"#page-supplier"};
+function showPage(name){
+  if(!PAGES[name]){ document.body.classList.remove("subview"); $$(".subpage").forEach(p=>p.classList.remove("active")); return; }
+  document.body.classList.add("subview");
+  const target=$(PAGES[name]);
+  $$(".subpage").forEach(p=>p.classList.toggle("active", p===target));
+  if(target) $$(".reveal",target).forEach(r=>r.classList.add("in"));
+  window.scrollTo(0,0);
+}
+function routeFromHash(){
+  const h=(location.hash||"").replace("#","");
+  showPage(["career","investor","supplier"].includes(h)?h:null);
+}
+
+/* ============================================================
+   APPLY I18N
+   ============================================================ */
+function applyI18n(){
+  document.documentElement.lang = lang;
+  $$("[data-i18n]").forEach(el=>{ const k=el.getAttribute("data-i18n"); const v=t(k); if(typeof v==="string") el.textContent=v; });
+  $("#langCur").textContent = ({en:"EN",de:"DE",zh:"ZH",pt:"BR",es:"ES"})[lang];
+  $$(".lang-menu button").forEach(b=>b.classList.toggle("active", b.dataset.lang===lang));
+  renderProducts(); renderPs(); renderTimeline(); renderSus(); renderNews(); renderZoneButtons();
+  renderCareer(); renderInvestor(); renderSupplier(); renderMap();
+  selectZone(selZone);
+  if(window.ADMIN) ADMIN.wireContentEditable();
+  document.title = ({en:"Adler Pelzer Group — A worldwide leader in automotive acoustics",
+    de:"Adler Pelzer Group — Weltweit führend in der Automobilakustik",
+    zh:"Adler Pelzer Group — 汽车声学领域的全球领导者",
+    pt:"Adler Pelzer Group — Líder mundial em acústica automotiva",
+    es:"Adler Pelzer Group — Líder mundial en acústica automotriz"})[lang];
+}
+function setLang(l){ if(!D[l])return; lang=l; localStorage.setItem("apg_lang",l); applyI18n(); }
+
+/* ============================================================
+   ADMIN / EDIT MODE
+   ============================================================ */
+const ADMIN_KEY = "apg_admin_state";
+const ADMIN = {
+  state: null,
+  on: false,
+  save(){
+    try{ localStorage.setItem(ADMIN_KEY, JSON.stringify(ADMIN.state)); }
+    catch(e){ console.warn("APG admin: could not persist state", e); }
+  },
+  load(){
+    let raw=null;
+    try{ raw = localStorage.getItem(ADMIN_KEY); }catch(e){ raw=null; }
+    if(raw){
+      try{ ADMIN.state = JSON.parse(raw); }catch(e){ ADMIN.state = null; }
+    }
+    if(!ADMIN.state || typeof ADMIN.state!=="object"){
+      ADMIN.state = ADMIN.seedFresh();
+      ADMIN.save();
+    }
+    ADMIN.state.news = ADMIN.state.news || [];
+    ADMIN.state.plants = ADMIN.state.plants || [];
+    ADMIN.state.textOverrides = ADMIN.state.textOverrides || {};
+  },
+  status(msg){
+    const el = $("#adminStatus"); if(!el) return;
+    el.textContent = msg;
+    clearTimeout(ADMIN._statusTimer);
+    ADMIN._statusTimer = setTimeout(()=>{ el.textContent=""; }, 4000);
+  },
+  setOn(v){
+    ADMIN.on = v;
+    document.documentElement.dataset.admin = v ? "1" : "0";
+    const btn = $("#adminBtn"); if(btn){ btn.classList.toggle("active", v); btn.setAttribute("aria-pressed", v?"true":"false"); }
+    const panel = $("#adminPanel"); if(panel){ panel.hidden = !v; panel.classList.toggle("open", v); }
+    if(v) ADMIN.renderPanel();
+    ADMIN.wireContentEditable();
+  },
+  toggle(){ ADMIN.setOn(!ADMIN.on); },
+
+  /* ---- inline contenteditable on data-i18n nodes ---- */
+  wireContentEditable(){
+    $$("[data-i18n]").forEach(el=>{
+      if(ADMIN.on){
+        if(el.tagName==="A"||el.tagName==="BUTTON") return; // avoid breaking interactive controls
+        el.setAttribute("contenteditable","true");
+        el.setAttribute("spellcheck","false");
+        if(!el._admWired){
+          el._admWired = true;
+          el.addEventListener("blur",()=>{
+            const k = el.getAttribute("data-i18n");
+            const v = el.textContent;
+            ADMIN.state.textOverrides[lang] = ADMIN.state.textOverrides[lang] || {};
+            ADMIN.state.textOverrides[lang][k] = v;
+            ADMIN.save();
+            ADMIN.status(t("admin.saved"));
+          });
+        }
+      } else {
+        el.removeAttribute("contenteditable");
+      }
+    });
+  },
+
+  /* ---- news CRUD ---- */
+  newsAdd(){
+    ADMIN.state.news.push({cat:"News", title:"New headline", body:"Description…", img:null});
+    ADMIN.save(); renderNews(); ADMIN.renderPanel();
+  },
+  newsDel(i){ ADMIN.state.news.splice(i,1); ADMIN.save(); renderNews(); ADMIN.renderPanel(); },
+  newsMove(i,dir){
+    const j=i+dir; if(j<0||j>=ADMIN.state.news.length) return;
+    const arr=ADMIN.state.news; [arr[i],arr[j]]=[arr[j],arr[i]];
+    ADMIN.save(); renderNews(); ADMIN.renderPanel();
+  },
+  newsUpdate(i,field,val){ if(ADMIN.state.news[i]){ ADMIN.state.news[i][field]=val; ADMIN.save(); renderNews(); } },
+  newsImage(i,file){
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{ ADMIN.state.news[i].img = reader.result; ADMIN.save(); renderNews(); ADMIN.renderPanel(); };
+    reader.readAsDataURL(file);
+  },
+
+  /* ---- plants CRUD ---- */
+  plantAdd(){
+    ADMIN.state.plants.push({city:"New location", lat:0, lon:0, hq:false});
+    ADMIN.save(); renderMap(); ADMIN.renderPanel();
+  },
+  plantDel(i){ ADMIN.state.plants.splice(i,1); ADMIN.save(); renderMap(); ADMIN.renderPanel(); },
+  plantUpdate(i,field,val){
+    if(!ADMIN.state.plants[i]) return;
+    if(field==="lat"||field==="lon") val=parseFloat(val)||0;
+    if(field==="hq") val=!!val;
+    ADMIN.state.plants[i][field]=val; ADMIN.save(); renderMap();
+  },
+
+  /* ---- export / import / reset ---- */
+  exportJSON(){
+    const blob = new Blob([JSON.stringify(ADMIN.state,null,2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "apg-admin-state.json"; document.body.appendChild(a); a.click();
+    a.remove(); URL.revokeObjectURL(url);
+    ADMIN.status(t("admin.exported"));
+  },
+  importJSON(file){
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      try{
+        const data = JSON.parse(reader.result);
+        if(typeof data!=="object" || data===null) throw new Error("bad json");
+        ADMIN.state = {
+          news: Array.isArray(data.news)?data.news:[],
+          plants: Array.isArray(data.plants)?data.plants:[],
+          textOverrides: (data.textOverrides && typeof data.textOverrides==="object") ? data.textOverrides : {}
+        };
+        ADMIN.save(); applyI18n(); ADMIN.renderPanel();
+        ADMIN.status(t("admin.imported"));
+      }catch(e){
+        ADMIN.status(t("admin.import.err"));
+      }
+    };
+    reader.readAsText(file);
+  },
+  resetDefaults(){
+    ADMIN.state = ADMIN.seedFresh();
+    ADMIN.save(); applyI18n(); ADMIN.renderPanel();
+    ADMIN.status(t("admin.reset.done"));
+  },
+  seedFresh(){
+    return {
+      news: NEWS.map(n=>({cat:D.en["n."+n+".c"], title:D.en["n."+n+".t"], body:D.en["n."+n+".d"], img:null})),
+      plants: PLANTS.map(p=>({city:p.city, lat:p.lat, lon:p.lon, hq:!!p.hq})),
+      textOverrides: {}
+    };
+  },
+
+  /* ---- render side panel ---- */
+  renderPanel(){
+    const nl = $("#adminNewsList");
+    if(nl) nl.innerHTML = ADMIN.state.news.map((n,i)=>`
+      <div class="admin-item" data-i="${i}" data-kind="news">
+        <div class="row">
+          ${n.img?`<img class="thumb" src="${n.img}" alt="">`:`<div class="thumb"></div>`}
+          <label class="icon-btn" title="${esc(t('admin.news.upload'))}">⤒<input type="file" accept="image/*" class="news-img" hidden></label>
+          <button class="icon-btn news-up" title="${esc(t('admin.news.up'))}" type="button">↑</button>
+          <button class="icon-btn news-down" title="${esc(t('admin.news.down'))}" type="button">↓</button>
+          <button class="icon-btn news-del" title="${esc(t('admin.news.del'))}" type="button">✕</button>
+        </div>
+        <div class="field-row"><input class="news-cat" placeholder="${esc(t('admin.news.cat'))}" value="${esc(n.cat||"")}"></div>
+        <div class="field-row"><input class="news-title" placeholder="${esc(t('admin.news.title'))}" value="${esc(n.title||"")}"></div>
+        <textarea class="news-body" placeholder="${esc(t('admin.news.body'))}">${esc(n.body||"")}</textarea>
+      </div>`).join("");
+    if(nl) $$(".admin-item",nl).forEach(card=>{
+      const i = +card.dataset.i;
+      $(".news-cat",card).addEventListener("change",e=>ADMIN.newsUpdate(i,"cat",e.target.value));
+      $(".news-title",card).addEventListener("change",e=>ADMIN.newsUpdate(i,"title",e.target.value));
+      $(".news-body",card).addEventListener("change",e=>ADMIN.newsUpdate(i,"body",e.target.value));
+      $(".news-img",card).addEventListener("change",e=>ADMIN.newsImage(i,e.target.files[0]));
+      $(".news-up",card).addEventListener("click",()=>ADMIN.newsMove(i,-1));
+      $(".news-down",card).addEventListener("click",()=>ADMIN.newsMove(i,1));
+      $(".news-del",card).addEventListener("click",()=>ADMIN.newsDel(i));
+    });
+
+    const pl = $("#adminPlantsList");
+    if(pl) pl.innerHTML = ADMIN.state.plants.map((p,i)=>`
+      <div class="admin-item" data-i="${i}" data-kind="plant">
+        <div class="field-row"><input class="plant-city" placeholder="${esc(t('admin.plants.city'))}" value="${esc(p.city||"")}"></div>
+        <div class="field-row">
+          <input class="plant-lat" type="number" step="0.01" placeholder="${esc(t('admin.plants.lat'))}" value="${p.lat}">
+          <input class="plant-lon" type="number" step="0.01" placeholder="${esc(t('admin.plants.lon'))}" value="${p.lon}">
+        </div>
+        <div class="row">
+          <label style="font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:6px">
+            <input type="checkbox" class="plant-hq" ${p.hq?"checked":""}> ${esc(t('admin.plants.hq'))}
+          </label>
+          <button class="icon-btn plant-del" title="${esc(t('admin.plants.del'))}" type="button" style="margin-left:auto">✕</button>
+        </div>
+      </div>`).join("");
+    if(pl) $$(".admin-item",pl).forEach(card=>{
+      const i = +card.dataset.i;
+      $(".plant-city",card).addEventListener("change",e=>ADMIN.plantUpdate(i,"city",e.target.value));
+      $(".plant-lat",card).addEventListener("change",e=>ADMIN.plantUpdate(i,"lat",e.target.value));
+      $(".plant-lon",card).addEventListener("change",e=>ADMIN.plantUpdate(i,"lon",e.target.value));
+      $(".plant-hq",card).addEventListener("change",e=>ADMIN.plantUpdate(i,"hq",e.target.checked));
+      $(".plant-del",card).addEventListener("click",()=>ADMIN.plantDel(i));
+    });
+  }
+};
+window.ADMIN = ADMIN;
+
+function wireAdmin(){
+  ADMIN.load();
+  $("#adminBtn").addEventListener("click",ADMIN.toggle);
+  $("#adminPanelClose").addEventListener("click",()=>ADMIN.setOn(false));
+  $("#adminNewsAdd").addEventListener("click",ADMIN.newsAdd);
+  $("#adminPlantsAdd").addEventListener("click",ADMIN.plantAdd);
+  $("#adminExport").addEventListener("click",ADMIN.exportJSON);
+  $("#adminReset").addEventListener("click",ADMIN.resetDefaults);
+  const importBtn=$("#adminImportBtn"), importFile=$("#adminImportFile");
+  importBtn.addEventListener("click",()=>importFile.click());
+  importFile.addEventListener("change",e=>{ if(e.target.files[0]) ADMIN.importJSON(e.target.files[0]); e.target.value=""; });
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+function init(){
+  $("#yr").textContent = new Date().getFullYear();
+  $("#expCanvas").innerHTML = buildVehicle();
+  $$(".exp-part,.exp-dot").forEach(e=>e.addEventListener("click",()=>selectZone(e.dataset.zone)));
+  wireAdmin();
+  applyI18n();
+  wireRfq();
+
+  /* theme toggle */
+  function applyTheme(th){
+    document.documentElement.dataset.theme=th;
+    try{localStorage.setItem("apg_theme",th)}catch(e){}
+    const b=$("#themeBtn"); if(b) b.innerHTML = th==="light"
+      ? '<svg viewBox="0 0 18 18" fill="none"><path d="M15.5 11.3A6.5 6.5 0 016.7 2.5a6.5 6.5 0 108.8 8.8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>'
+      : '<svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="3.6" stroke="currentColor" stroke-width="1.5"/><path d="M9 1v2.2M9 14.8V17M1 9h2.2M14.8 9H17M3.5 3.5l1.6 1.6M12.9 12.9l1.6 1.6M14.5 3.5l-1.6 1.6M5.1 12.9l-1.6 1.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+  }
+  let savedTheme="dark"; try{savedTheme=localStorage.getItem("apg_theme")||"dark"}catch(e){}
+  applyTheme(savedTheme==="light"?"light":"dark");
+  $("#themeBtn").addEventListener("click",()=>applyTheme(document.documentElement.dataset.theme==="light"?"dark":"light"));
+
+  /* page router */
+  document.addEventListener("click",e=>{
+    const home=e.target.closest("[data-home]");
+    if(home){ e.preventDefault(); location.hash="#top"; }
+    const ct=e.target.closest("[data-contactype]");
+    if(ct){ const sel=$("#f_type"); if(sel) sel.value=ct.getAttribute("data-contactype"); }
+  });
+  window.addEventListener("hashchange",routeFromHash);
+  routeFromHash();
+
+  /* language switcher */
+  const langWrap=$("#lang"), langBtn=$("#langBtn");
+  langBtn.addEventListener("click",e=>{ e.stopPropagation(); langWrap.classList.toggle("open"); langBtn.setAttribute("aria-expanded",langWrap.classList.contains("open")); });
+  document.addEventListener("click",()=>langWrap.classList.remove("open"));
+  $$(".lang-menu button").forEach(b=>b.addEventListener("click",()=>{ setLang(b.dataset.lang); langWrap.classList.remove("open"); }));
+
+  /* header scroll */
+  const hdr=$("#hdr");
+  const onScroll=()=>hdr.classList.toggle("scrolled", window.scrollY>40);
+  onScroll(); window.addEventListener("scroll",onScroll,{passive:true});
+
+  /* mobile drawer */
+  const drawer=$("#drawer");
+  $("#burger").addEventListener("click",()=>drawer.classList.add("open"));
+  $("#drawerClose").addEventListener("click",()=>drawer.classList.remove("open"));
+  $$(".drawer a").forEach(a=>a.addEventListener("click",()=>drawer.classList.remove("open")));
+
+  /* reveal + counters + special triggers */
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduce){
+    $$(".reveal").forEach(e=>e.classList.add("in"));
+    $("#expStage").classList.add("go"); $("#waveBox").classList.add("go");
+    $$(".stat .num").forEach(n=>finalCount(n));
+  } else {
+    const io=new IntersectionObserver((ents)=>{
+      ents.forEach(en=>{
+        if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target);
+          if(en.target.classList.contains("stat")) finalCount($(".num",en.target),true);
+        }
+      });
+    },{threshold:.18});
+    $$(".reveal").forEach(e=>io.observe(e));
+
+    const io2=new IntersectionObserver((ents)=>{
+      ents.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("go"); io2.unobserve(en.target); } });
+    },{threshold:.3});
+    io2.observe($("#expStage")); io2.observe($("#waveBox"));
+
+    const statWrap=$(".stats-grid");
+    const io3=new IntersectionObserver((ents)=>{
+      ents.forEach(en=>{ if(en.isIntersecting){ $$(".stat .num",statWrap).forEach(n=>animateCount(n)); io3.unobserve(en.target); } });
+    },{threshold:.4});
+    io3.observe(statWrap);
+  }
+
+  heroWaves(reduce);
+}
+
+/* counters */
+function fmt(v,dec){ return dec>0 ? v.toFixed(dec) : Math.round(v).toLocaleString("en-US"); }
+function animateCount(el){
+  if(el.dataset.done) return; el.dataset.done="1";
+  if(el.dataset.raw){ return; } // keep "1960s" literal
+  const target=parseFloat(el.dataset.count), pre=el.dataset.prefix||"", suf=el.dataset.suffix||"";
+  const dec=(String(el.dataset.count).split(".")[1]||"").length;
+  let start=null, dur=1500;
+  function step(ts){ if(!start)start=ts; const p=Math.min((ts-start)/dur,1); const e=1-Math.pow(1-p,3);
+    el.textContent=pre+fmt(target*e,dec)+suf; if(p<1)requestAnimationFrame(step); }
+  requestAnimationFrame(step);
+}
+function finalCount(el){ if(!el||el.dataset.raw)return; const pre=el.dataset.prefix||"",suf=el.dataset.suffix||"";
+  const dec=(String(el.dataset.count).split(".")[1]||"").length; el.textContent=pre+fmt(parseFloat(el.dataset.count),dec)+suf; }
+
+/* hero ambient sound-waves */
+function heroWaves(reduce){
+  const cv=$("#waveCanvas"); if(!cv) return; const ctx=cv.getContext("2d");
+  let w,h,dpr; function size(){ dpr=Math.min(window.devicePixelRatio||1,2); w=cv.clientWidth; h=cv.clientHeight; cv.width=w*dpr; cv.height=h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+  size(); window.addEventListener("resize",size);
+  if(reduce){ drawStatic(); return; }
+  let tt=0;
+  function loop(){ ctx.clearRect(0,0,w,h);
+    const cxs=w*0.74, cys=h*0.42;
+    for(let i=0;i<5;i++){ const r=(tt*0.4+i*70)% 420; const a=Math.max(0,1-r/420);
+      ctx.beginPath(); ctx.arc(cxs,cys,r,0,Math.PI*2);
+      ctx.strokeStyle="rgba(46,71,176,"+(a*0.30)+")"; ctx.lineWidth=1.4; ctx.stroke(); }
+    ctx.lineWidth=1.6;
+    for(let l=0;l<3;l++){ ctx.beginPath();
+      for(let x=0;x<=w;x+=6){ const y=cys+Math.sin(x*0.012+tt*0.03+l*1.4)*(18+l*10)*Math.sin(x*0.002+tt*0.01);
+        x===0?ctx.moveTo(x,y):ctx.lineTo(x,y); }
+      ctx.strokeStyle="rgba(120,140,170,"+(0.05+l*0.015)+")"; ctx.stroke(); }
+    tt+=1; requestAnimationFrame(loop);
+  }
+  function drawStatic(){ const cxs=w*0.74, cys=h*0.42; for(let i=1;i<=4;i++){ ctx.beginPath(); ctx.arc(cxs,cys,i*80,0,Math.PI*2); ctx.strokeStyle="rgba(46,71,176,"+(0.18/i)+")"; ctx.lineWidth=1.2; ctx.stroke(); } }
+  loop();
+}
+
+/* ============================================================
+   RFQ FORM
+   ============================================================ */
+function wireRfq(){
+  const form=$("#rfqForm"); if(!form) return;
+  const clearOn=["f_name","f_company","f_email","f_msg"];
+  clearOn.forEach(id=>{ const el=document.getElementById(id);
+    el.addEventListener("input",()=>el.closest(".field").classList.remove("err")); });
+
+  form.addEventListener("submit",e=>{
+    e.preventDefault();
+    let ok=true;
+    const set=(id,bad)=>{ const f=document.getElementById(id).closest(".field"); f.classList.toggle("err",bad); if(bad)ok=false; };
+    const v=id=>document.getElementById(id).value.trim();
+    const name=v("f_name"), company=v("f_company"), email=v("f_email"), msg=v("f_msg");
+    set("f_name",!name); set("f_company",!company); set("f_msg",!msg);
+    set("f_email", !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+    if(!ok){ form.querySelector(".field.err input,.field.err textarea,.field.err select").focus(); return; }
+
+    const sel=$("#f_type"), typeLabel=sel.options[sel.selectedIndex].textContent;
+    const country=v("f_country"), program=v("f_program");
+    const L=k=>t(k).replace(/\s*\*$/,"");
+    const subj="["+typeLabel+"] "+(company||"Inquiry")+" — Adler Pelzer Group";
+    const body=
+      typeLabel+"\n\n"+
+      L("f.name")+": "+name+"\n"+
+      L("f.company")+": "+company+"\n"+
+      L("f.email")+": "+email+"\n"+
+      (country?L("f.country")+": "+country+"\n":"")+
+      (program?L("f.program")+": "+program+"\n":"")+
+      "\n"+L("f.message")+":\n"+msg+"\n";
+    window.location.href="mailto:info@adlerpelzer.com?subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(body);
+    form.classList.add("hide"); $("#rfqSuccess").classList.add("show");
+  });
+}
+
+if(document.readyState!=="loading") init();
+else document.addEventListener("DOMContentLoaded",init);
+})();
